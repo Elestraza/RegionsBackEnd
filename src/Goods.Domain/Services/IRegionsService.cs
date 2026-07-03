@@ -11,8 +11,8 @@ namespace Goods.Domain.Services
     public interface IRegionsService
     {
         Task<Result> SaveRegion(SettlementsBlank productBlank);
-        Task<Product> GetRegion(Guid id);
-        Task<Page<Product>> GetRegions(Int32 page, Int32 count);
+        Task<Regions> GetRegion(Guid id);
+        Task<Page<Regions>> GetRegions(Int32 page, Int32 count);
         Task<Result> RemoveRegion(Guid id);
     }
 }
