@@ -5,7 +5,7 @@ using Goods.Tools.Types.Results;
 
 namespace Goods.Services.Products;
 
-public class SettlementsTypeService(ISettlementsTypeRepository repository) : ISettlementsTypesService
+public class SettlementsTypesService(ISettlementsTypeRepository repository) : ISettlementsTypesService
 {
     public async Task<Result> SaveProduct(SettlementsTypesBlank productBlank)
     {
