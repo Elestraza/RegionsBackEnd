@@ -11,8 +11,8 @@ namespace Goods.Domain.Services
     public interface ISettlementsService
     {
         Task<Result> SaveSettlement(SettlementsBlank productBlank);
-        Task<Settlements> GetSettlements(Guid id);
+        Task<Settlements> GetSettlement(Int32 id);
         Task<Page<Settlements>> GetSettlements(Int32 page, Int32 count);
-        Task<Result> RemoveSettlement(Guid id);
+        Task<Result> RemoveSettlement(Int32 id);
     }
 }

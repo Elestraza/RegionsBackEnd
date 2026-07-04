@@ -5,7 +5,7 @@ using Goods.Tools.Types.Results;
 
 namespace Goods.Services.Products;
 
-public class SettlementsTypesService(ISettlementsTypeRepository repository) : ISettlementsTypesService
+public class SettlementsTypesService(ISettlementsTypesRepository repository) : ISettlementsTypesService
 {
     public async Task<Result> SaveProduct(SettlementsTypesBlank productBlank)
     {
@@ -96,17 +96,17 @@ public class SettlementsTypesService(ISettlementsTypeRepository repository) : IS
     
     #endregion Validation
 
-    public async Task<SettlementsTypes> GetSettlementsType(Guid productId)
+    public async Task<SettlementsTypes> GetSettlementsType(Int32 id)
     {
-        SettlementsTypes? settlementsType = await repository.GetSettlementsType(productId);
-        if (settlementsType is null) throw new Exception($"Продукт {productId} не найден");
+        SettlementsTypes? settlementsType = await repository.GetSettlementsType(id);
+        if (settlementsType is null) throw new Exception($"Продукт {id} не найден");
 
         return settlementsType;
     }
 
-    private Task<SettlementsTypes?> GetSettlementsType(String name)
+    private Task<SettlementsTypes?> GetSettlementsType(String type)
     {
-        return repository.GetSettlementsType(name);
+        return repository.GetSettlementsType(type);
     }
 
     public Task<Page<SettlementsTypes>> GetSettlementsTypes(Int32 page, Int32 countInPage)
@@ -114,7 +114,7 @@ public class SettlementsTypesService(ISettlementsTypeRepository repository) : IS
         return repository.GetSettlementsTypes(page, countInPage);
     }
 
-    public async Task<Result> RemoveSettlementsType(Guid id)
+    public async Task<Result> RemoveSettlementsType(Int32 id)
     {
         SettlementsTypes settlementsType = await GetSettlementsType(id);
         if (settlementsType.IsRemoved) return Result.Fail("Продукт уже удален");

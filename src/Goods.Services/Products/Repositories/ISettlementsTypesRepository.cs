@@ -5,8 +5,8 @@ namespace Goods.Services.Products.Repositories;
 public interface ISettlementsTypesRepository
 {
     Task SaveSettlementsType(SettlementsTypes blank);
-    Task<SettlementsTypes?> GetSettlementsType(Guid id);
-    Task<SettlementsTypes?> GetSettlementsType(String name);
+    Task<SettlementsTypes?> GetSettlementsType(Int32 id);
+    Task<SettlementsTypes?> GetSettlementsType(String type);
     Task<Page<SettlementsTypes>> GetSettlementsTypes(Int32 page, Int32 count);
-    Task RemoveSettlementsType(Guid id);
+    Task RemoveSettlementsType(Int32 id);
 }

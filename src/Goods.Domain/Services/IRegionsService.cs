@@ -10,9 +10,9 @@ namespace Goods.Domain.Services
 {
     public interface IRegionsService
     {
-        Task<Result> SaveRegion(SettlementsBlank productBlank);
-        Task<Regions> GetRegion(Guid id);
+        Task<Result> SaveRegion(Regions blank);
+        Task<Regions> GetRegion(Int32 id);
         Task<Page<Regions>> GetRegions(Int32 page, Int32 count);
-        Task<Result> RemoveRegion(Guid id);
+        Task<Result> RemoveRegion(Int32 id);
     }
 }

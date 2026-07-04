@@ -6,12 +6,13 @@ using Goods.Tools.Types.Results;
 namespace Goods.Services.Products;
 
 public class FederalRegionsService(IFederalRegionsRepository repository) : IFederalRegionsService
+{
     public async Task<Result> SaveFederalRegion(FederalRegionsBlank blank)
     {
         DataResult<FederalRegions> validationResult = await ValidateFederalRegionsBlank(blank);
         if (validationResult.IsFail(out FederalRegions product)) return validationResult.ToResult();
 
-        await repository.SaveProduct(product);
+        await repository.SaveFederalRegion(product);
 
         return Result.Success();
     }
@@ -95,17 +96,17 @@ public class FederalRegionsService(IFederalRegionsRepository repository) : IFede
     
     #endregion Validation
 
-    public async Task<FederalRegions> GetFederalRegion(Int32 Id)
+    public async Task<FederalRegions> GetFederalRegion(Int32 id)
     {
-        FederalRegions? federalRegions = await repository.GetProduct(Id);
-        if (federalRegions is null) throw new Exception($"Продукт {Id} не найден");
+        FederalRegions? federalRegions = await repository.GetFederalRegion(id);
+        if (federalRegions is null) throw new Exception($"Продукт {id} не найден");
 
         return federalRegions;
     }
 
     private Task<FederalRegions?> GetFederalRegion(String name)
     {
-        return repository.GetProduct(name);
+        return repository.GetFederalRegion(name);
     }
 
     public Task<Page<FederalRegions>> GetFederalRegions(Int32 page, Int32 countInPage)
@@ -113,9 +114,9 @@ public class FederalRegionsService(IFederalRegionsRepository repository) : IFede
         return repository.GetFederalRegions(page, countInPage);
     }
 
-    public async Task<Result> RemoveFederalRegion(Int32 Id)
+    public async Task<Result> RemoveFederalRegion(Int32 id)
     {
-        FederalRegions federalRegions = await GetFederalRegion(Id);
+        FederalRegions federalRegions = await GetFederalRegion(id);
         if (federalRegions.IsRemoved) return Result.Fail("Продукт уже удален");
 
         await repository.RemoveFederalRegion(id);

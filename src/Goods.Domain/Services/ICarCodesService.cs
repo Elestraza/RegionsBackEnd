@@ -10,9 +10,9 @@ namespace Goods.Domain.Services
 {
     public interface ICarCodesService
     {
-        Task<Result> SaveCarCode(SettlementsBlank productBlank);
-        Task<CarCodes> GetCarCode(Guid id);
+        Task<Result> SaveCarCode(CarCodesBlank blank);
+        Task<CarCodes> GetCarCode(Int32 id);
         Task<Page<CarCodes>> GetCarCodes(Int32 page, Int32 count);
-        Task<Result> RemoveCarCode(Guid id);
+        Task<Result> RemoveCarCode(Int32 id);
     }
 }

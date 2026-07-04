@@ -6,12 +6,13 @@ using Goods.Tools.Types.Results;
 namespace Goods.Services.Products;
 
 public class CarCodesService(ICarCodesRepository repository) : ICarCodesService
-    public async Task<Result> SaveProduct(CarCodesBlank blank)
+{
+    public async Task<Result> SaveCarCode(CarCodesBlank blank)
     {
         DataResult<CarCodes> validationResult = await ValidateCarCodes(blank);
         if (validationResult.IsFail(out CarCodes product)) return validationResult.ToResult();
 
-        await repository.SaveProduct(product);
+        await repository.SaveCarCode(product);
 
         return Result.Success();
     }

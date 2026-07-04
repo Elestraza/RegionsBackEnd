@@ -96,10 +96,10 @@ public class SettlementsService(ISettlementsRepository repository) : ISettlement
     
     #endregion Validation
 
-    public async Task<Settlements> GetSettlement(Guid productId)
+    public async Task<Settlements> GetSettlement(Int32 id)
     {
-        Settlements? settlement = await repository.GetSettlement(productId);
-        if (settlement is null) throw new Exception($"Продукт {productId} не найден");
+        Settlements? settlement = await repository.GetSettlement(id);
+        if (settlement is null) throw new Exception($"Населенный пункт {id} не найден");
 
         return settlement;
     }
@@ -114,7 +114,7 @@ public class SettlementsService(ISettlementsRepository repository) : ISettlement
         return repository.GetSettlements(page, countInPage);
     }
 
-    public async Task<Result> RemoveSettlement(Guid id)
+    public async Task<Result> RemoveSettlement(Int32 id)
     {
         Settlements settlement = await GetSettlement(id);
         if (settlement.IsRemoved) return Result.Fail("Продукт уже удален");

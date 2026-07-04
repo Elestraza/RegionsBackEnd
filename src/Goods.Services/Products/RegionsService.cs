@@ -7,9 +7,9 @@ namespace Goods.Services.Products;
 
 public class RegionsService(IRegionsRepository repository) : IRegionsService
 {
-    public async Task<Result> SaveRegion(RegionsBlank productBlank)
+    public async Task<Result> SaveRegion(RegionsBlank blank)
     {
-        DataResult<Regions> validationResult = await ValidateRegionsBlank(productBlank);
+        DataResult<Regions> validationResult = await ValidateRegionsBlank(blank);
         if (validationResult.IsFail(out Regions product)) return validationResult.ToResult();
 
         await repository.SaveRegion(product);
@@ -96,10 +96,10 @@ public class RegionsService(IRegionsRepository repository) : IRegionsService
     
     #endregion Validation
 
-    public async Task<Regions> GetRegion(Guid productId)
+    public async Task<Regions> GetRegion(Int32 id)
     {
-        Regions? product = await repository.GetRegion(productId);
-        if (product is null) throw new Exception($"Продукт {productId} не найден");
+        Regions? product = await repository.GetRegion(id);
+        if (product is null) throw new Exception($"Регион {id} не найден");
 
         return product;
     }
@@ -114,7 +114,7 @@ public class RegionsService(IRegionsRepository repository) : IRegionsService
         return repository.GetRegions(page, countInPage);
     }
 
-    public async Task<Result> RemoveRegion(Guid id)
+    public async Task<Result> RemoveRegion(Int32 id)
     {
         Regions product = await GetRegion(id);
         if (product.IsRemoved) return Result.Fail("Продукт уже удален");
