@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Goods.BackOffice.Controllers.Products;
 
-public class ProductsController(IProductsService productsService) : BaseController
+public class ProductsController(ISettlementsService productsService) : BaseController
 {
 	[HttpGet("/products")]
     public IActionResult Index() => ReactApp();
@@ -14,24 +14,24 @@ public class ProductsController(IProductsService productsService) : BaseControll
 	[HttpPost("products/save")]
 	public Task<Result> SaveProducts([FromBody] SettlementsBlank productBlank)
 	{
-		return productsService.SaveProduct(productBlank);
+		return productsService.SaveSettlement(productBlank);
 	}
 
 	[HttpGet("products/get-page")]
-	public Task<Page<Product>> GetProductsPage([FromQuery] Int32 page, [FromQuery] Int32 count)
+	public Task<Page<Settlements>> GetProductsPage([FromQuery] Int32 page, [FromQuery] Int32 count)
 	{
-		return productsService.GetProducts(page, count);
+		return productsService.GetSettlements(page, count);
 	}
 
 	[HttpGet("products/get-by-id")]
-	public Task<Product> GetProduct([FromQuery] Guid id)
+	public Task<Settlements> GetProduct([FromQuery] Guid id)
 	{
-		return productsService.GetProduct(id);
+		return productsService.GetSettlement(id);
 	}
 
 	[HttpGet("products/remove")]
 	public Task<Result> RemoveProduct([FromQuery] Guid id)
 	{
-		return productsService.RemoveProduct(id);
+		return productsService.RemoveSettlement(id);
 	}
 }
