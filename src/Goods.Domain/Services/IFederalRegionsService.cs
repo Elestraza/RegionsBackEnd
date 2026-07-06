@@ -11,8 +11,8 @@ namespace Goods.Domain.Services
     public interface IFederalRegionsService
     {
         Task<Result> SaveFederalRegion(FederalRegionsBlank blank);
-        Task<FederalRegions> GetFederalRegion(Int32 id);
+        Task<FederalRegions> GetFederalRegion(Guid id);
         Task<Page<FederalRegions>> GetFederalRegions(Int32 page, Int32 count);
-        Task<Result> RemoveFederalRegion(Int32 id);
+        Task<Result> RemoveFederalRegion(Guid id);
     }
 }

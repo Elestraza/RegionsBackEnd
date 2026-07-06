@@ -10,8 +10,8 @@ namespace Goods.Domain.Services
 {
     public interface ISettlementsTypesService
     {
-        Task<Result> SaveSettlementsType(SettlementsBlank productBlank);
-        Task<SettlementsTypes> GetSettlementsType(Guid id);
+        Task<Result> SaveSettlementsType(SettlementsTypesBlank blank);
+        Task<SettlementsTypes?> GetSettlementsType(Guid id);
         Task<Page<SettlementsTypes>> GetSettlementsTypes(Int32 page, Int32 count);
         Task<Result> RemoveSettlementsType(Guid id);
     }

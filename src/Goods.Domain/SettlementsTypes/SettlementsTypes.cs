@@ -2,11 +2,11 @@
 
 public class SettlementsTypes
 {
-    public Int32 Id { get; set; }
+    public Guid Id { get; set; }
     public String Type { get; set; }
     public SettlementsTypes(
-     Int32 id,
-     String type
+        Guid id,
+        String type
     )
     {
         Id = id;

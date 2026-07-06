@@ -2,11 +2,12 @@
 
 public class SettlementsBlank
 {
-    public Int32 Id { get; set; }
-    public ICollection<SettlementsTypes> Type { get; set; }
+    public Guid Id { get; set; }
+    public SettlementsTypes Type { get; set; }
     public String Name { get; set; }
-    public ICollection<Regions> Region { get; set; }
-    public Int32 Age { get; set; }
+    public Int32 Population { get; set; }
+    public Regions Region { get; set; }
+    public Int32 FoundationYear { get; set; }
     public Boolean IsHero { get; set; }
     public Int32 AverageHotelCost { get; set; }
 }

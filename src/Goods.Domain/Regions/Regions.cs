@@ -2,18 +2,18 @@
 
 public class Regions
 {
-    public Int32 Id { get; set; }
-    public String Type { get; set; }
-    public ICollection<FederalRegions> FederalRegion { get; set; }
+    public Guid Id { get; set; }
+    public String Name { get; set; }
+    public FederalRegions FederalRegion { get; set; }
     public Regions
     (
-        Int32 id,
-        String type,
-        ICollection<FederalRegions> federalRegion
+        Guid id,
+        String name,
+        FederalRegions federalRegion
     )
     {
         Id = id;
-        Type = type;
+        Name = name;
         FederalRegion = federalRegion;
     }
 }

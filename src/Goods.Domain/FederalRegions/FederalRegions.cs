@@ -2,15 +2,14 @@
 
 public class FederalRegions
 {
-    public Int32 Id { get; set; }
-    public String Type { get; set; }
-    public Boolean isRemoved { get; set; }
+    public Guid Id { get; set; }
+    public String Name { get; set; }
     public FederalRegions(
-        Int32 id,
-        String type
+        Guid id,
+        String name
     )
     {
         Id = id;
-        Type = type;
+        Name = name;
     }
 }

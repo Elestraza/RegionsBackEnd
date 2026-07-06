@@ -2,21 +2,35 @@
 
 public class Settlements
 {
-    public Int32 Id { get; set; }
-    public ICollection<SettlementsTypes> Type { get; set; }
+
+    /*
+        id uuid primary key not null,
+	    settlementtype uuid NOT NULL,
+	    name varchar NOT NULL,
+	    population int NOT NULL,
+	    region uuid NOT NULL,
+	    foundationyear varchar(4) NOT NULL,
+	    ishero bool NOT NULL,
+	    averagehotelcost int NOT NULL,
+     */
+
+    public Guid Id { get; set; }
+    public SettlementsTypes Type { get; set; }
     public String Name { get; set; }
-    public ICollection<Regions> Region { get; set; }
-    public Int32 Age { get; set; }
+    public Int32 Population {  get; set; }
+    public Regions Region { get; set; }
+    public Int32 FoundationYear { get; set; }
     public Boolean IsHero { get; set; }
     public Int32 AverageHotelCost { get; set; }
 
     public Settlements
     (
-        Int32 id,
-        ICollection<SettlementsTypes> type,
+        Guid id,
+        SettlementsTypes type,
         String name,
-        ICollection<Regions> region,
-        Int32 age,
+        Int32 population,
+        Regions region,
+        Int32 foundationYear,
         Boolean isHero,
         Int32 averageHotelCost
     )
@@ -24,8 +38,9 @@ public class Settlements
         Id = id;
         Type = type;
         Name = name;
+        Population = population;
         Region = region;
-        Age = age;
+        FoundationYear = foundationYear;
         IsHero = isHero;
         AverageHotelCost = averageHotelCost;
     }
