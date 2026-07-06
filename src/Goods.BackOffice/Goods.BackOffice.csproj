@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="client-app\**" />
 		<Content Remove="client-app\**" />
