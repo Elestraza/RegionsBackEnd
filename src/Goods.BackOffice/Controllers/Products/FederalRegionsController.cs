@@ -8,7 +8,7 @@ namespace Goods.BackOffice.Controllers.Products;
 
 public class FederalRegionsController(IFederalRegionsService federalRegionsService) : BaseController
 {
-	[HttpGet("/products")]
+	[HttpGet("/federal-regions")]
     public IActionResult Index() => ReactApp();
 
 	[HttpPost("federal-regions/save")]

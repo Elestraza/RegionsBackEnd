@@ -8,7 +8,10 @@ namespace Goods.BackOffice.Controllers.Products;
 
 public class RegionsController(IRegionsService regionsService) : BaseController
 {
-	[HttpPost("regions/save")]
+    [HttpGet("/regions")]
+    public IActionResult Index() => ReactApp();
+
+    [HttpPost("regions/save")]
 	public Task<Result> SaveProducts([FromBody] RegionsBlank blank)
 	{
 		return regionsService.SaveRegion(blank);
