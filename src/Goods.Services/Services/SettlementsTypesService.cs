@@ -39,7 +39,7 @@ public class SettlementsTypesService(ISettlementsTypesRepository repository) : I
     {
         if (!(blank.Id is { } id))
             return DataResult<Guid?>.Success(null);
-
+        Console.WriteLine($"{id} | {blank.Id}");
         try
         {
             SettlementsTypes existSettlementType = await GetSettlementsType(id);
@@ -69,6 +69,7 @@ public class SettlementsTypesService(ISettlementsTypesRepository repository) : I
     public async Task<SettlementsTypes?> GetSettlementsType(Guid id)
     {
         SettlementsTypes? settlementsType = await repository.GetSettlementsType(id);
+        Console.WriteLine(id);
         if (settlementsType is null) throw new Exception($"Населенный пункт {id} не найден");
 
         return settlementsType;

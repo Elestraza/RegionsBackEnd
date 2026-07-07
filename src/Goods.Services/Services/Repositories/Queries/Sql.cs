@@ -4,7 +4,7 @@ internal static class Sql
 {
     internal static String GetById =>
         """
-            SELECT * FROM @table 
+            SELECT * FROM settlementstypes
             WHERE id = @id;
         """;
 

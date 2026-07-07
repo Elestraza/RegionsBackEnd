@@ -37,8 +37,8 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
         DataResult<Regions> regionValidationResult = await ValidateSettlementRegion(blank);
         if (regionValidationResult.IsFail(out Regions region)) return DataResult<Settlements>.Fail(regionValidationResult);
 
-        DataResult<Int32> foundationDateValidationResult = ValidateSettlementFoundationDate(blank);
-        if (foundationDateValidationResult.IsFail(out Int32 foundationyear)) return DataResult<Settlements>.Fail(foundationDateValidationResult);
+        DataResult<String> foundationDateValidationResult = ValidateSettlementFoundationDate(blank);
+        if (foundationDateValidationResult.IsFail(out String foundationyear)) return DataResult<Settlements>.Fail(foundationDateValidationResult);
 
         DataResult<Boolean> heroStatusValidationResult = ValidateSettlementHeroStatus(blank);
         if (heroStatusValidationResult.IsFail(out Boolean isHero)) return DataResult<Settlements>.Fail(heroStatusValidationResult);
@@ -145,15 +145,15 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
         throw new NotImplementedException();
     }
 
-    private DataResult<Int32> ValidateSettlementFoundationDate(SettlementsBlank blank)
+    private DataResult<String> ValidateSettlementFoundationDate(SettlementsBlank blank)
     {
         if (!(blank.FoundationYear is { } foundationYear))
-            return DataResult<Int32>.Fail("Не указан автомобильный код");
+            return DataResult<String>.Fail("Не указан год");
 
-        if (foundationYear < 0)
-            return DataResult<Int32>.Fail("Указан некорректный автомобильный код");
+        if (foundationYear.Length < 0)
+            return DataResult<String>.Fail("Указан некорректный год");
 
-        return DataResult<Int32>.Success(foundationYear);
+        return DataResult<String>.Success(foundationYear);
     }
 
     #endregion Validation

@@ -41,7 +41,7 @@ internal static class SettlementsConverter
             reader.GetString(reader.GetOrdinal("name")),
             reader.GetInt32(reader.GetOrdinal("population")),
             region,
-            reader.GetInt32(reader.GetOrdinal("foundationyear")),
+            reader.GetString(reader.GetOrdinal("foundationyear")),
             reader.GetBoolean(reader.GetOrdinal("ishero")),
             reader.GetInt32(reader.GetOrdinal("averagehotelcost"))
         );

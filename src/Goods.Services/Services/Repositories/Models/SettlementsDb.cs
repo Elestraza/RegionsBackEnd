@@ -28,7 +28,7 @@ namespace Goods.Services.Products.Repositories.Models
         public String Name { get; set; }
         public Int32 Population { get; set; }
         public RegionsDb Region { get; set; }
-        public Int32 FoundationYear { get; set; }
+        public String FoundationYear { get; set; }
         public Boolean IsHero { get; set; }
         public Int32 AverageHotelCost { get; set; }
 
@@ -39,7 +39,7 @@ namespace Goods.Services.Products.Repositories.Models
             String name,
             Int32 population,
             RegionsDb region,
-            Int32 foundationYear,
+            String foundationYear,
             Boolean isHero,
             Int32 averageHotelCost
         ) 

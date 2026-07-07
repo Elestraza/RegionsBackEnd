@@ -19,7 +19,7 @@ public class SettlementsTypesRepository : ISettlementsTypesRepository
             parameters =>
             {
                 parameters.AddWithValue("@id", settlementsTypeDb.Id);
-                parameters.AddWithValue("@settlementstype", (Object)settlementsTypeDb.Type);
+                parameters.AddWithValue("@settlementstype", settlementsTypeDb.Type);
             }
         );
     }
@@ -30,13 +30,14 @@ public class SettlementsTypesRepository : ISettlementsTypesRepository
             Sql.GetById,
             parameters =>
             {
-                parameters.AddWithValue("@table", "settlementstypes");
+                //parameters.AddWithValue("@table", "settlementstypes");
                 parameters.AddWithValue("@id", id);
             },
             reader => reader.ToSettlementsTypesDb()
         );
-
-        return settlementsTypeDb?.ToSettlementsTypes();
+        var res = settlementsTypeDb?.ToSettlementsTypes();
+        Console.WriteLine($"RESULT: {res}");
+        return res;
     }
 
     public async Task<SettlementsTypes?> GetSettlementsType(String name)
