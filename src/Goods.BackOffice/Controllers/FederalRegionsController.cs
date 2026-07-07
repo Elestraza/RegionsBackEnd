@@ -29,7 +29,7 @@ public class FederalRegionsController(IFederalRegionsService federalRegionsServi
 		return federalRegionsService.GetFederalRegion(id);
 	}
 
-	[HttpGet("federal-regions/remove")]
+	[HttpPost("federal-regions/remove")]
 	public Task<Result> RemoveProduct([FromQuery] Guid id)
 	{
 		return federalRegionsService.RemoveFederalRegion(id);

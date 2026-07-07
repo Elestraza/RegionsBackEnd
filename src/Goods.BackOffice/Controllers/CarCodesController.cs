@@ -29,7 +29,7 @@ public class CarCodesController(ICarCodesService carCodesService) : BaseControll
 		return carCodesService.GetCarCode(id);
 	}
 
-	[HttpGet("car-codes/remove")]
+	[HttpPost("car-codes/remove")]
 	public Task<Result> RemoveProduct([FromQuery] Guid id)
 	{
 		return carCodesService.RemoveCarCode(id);

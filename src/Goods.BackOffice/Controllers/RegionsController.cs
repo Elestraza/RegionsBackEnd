@@ -29,7 +29,7 @@ public class RegionsController(IRegionsService regionsService) : BaseController
 		return regionsService.GetRegion(id);
 	}
 
-	[HttpGet("regions/remove")]
+	[HttpPost("regions/remove")]
 	public Task<Result> RemoveProduct([FromQuery] Guid id)
 	{
 		return regionsService.RemoveRegion(id);

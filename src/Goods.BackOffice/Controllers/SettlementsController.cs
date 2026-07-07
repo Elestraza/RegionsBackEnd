@@ -4,7 +4,7 @@ using Goods.Domain.Services;
 using Goods.Tools.Types.Results;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Goods.BackOffice.Controllers.Products;
+namespace Goods.BackOffice.Controllers;
 
 public class SettlementsController(ISettlementsService settlementsService) : BaseController
 {
@@ -29,7 +29,7 @@ public class SettlementsController(ISettlementsService settlementsService) : Bas
 		return settlementsService.GetSettlement(id);
 	}
 
-	[HttpGet("settlements/remove")]
+	[HttpPost("settlements/remove")]
 	public Task<Result> RemoveProduct([FromQuery] Guid id)
 	{
 		return settlementsService.RemoveSettlement(id);
