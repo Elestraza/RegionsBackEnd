@@ -10,7 +10,7 @@ export class CarCodesProvider {
 	];
 
 	public static async saveCarCode(blank: CarCodesBlank): Promise<Result> {
-		const response = await fetch('/products/save', {
+		const response = await fetch('/car-codes/save', {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify(blank)
@@ -21,7 +21,7 @@ export class CarCodesProvider {
 	}
 
 	public static async getCarCodesPage(page: number, count: number): Promise<Page<CarCodes>> {
-		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+		const response = await fetch(`/car-codes/get-page?page=${page}&count=${count}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -31,7 +31,7 @@ export class CarCodesProvider {
 	}
 
 	public static async getProductById(id: string): Promise<CarCodes | null> {
-		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+		const response = await fetch(`/car-codes/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -41,7 +41,7 @@ export class CarCodesProvider {
 	}
 
 	public static async removeCarCodes(id: string): Promise<Result> {
-		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+		const response = await fetch(`/car-codes/remove?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});

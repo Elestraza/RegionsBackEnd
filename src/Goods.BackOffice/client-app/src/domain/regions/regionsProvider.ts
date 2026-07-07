@@ -10,7 +10,7 @@ export class RegionsProvider {
 	];
 
 	public static async saveRegion(blank: RegionsBlank): Promise<Result> {
-		const response = await fetch('/products/save', {
+		const response = await fetch('/regions/save', {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify(blank)
@@ -21,7 +21,7 @@ export class RegionsProvider {
 	}
 
 	public static async getRegionsPage(page: number, count: number): Promise<Page<Regions>> {
-		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+		const response = await fetch(`/regions/get-page?page=${page}&count=${count}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -31,7 +31,7 @@ export class RegionsProvider {
 	}
 
 	public static async getRegionById(id: string): Promise<Regions | null> {
-		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+		const response = await fetch(`/regions/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -41,7 +41,7 @@ export class RegionsProvider {
 	}
 
 	public static async removeRegion(id: string): Promise<Result> {
-		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+		const response = await fetch(`/regions/remove?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});

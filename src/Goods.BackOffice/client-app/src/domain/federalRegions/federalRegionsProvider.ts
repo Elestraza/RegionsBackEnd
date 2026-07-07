@@ -10,7 +10,7 @@ export class FederalRegionsProvider {
 	];
 
 	public static async saveFederalRegion(blank: FederalRegionsBlank): Promise<Result> {
-		const response = await fetch('/products/save', {
+		const response = await fetch('/federal-regions/save', {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify(blank)
@@ -21,7 +21,7 @@ export class FederalRegionsProvider {
 	}
 
 	public static async getFederalRegionsPage(page: number, count: number): Promise<Page<FederalRegions>> {
-		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+		const response = await fetch(`/federal-regions/get-page?page=${page}&count=${count}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -31,7 +31,7 @@ export class FederalRegionsProvider {
 	}
 
 	public static async getProductById(id: string): Promise<FederalRegions | null> {
-		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+		const response = await fetch(`/federal-regions/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -41,7 +41,7 @@ export class FederalRegionsProvider {
 	}
 
 	public static async removeFederalRegion(id: string): Promise<Result> {
-		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+		const response = await fetch(`/federal-regions/remove?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});

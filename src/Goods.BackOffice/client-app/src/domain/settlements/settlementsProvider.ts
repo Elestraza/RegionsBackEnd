@@ -10,7 +10,7 @@ export class SettlementsProvider {
 	];
 
 	public static async saveSettlements(productBlank: SettlementsBlank): Promise<Result> {
-		const response = await fetch('/products/save', {
+		const response = await fetch('/settlements/save', {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify(productBlank)
@@ -21,7 +21,7 @@ export class SettlementsProvider {
 	}
 
 	public static async getSettlementsPage(page: number, count: number): Promise<Page<Settlements>> {
-		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+		const response = await fetch(`/settlements/get-page?page=${page}&count=${count}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -31,7 +31,7 @@ export class SettlementsProvider {
 	}
 
 	public static async getSettlementById(id: string): Promise<Settlements | null> {
-		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+		const response = await fetch(`/settlements/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -41,7 +41,7 @@ export class SettlementsProvider {
 	}
 
 	public static async removeSettlement(id: string): Promise<Result> {
-		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+		const response = await fetch(`/settlements/remove?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});

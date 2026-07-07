@@ -10,7 +10,7 @@ export class SettlementsTypesProvider {
 	];
 
 	public static async saveSettlementsType(blank: SettlementsTypesBlank): Promise<Result> {
-		const response = await fetch('/products/save', {
+		const response = await fetch('/settlements-types/save', {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify(blank)
@@ -21,7 +21,7 @@ export class SettlementsTypesProvider {
 	}
 
 	public static async getSettlementsTypesPage(page: number, count: number): Promise<Page<SettlementsTypes>> {
-		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+		const response = await fetch(`/settlements-types/get-page?page=${page}&count=${count}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -31,7 +31,7 @@ export class SettlementsTypesProvider {
 	}
 
 	public static async getSettlementsTypeById(id: string): Promise<SettlementsTypes | null> {
-		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+		const response = await fetch(`/settlements-types/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
@@ -41,7 +41,7 @@ export class SettlementsTypesProvider {
 	}
 
 	public static async removeSettlementsType(id: string): Promise<Result> {
-		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+		const response = await fetch(`/settlements-types/remove?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
 		});
