@@ -1,13 +1,10 @@
 import { Page } from '../../tools/types/page';
-import { ProductCategory } from './productCategory';
 
 export class Regions {
 	constructor(
 		public readonly id: string,
-		public readonly category: ProductCategory,
 		public readonly name: string,
-		public readonly description: string,
-		public readonly price: number
+		public readonly federalregion: string
 	) { }
 }
 
@@ -20,5 +17,5 @@ export function mapToProducts(data: any[]): Regions[] {
 }
 
 export function mapToRegion(data: any): Regions {
-	return new Regions(data.id, data.category, data.name, data.description, data.price);
+	return new Regions(data.id, data.name, data.federalregion);
 }

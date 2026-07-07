@@ -1,13 +1,26 @@
 import { Page } from '../../tools/types/page';
-import { ProductCategory } from './productCategory';
+
+/*
+	id uuid primary key not null,
+	settlementtype uuid NOT NULL,
+	name varchar NOT NULL,
+	population int NOT NULL,
+	region uuid NOT NULL,
+	foundationyear varchar(4) NOT NULL,
+	ishero bool NOT NULL,
+	averagehotelcost int NOT NULL,
+*/
 
 export class Settlements {
 	constructor(
 		public readonly id: string,
-		public readonly category: ProductCategory,
+		public readonly settlementtype: string,
 		public readonly name: string,
-		public readonly description: string,
-		public readonly price: number
+		public readonly population: number,
+		public readonly region: string,
+		public readonly foundationdate: string,
+		public readonly ishero: boolean,
+		public readonly averagehotelcost: number
 	) { }
 }
 
@@ -20,5 +33,5 @@ export function mapToSettlements(data: any[]): Settlements[] {
 }
 
 export function mapToSettlement(data: any): Settlements {
-	return new Settlements(data.id, data.category, data.name, data.description, data.price);
+	return new Settlements(data.id, data.settlementtype, data.name, data.population, data.region, data.foundationdate, data.ishero, data.averagehotelcost);
 }

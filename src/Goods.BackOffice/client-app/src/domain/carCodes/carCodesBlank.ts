@@ -1,28 +1,23 @@
-import { CarCodes } from './CarCodes';
-import { ProductCategory } from './productCategory';
+import { CarCodes } from './carCodes';
 
 export class CarCodesBlank {
 	constructor(
 		public id: string | null,
-		public category: ProductCategory | null,
-		public name: string | null,
-		public description: string | null,
-		public price: number | null
+		public code: number | null,
+		public region: string | null
 	) { }
 }
 
 export namespace CarCodesBlank {
 	export function getEmpty(): CarCodesBlank {
-		return new CarCodesBlank(null, null, null, null, null);
+		return new CarCodesBlank(null, null, null);
 	}
 
-	export function getFromProduct(carCode: CarCodes): CarCodesBlank {
+	export function getFromCarCode(carCode: CarCodes): CarCodesBlank {
 		return {
 			id: carCode.id,
-			category: carCode.category,
-			name: carCode.name,
-			description: carCode.description,
-			price: carCode.price
+			code: carCode.code,
+			region: carCode.region
 		};
 	}
 }
