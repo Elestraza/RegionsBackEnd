@@ -30,7 +30,7 @@ export class CarCodesProvider {
 		return mapToCarCodesPage(json);
 	}
 
-	public static async getProductById(id: string): Promise<CarCodes | null> {
+	public static async getCarCodeById(id: string): Promise<CarCodes | null> {
 		const response = await fetch(`/car-codes/get-by-id?id=${id}`, {
 			method: 'GET',
 			headers: this.headers
