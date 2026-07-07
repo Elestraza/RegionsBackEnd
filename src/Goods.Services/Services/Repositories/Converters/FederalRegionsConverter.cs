@@ -18,7 +18,7 @@ internal static class FederalRegionsConverter
     {
         return new FederalRegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("name"))
+            reader.GetString(reader.GetOrdinal("Name"))
         );
     }
 

@@ -27,7 +27,7 @@ public class CarCodesRepository : ICarCodesRepository
     public async Task<CarCodes?> GetCarCode(Guid id)
     {
         CarCodesDb? carCodesDb = await DatabaseUtils.GetAsync<CarCodesDb?>(
-            Sql.GetById,
+            CarCodesSql.GetById,
             parameters =>
             {
                 parameters.AddWithValue("@id", id);
@@ -41,7 +41,7 @@ public class CarCodesRepository : ICarCodesRepository
     public async Task<CarCodes?> GetCarCode(String name)
     {
         CarCodesDb? carCodesDb = await DatabaseUtils.GetAsync<CarCodesDb?>(
-            Sql.GetByName,
+            CarCodesSql.GetByName,
             parameters =>
             {
                 parameters.AddWithValue("@name", name);
@@ -57,7 +57,7 @@ public class CarCodesRepository : ICarCodesRepository
         (Int32 offset, Int32 limit) = NormalizeRange(page, count);
 
         Page<CarCodesDb> pageDb = await DatabaseUtils.GetPageAsync(
-            Sql.GetPage,
+            CarCodesSql.GetPage,
             parameters =>
             {
                 parameters.AddWithValue("@offset", offset);
@@ -72,7 +72,7 @@ public class CarCodesRepository : ICarCodesRepository
     public Task RemoveCarCode(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
-            Sql.Remove,
+            CarCodesSql.Remove,
             parameters =>
             {
                 parameters.AddWithValue("@id", id);

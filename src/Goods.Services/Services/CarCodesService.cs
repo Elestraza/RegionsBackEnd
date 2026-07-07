@@ -106,7 +106,7 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
             CarCodes carCodes = await GetCarCode(Id);
         } catch
         {
-                return Result.Fail("Автомобильный код уже удален");
+            return Result.Fail("Автомобильный код уже удален");
         }
         await repository.RemoveCarCode(Id);
 

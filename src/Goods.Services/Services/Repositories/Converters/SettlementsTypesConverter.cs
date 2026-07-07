@@ -18,7 +18,7 @@ internal static class SettlementsTypesConverter
     {
         return new SettlementsTypesDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("types"))
+            reader.GetString(reader.GetOrdinal("Settlementtype"))
         );
     }
 

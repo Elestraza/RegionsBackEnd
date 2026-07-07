@@ -21,25 +21,25 @@ import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { ProductEditorModal } from './modals/productEditorModal';
 
-type ProductEditorModalState = {
-	productId: string | null;
+type carCodeEditorModalState = {
+	carCodeId: string | null;
 	isOpen: boolean;
 };
 
-interface RemoveProductConfirmModalState extends ConfirmModalState {
-	productId: string | null;
+interface RemoveCarCodeConfirmModalState extends ConfirmModalState {
+	carCodeId: string | null;
 }
 
 export function CarCodesPage() {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
 
-	const [productEditorModalState, setProductEditorModalState] = useState<ProductEditorModalState>({
-		productId: null,
+	const [productEditorModalState, setProductEditorModalState] = useState<carCodeEditorModalState>({
+		carCodeId: null,
 		isOpen: false
 	});
 	const [removeProductConfirmModalState, setRemoveProductConfirmModalState] =
-		useState<RemoveProductConfirmModalState>({ productId: null, ...ConfirmModalState.getClosed() });
+		useState<RemoveCarCodeConfirmModalState>({ carCodeId: null, ...ConfirmModalState.getClosed() });
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -59,18 +59,18 @@ export function CarCodesPage() {
 		}));
 	}
 
-	function openProductEditorModal(productId?: string) {
-		setProductEditorModalState({ productId: productId ?? null, isOpen: true });
+	function openProductEditorModal(carCodeId?: string) {
+		setProductEditorModalState({ carCodeId: carCodeId ?? null, isOpen: true });
 	}
 
 	function closeProductEditorModal(isEdited: boolean) {
 		if (isEdited) loadProductsPage({ ...pagination, page: 1 });
-		setProductEditorModalState({ productId: null, isOpen: false });
+		setProductEditorModalState({ carCodeId: null, isOpen: false });
 	}
 
-	function openRemoveProductConfirmModal(productId: string, productName: string) {
+	function openRemoveProductConfirmModal(carCodeId: string, productName: string) {
 		setRemoveProductConfirmModalState({
-			productId,
+			carCodeId,
 			...ConfirmModalState.getOpen(`Вы действительно хотите удалить продукт "${productName}"`)
 		});
 	}
@@ -167,7 +167,7 @@ export function CarCodesPage() {
 
 			<ProductEditorModal
 				isOpen={productEditorModalState.isOpen}
-				productId={productEditorModalState.productId}
+				productId={productEditorModalState.carCodeId}
 				onClose={closeProductEditorModal}
 			/>
 

@@ -4,15 +4,14 @@ internal static class Sql
 {
     internal static String GetById =>
         """
-            SELECT * FROM settlementstypes
+            SELECT * FROM @table
             WHERE id = @id;
         """;
 
     internal static String GetByName =>
         """
             SELECT * FROM @table 
-            WHERE name = @name
-            AND NOT isremoved;
+            WHERE name = @name;
         """;
 
     internal static String GetPage =>
@@ -21,8 +20,6 @@ internal static class Sql
                 COUNT(*) OVER() as count, 
                 *
             FROM @table
-            WHERE NOT isremoved 
-            ORDER BY createddatetimeutc DESC 
             OFFSET @offset 
             LIMIT @limit
         """;
