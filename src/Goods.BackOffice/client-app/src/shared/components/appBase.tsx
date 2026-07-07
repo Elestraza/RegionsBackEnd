@@ -1,6 +1,6 @@
 //#region Globals
 
-import 'tools/globals/string';
+import '../../tools/globals/string';
 
 //#endregion
 

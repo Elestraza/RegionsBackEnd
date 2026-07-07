@@ -10,8 +10,6 @@ import {
 	Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Product } from '../../domain/products/product';
-import { ProductCategory } from '../../domain/products/productCategory';
 import { ProductsProvider } from '../../domain/products/productsProvider';
 import { Button } from '../../shared/components/buttons/button';
 import { ConfirmModal } from '../../shared/components/modals/confirmModal';
@@ -20,7 +18,8 @@ import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { ProductEditorModal } from './modals/productEditorModal';
-
+import { FederalRegions } from '../../domain/federalRegions/federalRegions';
+import { FederalRegionsProvider } from '../../domain/federalRegions/federalRegionsProvider';
 type ProductEditorModalState = {
 	productId: string | null;
 	isOpen: boolean;
@@ -31,7 +30,7 @@ interface RemoveProductConfirmModalState extends ConfirmModalState {
 }
 
 export function FederalRegionsPage() {
-	const [products, setProducts] = useState<Product[]>([]);
+	const [products, setProducts] = useState<FederalRegions[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
 
 	const [productEditorModalState, setProductEditorModalState] = useState<ProductEditorModalState>({
@@ -48,7 +47,7 @@ export function FederalRegionsPage() {
 	}, []);
 
 	async function loadProductsPage(newPagination: Pagination) {
-		const productsPage = await ProductsProvider.getProductsPage(newPagination.page, newPagination.pageSize);
+		const productsPage = await FederalRegionsProvider.getFederalRegionsPage(newPagination.page, newPagination.pageSize);
 
 		setProducts(productsPage.values);
 		setPagination((pagination) => ({
@@ -105,7 +104,7 @@ export function FederalRegionsPage() {
 					paddingX: '12px',
 					paddingY: '6px'
 				}}>
-				<Typography variant='h6'>Продукты</Typography>
+				<Typography variant='h6'>Федеральные регионы</Typography>
 				<Button variant='add' title='Создать' onClick={() => openProductEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
@@ -113,10 +112,7 @@ export function FederalRegionsPage() {
 					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
-								<TableCell>Категория</TableCell>
 								<TableCell>Название</TableCell>
-								<TableCell>Описание</TableCell>
-								<TableCell>Цена</TableCell>
 								<TableCell>Управление</TableCell>
 							</TableRow>
 						</TableHead>
@@ -130,12 +126,7 @@ export function FederalRegionsPage() {
 							{
 								products.map(product => (
 									<TableRow key={`product__${product.id}`}>
-										<TableCell width='15%'>
-											{ProductCategory.getDisplayName(product.category)}
-										</TableCell>
 										<TableCell width='20%'>{product.name}</TableCell>
-										<TableCell width='40%'>{product.description ?? '—'}</TableCell>
-										<TableCell width='15%'>{product.price}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'

@@ -106,7 +106,7 @@ export function RegionsPage() {
 					paddingX: '12px',
 					paddingY: '6px'
 				}}>
-				<Typography variant='h6'>Продукты</Typography>
+				<Typography variant='h6'>Регионы</Typography>
 				<Button variant='add' title='Создать' onClick={() => openRegionsEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
@@ -114,10 +114,7 @@ export function RegionsPage() {
 					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
-								<TableCell>Категория</TableCell>
 								<TableCell>Название</TableCell>
-								<TableCell>Описание</TableCell>
-								<TableCell>Цена</TableCell>
 								<TableCell>Управление</TableCell>
 							</TableRow>
 						</TableHead>

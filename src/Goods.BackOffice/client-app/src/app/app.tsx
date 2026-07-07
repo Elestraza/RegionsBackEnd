@@ -5,6 +5,7 @@ import { Layout } from '../shared/components/layout';
 import { InfrastructureRouter } from './infrastructure/infrastructureRouter';
 import { Router } from './router'
 
+
 export function App() {
 	return (
 		<AppBase>
