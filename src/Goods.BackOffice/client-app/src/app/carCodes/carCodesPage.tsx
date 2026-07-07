@@ -10,8 +10,6 @@ import {
 	Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Product } from '../../domain/products/product';
-import { ProductCategory } from '../../domain/products/productCategory';
 import { ProductsProvider } from '../../domain/products/productsProvider';
 import { Button } from '../../shared/components/buttons/button';
 import { ConfirmModal } from '../../shared/components/modals/confirmModal';
@@ -20,6 +18,8 @@ import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { ProductEditorModal } from './modals/productEditorModal';
+import { CarCodesProvider } from '../../domain/carCodes/carCodesProvider';
+import { CarCodes } from '../../domain/carCodes/CarCodes';
 
 type carCodeEditorModalState = {
 	carCodeId: string | null;
@@ -31,64 +31,64 @@ interface RemoveCarCodeConfirmModalState extends ConfirmModalState {
 }
 
 export function CarCodesPage() {
-	const [products, setProducts] = useState<Product[]>([]);
+	const [carCodes, setCarCodes] = useState<CarCodes[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
 
-	const [productEditorModalState, setProductEditorModalState] = useState<carCodeEditorModalState>({
+	const [carCodesEditorModalState, setCarCodesEditorModalState] = useState<carCodeEditorModalState>({
 		carCodeId: null,
 		isOpen: false
 	});
-	const [removeProductConfirmModalState, setRemoveProductConfirmModalState] =
+	const [removeCarCodeConfirmModalState, setRemoveCarCodeConfirmModalState] =
 		useState<RemoveCarCodeConfirmModalState>({ carCodeId: null, ...ConfirmModalState.getClosed() });
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
-		loadProductsPage({ ...pagination });
+		loadCarCodesPage({ ...pagination });
 	}, []);
 
-	async function loadProductsPage(newPagination: Pagination) {
-		const productsPage = await ProductsProvider.getProductsPage(newPagination.page, newPagination.pageSize);
+	async function loadCarCodesPage(newPagination: Pagination) {
+		const carCodesPage = await CarCodesProvider.getCarCodesPage(newPagination.page, newPagination.pageSize);
 
-		setProducts(productsPage.values);
+		setCarCodes(carCodesPage.values);
 		setPagination((pagination) => ({
 			...pagination,
 			page: newPagination.page,
 			pageSize: newPagination.pageSize,
-			totalRows: productsPage.totalRows
+			totalRows: carCodesPage.totalRows
 		}));
 	}
 
-	function openProductEditorModal(carCodeId?: string) {
-		setProductEditorModalState({ carCodeId: carCodeId ?? null, isOpen: true });
+	function openCarCodesEditorModal(carCodeId?: string) {
+		setCarCodesEditorModalState({ carCodeId: carCodeId ?? null, isOpen: true });
 	}
 
-	function closeProductEditorModal(isEdited: boolean) {
-		if (isEdited) loadProductsPage({ ...pagination, page: 1 });
-		setProductEditorModalState({ carCodeId: null, isOpen: false });
+	function closeCarCodesEditorModal(isEdited: boolean) {
+		if (isEdited) loadCarCodesPage({ ...pagination, page: 1 });
+		setCarCodesEditorModalState({ carCodeId: null, isOpen: false });
 	}
 
-	function openRemoveProductConfirmModal(carCodeId: string, productName: string) {
-		setRemoveProductConfirmModalState({
+	function openRemoveCarCodesConfirmModal(carCodeId: string, code: number) {
+		setRemoveCarCodeConfirmModalState({
 			carCodeId,
-			...ConfirmModalState.getOpen(`Вы действительно хотите удалить продукт "${productName}"`)
+			...ConfirmModalState.getOpen(`Вы действительно хотите удалить автомобильный код "${code}"`)
 		});
 	}
 
-	async function closeRemoveProductConfirmModal(isConfirmed: boolean) {
+	async function closeRemoveCarCodesConfirmModal(isConfirmed: boolean) {
 		if (isConfirmed) {
-			if (removeProductConfirmModalState.productId == null) throw 'Cannot remove product with ProductId = null';
+			if (removeCarCodeConfirmModalState.carCodeId == null) throw 'Cannot remove CarCode with ID = null';
 
-			const result = await ProductsProvider.removeProduct(removeProductConfirmModalState.productId);
+			const result = await ProductsProvider.removeProduct(removeCarCodeConfirmModalState.carCodeId);
 			if (!result.isSuccess) {
 				setErrorMessage(result.errors.map((error) => error.message).join('. '));
 				return;
 			}
 
-			loadProductsPage({ ...pagination, page: 1 });
+			loadCarCodesPage({ ...pagination, page: 1 });
 		}
 
-		setRemoveProductConfirmModalState({ productId: null, ...ConfirmModalState.getClosed() });
+		setRemoveCarCodeConfirmModalState({ carCodeId: null, ...ConfirmModalState.getClosed() });
 	}
 
 	return (
@@ -106,47 +106,40 @@ export function CarCodesPage() {
 					paddingY: '6px'
 				}}>
 				<Typography variant='h6'>Продукты</Typography>
-				<Button variant='add' title='Создать' onClick={() => openProductEditorModal()} />
+				<Button variant='add' title='Создать' onClick={() => openCarCodesEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
 				<TableContainer sx={{ height: 'inherit' }}>
 					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
-								<TableCell>Категория</TableCell>
-								<TableCell>Название</TableCell>
-								<TableCell>Описание</TableCell>
-								<TableCell>Цена</TableCell>
-								<TableCell>Управление</TableCell>
+								<TableCell>Код</TableCell>
+								<TableCell>Регион</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{
-								products.length === 0 &&
+								carCodes.length === 0 &&
 								<TableRow>
 									<TableCell colSpan={5}>Пусто</TableCell>
 								</TableRow>
 							}
 							{
-								products.map(product => (
-									<TableRow key={`product__${product.id}`}>
-										<TableCell width='15%'>
-											{ProductCategory.getDisplayName(product.category)}
-										</TableCell>
-										<TableCell width='20%'>{product.name}</TableCell>
-										<TableCell width='40%'>{product.description ?? '—'}</TableCell>
-										<TableCell width='15%'>{product.price}</TableCell>
+								carCodes.map(carCode => (
+									<TableRow key={`product__${carCode.id}`}>
+										<TableCell width='20%'>{carCode.code}</TableCell>
+										<TableCell width='40%'>{carCode.region}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'
 												variant='edit'
 												size='small'
-												onClick={() => openProductEditorModal(product.id)} />
+												onClick={() => openCarCodesEditorModal(carCode.id)} />
 											<Button
 												type='icon'
 												variant='remove'
 												size='small'
-												onClick={() => openRemoveProductConfirmModal(product.id, product.name)} />
+												onClick={() => openRemoveCarCodesConfirmModal(carCode.id, carCode.code)} />
 										</TableCell>
 									</TableRow>
 								))
@@ -160,21 +153,21 @@ export function CarCodesPage() {
 					page={pagination.page}
 					countInPage={pagination.pageSize}
 					totalRows={pagination.totalRows}
-					changePage={page => loadProductsPage({ ...pagination, page })}
-					changeCountInPage={pageSize => loadProductsPage({ ...pagination, pageSize })}
+					changePage={page => loadCarCodesPage({ ...pagination, page })}
+					changeCountInPage={pageSize => loadCarCodesPage({ ...pagination, pageSize })}
 				/>
 			</Paper>
 
 			<ProductEditorModal
-				isOpen={productEditorModalState.isOpen}
-				productId={productEditorModalState.carCodeId}
-				onClose={closeProductEditorModal}
+				isOpen={carCodesEditorModalState.isOpen}
+				productId={carCodesEditorModalState.carCodeId}
+				onClose={closeCarCodesEditorModal}
 			/>
 
 			<ConfirmModal
-				title={removeProductConfirmModalState.title}
-				onClose={(isConfirmed) => closeRemoveProductConfirmModal(isConfirmed)}
-				isOpen={removeProductConfirmModalState.isOpen}
+				title={removeCarCodeConfirmModalState.title}
+				onClose={(isConfirmed) => closeRemoveCarCodesConfirmModal(isConfirmed)}
+				isOpen={removeCarCodeConfirmModalState.isOpen}
 			/>
 
 			{
