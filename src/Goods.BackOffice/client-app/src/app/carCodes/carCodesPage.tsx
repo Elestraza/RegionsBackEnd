@@ -19,7 +19,7 @@ import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { ProductEditorModal } from './modals/productEditorModal';
 import { CarCodesProvider } from '../../domain/carCodes/carCodesProvider';
-import { CarCodes } from '../../domain/carCodes/CarCodes';
+import { CarCodes } from '../../domain/carCodes/carCodes';
 
 type carCodeEditorModalState = {
 	carCodeId: string | null;

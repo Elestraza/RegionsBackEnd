@@ -12,7 +12,6 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { Regions } from '../../domain/regions/regions';
-import { ProductCategory } from '../../domain/products/productCategory';
 import { RegionsProvider } from '../../domain/regions/regionsProvider';
 
 import { Button } from '../../shared/components/buttons/button';
@@ -132,12 +131,8 @@ export function RegionsPage() {
 							{
 								regions.map(region => (
 									<TableRow key={`product__${region.id}`}>
-										<TableCell width='15%'>
-											{ProductCategory.getDisplayName(region.category)}
-										</TableCell>
+
 										<TableCell width='20%'>{region.name}</TableCell>
-										<TableCell width='40%'>{region.description ?? '—'}</TableCell>
-										<TableCell width='15%'>{region.price}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'
