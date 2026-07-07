@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppBase } from '../shared/components/appBase';
 import { Layout } from '../shared/components/layout';
 import { InfrastructureRouter } from './infrastructure/infrastructureRouter';
-import { ProductsRouter } from './products/productsRouter';
+import { Router } from './router'
 
 export function App() {
 	return (
@@ -12,7 +12,7 @@ export function App() {
 				<Routes>
 					<Route element={<Layout />}>
 						{InfrastructureRouter()}
-						{ProductsRouter()}
+						{Router()}
 					</Route>
 				</Routes>
 			</BrowserRouter>
