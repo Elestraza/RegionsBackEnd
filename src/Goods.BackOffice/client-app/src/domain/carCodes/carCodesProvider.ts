@@ -1,0 +1,52 @@
+import { Page } from '../../tools/types/page';
+import { mapToResult, Result } from '../../tools/types/results/result';
+import { mapToCarCode, mapToCarCodesPage, CarCodes } from './CarCodes';
+import { CarCodesBlank } from './carCodesBlank';
+
+export class CarCodesProvider {
+	private static readonly headers: HeadersInit = [
+		['X-Requested-With', 'XMLHttpRequest'],
+		['Content-Type', 'application/json']
+	];
+
+	public static async saveCarCode(blank: CarCodesBlank): Promise<Result> {
+		const response = await fetch('/products/save', {
+			method: 'POST',
+			headers: this.headers,
+			body: JSON.stringify(blank)
+		});
+		const json = await response.json();
+
+		return mapToResult(json);
+	}
+
+	public static async getCarCodesPage(page: number, count: number): Promise<Page<CarCodes>> {
+		const response = await fetch(`/products/get_page?page=${page}&count=${count}`, {
+			method: 'GET',
+			headers: this.headers
+		});
+		const json = await response.json();
+
+		return mapToCarCodesPage(json);
+	}
+
+	public static async getProductById(id: string): Promise<CarCodes | null> {
+		const response = await fetch(`/products/get_by_id?productId=${id}`, {
+			method: 'GET',
+			headers: this.headers
+		});
+		const json = await response.json();
+
+		return mapToCarCode(json);
+	}
+
+	public static async removeCarCodes(id: string): Promise<Result> {
+		const response = await fetch(`/products/mark_product_as_removed?productId=${id}`, {
+			method: 'GET',
+			headers: this.headers
+		});
+		const json = await response.json();
+
+		return mapToResult(json);
+	}
+}
