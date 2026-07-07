@@ -4,7 +4,7 @@ using Goods.Domain.Services;
 using Goods.Tools.Types.Results;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Goods.BackOffice.Controllers.Products;
+namespace Goods.BackOffice.Controllers;
 
 public class FederalRegionsController(IFederalRegionsService federalRegionsService) : BaseController
 {
