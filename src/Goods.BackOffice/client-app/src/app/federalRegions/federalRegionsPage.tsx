@@ -30,7 +30,7 @@ interface RemoveProductConfirmModalState extends ConfirmModalState {
 	productId: string | null;
 }
 
-export function SettlementsTypesPage() {
+export function FederalRegionsPage() {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
 

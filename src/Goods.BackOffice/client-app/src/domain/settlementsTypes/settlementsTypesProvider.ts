@@ -42,7 +42,7 @@ export class SettlementsTypesProvider {
 
 	public static async removeSettlementsType(id: string): Promise<Result> {
 		const response = await fetch(`/settlements-types/remove?id=${id}`, {
-			method: 'GET',
+			method: 'POST',
 			headers: this.headers
 		});
 		const json = await response.json();
