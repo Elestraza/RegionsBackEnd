@@ -19,16 +19,16 @@ internal static class CarCodesConverter
     {
         FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
+            reader.GetString(reader.GetOrdinal("name"))
         );
         RegionsDb regions = new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name")),
+            reader.GetString(reader.GetOrdinal("name")),
             federalRegionsDb
         );
         return new CarCodesDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetInt32(reader.GetOrdinal("Code")),
+            reader.GetInt32(reader.GetOrdinal("code")),
             regions
         );
     }

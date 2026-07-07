@@ -26,9 +26,11 @@ public class FederalRegionsRepository : IFederalRegionsRepository
     public async Task<FederalRegions?> GetFederalRegion(Guid id)
     {
         FederalRegionsDb? federalRegionsDb = await DatabaseUtils.GetAsync<FederalRegionsDb?>(
-            FederalRegionsSql.GetById,
+            Sql.GetById,
             parameters =>
             {
+
+                parameters.AddWithValue("@table", "federalregions");
                 parameters.AddWithValue("@id", id);
             },
             reader => reader.ToFederalRegionsDb()
@@ -40,9 +42,10 @@ public class FederalRegionsRepository : IFederalRegionsRepository
     public async Task<FederalRegions?> GetFederalRegion(String name)
     {
         FederalRegionsDb? federalRegionsDb = await DatabaseUtils.GetAsync<FederalRegionsDb?>(
-            FederalRegionsSql.GetByName,
+            Sql.GetByName,
             parameters =>
             {
+                parameters.AddWithValue("@table", "federalregions");
                 parameters.AddWithValue("@name", name);
             },
             reader => reader.ToFederalRegionsDb()
@@ -56,9 +59,10 @@ public class FederalRegionsRepository : IFederalRegionsRepository
         (Int32 offset, Int32 limit) = NormalizeRange(page, count);
 
         Page<FederalRegionsDb> pageDb = await DatabaseUtils.GetPageAsync(
-            FederalRegionsSql.GetPage,
+            Sql.GetPage,
             parameters =>
             {
+                parameters.AddWithValue("@table", "federalregions");
                 parameters.AddWithValue("@offset", offset);
                 parameters.AddWithValue("@limit", limit);
             },
@@ -71,9 +75,10 @@ public class FederalRegionsRepository : IFederalRegionsRepository
     public Task RemoveFederalRegion(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
-            FederalRegionsSql.Remove,
+            Sql.Remove,
             parameters =>
             {
+                parameters.AddWithValue("@table", "federalregions");
                 parameters.AddWithValue("@id", id);
             }
         );

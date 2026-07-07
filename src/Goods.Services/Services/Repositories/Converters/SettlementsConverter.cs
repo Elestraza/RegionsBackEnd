@@ -24,26 +24,26 @@ internal static class SettlementsConverter
     {
         SettlementsTypesDb settlementsTypes = new SettlementsTypesDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Settlementtype"))
+            reader.GetString(reader.GetOrdinal("type"))
         );
         FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
+            reader.GetString(reader.GetOrdinal("name"))
         );
         RegionsDb region = new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name")),
+            reader.GetString(reader.GetOrdinal("name")),
             federalRegionsDb
         );
         return new SettlementsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
             settlementsTypes,
-            reader.GetString(reader.GetOrdinal("Name")),
-            reader.GetInt32(reader.GetOrdinal("Population")),
+            reader.GetString(reader.GetOrdinal("name")),
+            reader.GetInt32(reader.GetOrdinal("population")),
             region,
-            reader.GetString(reader.GetOrdinal("FoundationYear")),
-            reader.GetBoolean(reader.GetOrdinal("IsHero")),
-            reader.GetInt32(reader.GetOrdinal("AverageHotelCost"))
+            reader.GetString(reader.GetOrdinal("foundationyear")),
+            reader.GetBoolean(reader.GetOrdinal("ishero")),
+            reader.GetInt32(reader.GetOrdinal("averagehotelcost"))
         );
     }
 

@@ -19,11 +19,11 @@ internal static class RegionsConverter
     {
         FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
+            reader.GetString(reader.GetOrdinal("name"))
         );
         return new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name")),
+            reader.GetString(reader.GetOrdinal("name")),
             federalRegionsDb
         );
     }

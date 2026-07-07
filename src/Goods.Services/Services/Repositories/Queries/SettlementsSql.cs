@@ -4,59 +4,19 @@ internal static class SettlementsSql
 {
     internal static String Settlements_Save =>
         """
-            INSERT INTO settlements (
-                id,
-                settlementtype,
-                name,
-                population,
-                region,
-                foundationyear,
-                ishero,
-                averagehotelcost
+            INSERT INTO regions (
+                id
+                name
+                federalregion
             )
             VALUES (
                 @id,
-                @settlementtype,
                 @name,
-                @population,
-                @region,
-                @foundationyear,
-                @ishero,
-                @averagehotelcost
+                @federalregion
             )
         	ON CONFLICT (id) DO UPDATE SET
-                settlementtype = @settlementtype,
-                name = @name,
-                population = @population,
-                region = @region,
-                foundationyear = @foundationyear,
-                ishero = @ishero,
-                averagehotelcost = @averagehotelcost
-        """;
-    internal static String GetById =>
-        """
-            SELECT * FROM settlements
-            WHERE id = @id;
+        	    federalregion = @federalregion,
+        	    name = @name
         """;
 
-    internal static String GetByName =>
-        """
-            SELECT * FROM settlements
-            WHERE name = @name;
-        """;
-
-    internal static String GetPage =>
-        """
-            SELECT 
-                COUNT(*) OVER() as count, 
-                *
-            FROM settlements
-            OFFSET @offset 
-            LIMIT @limit
-        """;
-
-    internal static String Remove =>
-        """
-        	DELETE ON CASCADE FROM settlements WHERE id = @id
-        """;
 }

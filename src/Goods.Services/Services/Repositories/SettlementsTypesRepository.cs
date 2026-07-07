@@ -27,23 +27,26 @@ public class SettlementsTypesRepository : ISettlementsTypesRepository
     public async Task<SettlementsTypes?> GetSettlementsType(Guid id)
     {
         SettlementsTypesDb? settlementsTypeDb = await DatabaseUtils.GetAsync<SettlementsTypesDb?>(
-            SettlementsTypesSql.GetById,
+            Sql.GetById,
             parameters =>
             {
+                //parameters.AddWithValue("@table", "settlementstypes");
                 parameters.AddWithValue("@id", id);
             },
             reader => reader.ToSettlementsTypesDb()
         );
-
-        return settlementsTypeDb?.ToSettlementsTypes();
+        var res = settlementsTypeDb?.ToSettlementsTypes();
+        Console.WriteLine($"RESULT: {res}");
+        return res;
     }
 
     public async Task<SettlementsTypes?> GetSettlementsType(String name)
     {
         SettlementsTypesDb? settlementsTypeDb = await DatabaseUtils.GetAsync<SettlementsTypesDb?>(
-            SettlementsTypesSql.GetByName,
+            Sql.GetByName,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlementstypes");
                 parameters.AddWithValue("@settlementstype", name);
             },
             reader => reader.ToSettlementsTypesDb()
@@ -57,9 +60,10 @@ public class SettlementsTypesRepository : ISettlementsTypesRepository
         (Int32 offset, Int32 limit) = NormalizeRange(page, count);
 
         Page<SettlementsTypesDb> pageDb = await DatabaseUtils.GetPageAsync(
-            SettlementsTypesSql.GetPage,
+            Sql.GetPage,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlementstypes");
                 parameters.AddWithValue("@offset", offset);
                 parameters.AddWithValue("@limit", limit);
             },
@@ -72,9 +76,10 @@ public class SettlementsTypesRepository : ISettlementsTypesRepository
     public Task RemoveSettlementsType(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
-            SettlementsTypesSql.Remove,
+            Sql.Remove,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlementstypes");
                 parameters.AddWithValue("@id", id);
             }
         );

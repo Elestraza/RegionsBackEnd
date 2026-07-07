@@ -31,9 +31,10 @@ public class SettlementsRepository : ISettlementsRepository
     public async Task<Settlements?> GetSettlement(Guid id)
     {
         SettlementsDb? settlementDb = await DatabaseUtils.GetAsync<SettlementsDb?>(
-            SettlementsSql.GetById,
+            Sql.GetById,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlements");
                 parameters.AddWithValue("@id", id);
             },
             reader => reader.ToSettlementsDb()
@@ -45,9 +46,10 @@ public class SettlementsRepository : ISettlementsRepository
     public async Task<Settlements?> GetSettlement(String name)
     {
         SettlementsDb? settlementDb = await DatabaseUtils.GetAsync<SettlementsDb?>(
-            SettlementsSql.GetByName,
+            Sql.GetByName,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlements");
                 parameters.AddWithValue("@name", name);
             },
             reader => reader.ToSettlementsDb()
@@ -61,9 +63,10 @@ public class SettlementsRepository : ISettlementsRepository
         (Int32 offset, Int32 limit) = NormalizeRange(page, count);
 
         Page<SettlementsDb> pageDb = await DatabaseUtils.GetPageAsync(
-            SettlementsSql.GetPage,
+            Sql.GetPage,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlements");
                 parameters.AddWithValue("@offset", offset);
                 parameters.AddWithValue("@limit", limit);
             },
@@ -76,9 +79,10 @@ public class SettlementsRepository : ISettlementsRepository
     public Task RemoveSettlement(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
-            SettlementsSql.Remove,
+            Sql.Remove,
             parameters =>
             {
+                parameters.AddWithValue("@table", "settlements");
                 parameters.AddWithValue("@id", id);
             }
         );

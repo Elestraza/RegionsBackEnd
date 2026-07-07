@@ -27,9 +27,10 @@ public class RegionsRepository : IRegionsRepository
     public async Task<Regions?> GetRegion(Guid id)
     {
         RegionsDb? regionsDb = await DatabaseUtils.GetAsync<RegionsDb?>(
-            RegionsSql.GetById,
+            Sql.GetById,
             parameters =>
             {
+                parameters.AddWithValue("@table", "regions");
                 parameters.AddWithValue("@id", id);
             },
             reader => reader.ToRegionsDb()
@@ -41,9 +42,10 @@ public class RegionsRepository : IRegionsRepository
     public async Task<Regions?> GetRegion(String name)
     {
         RegionsDb? regionsDb = await DatabaseUtils.GetAsync<RegionsDb?>(
-            RegionsSql.GetByName,
+            Sql.GetByName,
             parameters =>
             {
+                parameters.AddWithValue("@table", "regions");
                 parameters.AddWithValue("@name", name);
             },
             reader => reader.ToRegionsDb()
@@ -57,9 +59,10 @@ public class RegionsRepository : IRegionsRepository
         (Int32 offset, Int32 limit) = NormalizeRange(page, count);
 
         Page<RegionsDb> pageDb = await DatabaseUtils.GetPageAsync(
-            RegionsSql.GetPage,
+            Sql.GetPage,
             parameters =>
             {
+                parameters.AddWithValue("@table", "regions");
                 parameters.AddWithValue("@offset", offset);
                 parameters.AddWithValue("@limit", limit);
             },
@@ -72,9 +75,10 @@ public class RegionsRepository : IRegionsRepository
     public Task RemoveRegion(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
-            RegionsSql.Remove,
+            Sql.Remove,
             parameters =>
             {
+                parameters.AddWithValue("@table", "regions");
                 parameters.AddWithValue("@id", id);
             }
         );
