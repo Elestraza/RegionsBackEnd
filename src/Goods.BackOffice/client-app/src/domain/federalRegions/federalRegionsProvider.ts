@@ -1,6 +1,6 @@
 import { Page } from '../../tools/types/page';
 import { mapToResult, Result } from '../../tools/types/results/result';
-import { mapToFederalRegion, mapToFederalRegionsPage, FederalRegions } from './FederalRegions';
+import { mapToFederalRegion, mapToFederalRegionsPage, FederalRegions } from './federalRegions';
 import { FederalRegionsBlank } from './federalRegionsBlank';
 
 export class FederalRegionsProvider {

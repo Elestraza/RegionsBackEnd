@@ -1,6 +1,6 @@
 import { Page } from '../../tools/types/page';
 import { mapToResult, Result } from '../../tools/types/results/result';
-import { mapToCarCode, mapToCarCodesPage, CarCodes } from './CarCodes';
+import { mapToCarCode, mapToCarCodesPage, CarCodes } from './carCodes';
 import { CarCodesBlank } from './carCodesBlank';
 
 export class CarCodesProvider {
