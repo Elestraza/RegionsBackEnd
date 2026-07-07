@@ -9,6 +9,7 @@ import {
 	TableRow,
 	Typography
 } from '@mui/material';
+
 import React, { useEffect, useState } from 'react';
 import { ProductsProvider } from '../../domain/products/productsProvider';
 import { Button } from '../../shared/components/buttons/button';
