@@ -9,7 +9,7 @@ namespace Goods.BackOffice.Controllers;
 public class SettlementsTypesController(ISettlementsTypesService settlementsTypesService) : BaseController
 {
 	[HttpGet("/settlements-types")]
-    public IActionResult Index() => ReactApp();
+    public IActionResult SettlementsTypes() => ReactApp();
 
 	[HttpPost("settlements-types/save")]
 	public Task<Result> SaveProducts([FromBody] SettlementsTypesBlank blank)

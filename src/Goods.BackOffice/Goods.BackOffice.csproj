@@ -13,4 +13,7 @@
 		<ProjectReference Include="..\Goods.Services\Goods.Services.csproj" />
 		<ProjectReference Include="..\Goods.Tools\Goods.Tools.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="wwwroot\dist\" />
+	</ItemGroup>
 </Project>

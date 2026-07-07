@@ -9,7 +9,7 @@ namespace Goods.BackOffice.Controllers;
 public class FederalRegionsController(IFederalRegionsService federalRegionsService) : BaseController
 {
 	[HttpGet("/federal-regions")]
-    public IActionResult Index() => ReactApp();
+    public IActionResult FederalRegions() => ReactApp();
 
 	[HttpPost("federal-regions/save")]
 	public Task<Result> SaveProducts([FromBody] FederalRegionsBlank blank)

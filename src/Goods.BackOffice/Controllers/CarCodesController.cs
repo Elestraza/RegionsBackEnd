@@ -9,7 +9,7 @@ namespace Goods.BackOffice.Controllers;
 public class CarCodesController(ICarCodesService carCodesService) : BaseController
 {
 	[HttpGet("/car-codes")]
-    public IActionResult Index() => ReactApp();
+    public IActionResult CarCodes() => ReactApp();
 
 	[HttpPost("car-codes/save")]
 	public Task<Result> SaveProducts([FromBody] CarCodesBlank blank)
