@@ -1,4 +1,5 @@
 import { Page } from '../../tools/types/page';
+import { SettlementsTypes } from './settlementsTypes';
 
 /*
 	id uuid primary key not null,
@@ -14,7 +15,7 @@ import { Page } from '../../tools/types/page';
 export class Settlements {
 	constructor(
 		public readonly id: string,
-		public readonly settlementtype: string,
+		public readonly settlementtype: SettlementsTypes,
 		public readonly name: string,
 		public readonly population: number,
 		public readonly region: string,

@@ -1,10 +1,11 @@
 import { Page } from '../../tools/types/page';
+import { FederalRegions } from './federalRegions';
 
 export class Regions {
 	constructor(
 		public readonly id: string,
 		public readonly name: string,
-		public readonly federalregion: string
+		public readonly federalregion: FederalRegions
 	) { }
 }
 

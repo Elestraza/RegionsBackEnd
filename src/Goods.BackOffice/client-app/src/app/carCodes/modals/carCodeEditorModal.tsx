@@ -15,18 +15,17 @@ interface Props {
 	isOpen: boolean;
 }
 
-export function ProductEditorModal(props: Props) {
+export function CarCodeEditorModal(props: Props) {
 	const [blank, setCarCodesBlank] = useState<CarCodesBlank>(CarCodesBlank.getEmpty());
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	
-	// 1. Добавляем состояния для списка регионов и индикатора загрузки
 	const [regions, setRegions] = useState<Regions[]>([]);
 	const [isLoadingRegions, setIsLoadingRegions] = useState(false);
 
 	useEffect(() => {
 		if (!props.isOpen) return;
 
-		async function loadProductBlank() {
+		async function loadCarCodesBlank() {
 			let blank: CarCodesBlank | null = null;
 
 			if (props.carCodeId != null) {
@@ -39,17 +38,11 @@ export function ProductEditorModal(props: Props) {
 			setCarCodesBlank(blank ?? CarCodesBlank.getEmpty());
 		}
 
-		// 2. Функция загрузки регионов при открытии модалки
 		async function loadRegions() {
 			setIsLoadingRegions(true);
 			try {
-				// Запрашиваем первую страницу. 
-				// Если у вас пагинация с 0, замените 1 на 0.
 				const page = await RegionsProvider.getRegionsPage(1, 1000);
 				
-				// Примечание: в зависимости от вашей реализации класса Page, 
-				// массив может лежать в page.items, page.data или page.content.
-				// Здесь предполагается, что это page.items.
 				const regionsArray = (page as any).items || (page as any).data || [];
 				setRegions(regionsArray);
 			} catch (e) {
@@ -60,7 +53,7 @@ export function ProductEditorModal(props: Props) {
 			}
 		}
 
-		loadProductBlank();
+		loadCarCodesBlank();
 		loadRegions();
 
 		return () => {
@@ -103,15 +96,10 @@ export function ProductEditorModal(props: Props) {
 						title='Выберите регион'
 						options={regions} 
 						getOptionLabel={(option: Regions) => option.name}
-						isOptionEqualToValue={(option: Regions, value: Regions | null) => 
-							value != null ? option.id === value.id : false
-						}
+						isOptionEqualToValue={(option: Regions, value: Regions | null) =>  value != null ? option.id === value.id : false}
 						value={selectedRegion} 
 						onChange={(selectedRegion: Regions | null) => {
-							setCarCodesBlank(prev => ({ 
-								...prev, 
-								region: selectedRegion ? selectedRegion.id : '' 
-							}));
+							setCarCodesBlank(prev => ({ ...prev, region: selectedRegion ? selectedRegion.id : 'ПИСЬКА' }));
 						}}
 						disabled={isLoadingRegions} 
 						required

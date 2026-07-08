@@ -18,7 +18,7 @@ import { Notification } from '../../shared/components/notification';
 import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
-import { ProductEditorModal } from './modals/productEditorModal';
+import { CarCodeEditorModal } from './modals/carCodeEditorModal';
 import { CarCodesProvider } from '../../domain/carCodes/carCodesProvider';
 import { CarCodes } from '../../domain/carCodes/carCodes';
 
@@ -159,9 +159,9 @@ export function CarCodesPage() {
 				/>
 			</Paper>
 
-			<ProductEditorModal
+			<CarCodeEditorModal
 				isOpen={carCodesEditorModalState.isOpen}
-				productId={carCodesEditorModalState.carCodeId}
+				carCodeId={carCodesEditorModalState.carCodeId}
 				onClose={closeCarCodesEditorModal}
 			/>
 

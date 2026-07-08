@@ -1,10 +1,11 @@
+import { FederalRegions } from './federalRegions';
 import { Regions } from './regions';
 export class RegionsBlank {
 	constructor(
 		
 		public id: string | null,
 		public name: string | null,
-		public federalregion: string | null
+		public federalregion: FederalRegions | null
 	) { }
 }
 

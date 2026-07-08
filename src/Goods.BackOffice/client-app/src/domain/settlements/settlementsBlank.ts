@@ -1,9 +1,10 @@
 import { Settlements } from './settlements';
+import { SettlementsTypes } from './settlementsTypes';
 
 export class SettlementsBlank {
 	constructor(
 		public id: string | null,
-		public settlementtype: string | null,
+		public settlementtype: SettlementsTypes | null,
 		public name: string | null,
 		public population: number | null,
 		public region: string | null,
