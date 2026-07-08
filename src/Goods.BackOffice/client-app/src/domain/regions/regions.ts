@@ -5,7 +5,7 @@ export class Regions {
 	constructor(
 		public readonly id: string,
 		public readonly name: string,
-		public readonly federalregion: FederalRegions
+		public readonly federalRegion: FederalRegions
 	) { }
 }
 
@@ -13,10 +13,10 @@ export function mapToRegionsPage(data: any): Page<Regions> {
 	return Page.convert(data, mapToRegion);
 }
 
-export function mapToProducts(data: any[]): Regions[] {
+export function mapToRegions(data: any[]): Regions[] {
 	return data.map(mapToRegion);
 }
 
 export function mapToRegion(data: any): Regions {
-	return new Regions(data.id, data.name, data.federalregion);
+	return new Regions(data.id, data.name, data.federalRegion);
 }

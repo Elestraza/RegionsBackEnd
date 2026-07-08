@@ -32,7 +32,7 @@ export function SettlementEditorModal(props: Props) {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const [regions, setRegions] = useState<Regions[]>([]);
-	const [isLoadingRegions, setIsLoadingRegions] = useState(false);
+	// const [isLoadingRegions, setIsLoadingRegions] = useState(false);
 
 	const [checked, setChecked] = useState<boolean>(true);
 	
@@ -51,23 +51,23 @@ export function SettlementEditorModal(props: Props) {
 
 			setSettlementBlank(blank ?? SettlementsBlank.getEmpty());
 		}
-		async function loadRegions() {
-			setIsLoadingRegions(true);
-			try {
-				const page = await RegionsProvider.getRegionsPage(1, 1000);
+		// async function loadRegions() {
+		// 	setIsLoadingRegions(true);
+		// 	try {
+		// 		const page = await RegionsProvider.getRegionsPage(1, 1000);
 				
-				const regionsArray = (page as any).items || (page as any).data || [];
-				setRegions(regionsArray);
-			} catch (e) {
-				console.error('Ошибка загрузки регионов:', e);
-				setErrorMessage('Не удалось загрузить список регионов');
-			} finally {
-				setIsLoadingRegions(false);
-			}
-		}
+		// 		const regionsArray = (page as any).items || (page as any).data || [];
+		// 		setRegions(regionsArray);
+		// 	} catch (e) {
+		// 		console.error('Ошибка загрузки регионов:', e);
+		// 		setErrorMessage('Не удалось загрузить список регионов');
+		// 	} finally {
+		// 		setIsLoadingRegions(false);
+		// 	}
+		// }
 
 		loadSettlementBlank();
-		loadRegions();
+		// loadRegions();
 
 		return () => {
 			setSettlementBlank(SettlementsBlank.getEmpty());
@@ -84,7 +84,7 @@ export function SettlementEditorModal(props: Props) {
 
 		props.onClose(true);
 	}
-	const selectedRegion = regions.find(r => r.id === blank.region) ?? null;
+	// const selectedRegion = regions.find(r => r.id === blank.region?.id) ?? null;
 	return (
 		<>
 			<Modal onClose={() => props.onClose(false)} isOpen={props.isOpen}>
@@ -103,7 +103,7 @@ export function SettlementEditorModal(props: Props) {
 						options={Enum.getNumberValues<SettlementsTypes>(SettlementsTypes)}
 						getOptionLabel={(option) => SettlementsTypes.getDisplayName(option)}
 						isOptionEqualToValue={(a, b) => a === b}
-						value={blank.settlementtype}
+						value={blank.type}
 						onChange={(type) => setSettlementBlank((blank) => ({ ...blank, type }))}
 						required
 					/>
@@ -121,22 +121,36 @@ export function SettlementEditorModal(props: Props) {
 						onChange={(population) =>
 							setSettlementBlank((blank) => ({ ...blank, population }))
 						}
+						required
 					/>
 					<Input
 						variant='number'
 						title='Введите год основания'
-						value={blank.foundationdate}
+						value={blank.foundationYear}
 						onChange={(foundationDate) => setSettlementBlank((blank) => ({ ...blank, foundationDate }))}
 						required
 					/>
 					<Input
 						variant='number'
 						title='Введите среднюю стоимость отеля за ночь'
-						value={blank.averagehotelcost}
+						value={blank.averageHotelCost}
 						onChange={(averageCost) => setSettlementBlank((blank) => ({ ...blank, averageCost }))}
 						required
 					/>
-					<Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
+					<Input 
+						variant='select'
+						title='Выберите регион'
+						options={regions.map(r => r)}
+						getOptionLabel={(option) => {
+							const region = regions.find(r => r.id === option.id);
+							return region ? `${region.name}` : '';
+						}}
+						isOptionEqualToValue={(a, b) => a === b}
+						value={blank.region}
+						onChange={(regions: Regions | null) => { setSettlementBlank((blank) => ({ ...blank, region: regions})); }}
+						required
+					/>						
+					{/* <Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
 						variant='select'
 						title='Выберите регион'
 						options={regions} 
@@ -146,11 +160,11 @@ export function SettlementEditorModal(props: Props) {
 						}
 						value={selectedRegion} 
 						onChange={(selectedRegion: Regions | null) => { 
-							setSettlementBlank(prev => ({ ...prev, region: selectedRegion ? selectedRegion.id : ''  })); 
+							setSettlementBlank(prev => ({ ...prev, regions: selectedRegion ? selectedRegion.id : ''  })); 
 						}}
 						disabled={isLoadingRegions} 
 						required
-					/>
+					/> */}
 					<input name="Статус героя" type="checkbox" checked={checked} 
           				onChange={e => setChecked(!checked)} />
 				</Modal.Body>

@@ -5,13 +5,13 @@ import { SettlementsTypes } from './settlementsTypes';
 export class SettlementsBlank {
 	constructor(
 		public id: string | null,
-		public settlementtype: SettlementsTypes | null,
+		public type: SettlementsTypes | null,
 		public name: string | null,
 		public population: number | null,
 		public region: Regions | null,
-		public foundationdate: number | null,
-		public ishero: boolean | null,
-		public averagehotelcost: number | null
+		public foundationYear: number | null,
+		public isHero: boolean | null,
+		public averageHotelCost: number | null
 	) { }
 }
 
@@ -23,13 +23,13 @@ export namespace SettlementsBlank {
 	export function getFromSettlement(settlement: Settlements): SettlementsBlank {
 		return {
 			id: settlement.id,
-			settlementtype: settlement.settlementtype,
+			type: settlement.type,
 			name: settlement.name,
 			population: settlement.population,
 			region: settlement.region,
-			foundationdate: settlement.foundationdate,
-			ishero: settlement.ishero,
-			averagehotelcost: settlement.averagehotelcost
+			foundationYear: settlement.foundationYear,
+			isHero: settlement.isHero,
+			averageHotelCost: settlement.averageHotelCost
 		};
 	}
 }

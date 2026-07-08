@@ -26,7 +26,7 @@ export class SettlementsProvider {
 			headers: this.headers
 		});
 		const json = await response.json();
-
+		
 		return mapToSettlementsPage(json);
 	}
 

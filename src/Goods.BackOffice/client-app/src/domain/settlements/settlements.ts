@@ -1,28 +1,18 @@
 import { Page } from '../../tools/types/page';
 import { Regions } from '../regions/regions';
 import { SettlementsTypes } from './settlementsTypes';
-
-/*
-	id uuid primary key not null,
-	settlementtype uuid NOT NULL,
-	name varchar NOT NULL,
-	population int NOT NULL,
-	region uuid NOT NULL,
-	foundationyear varchar(4) NOT NULL,
-	ishero bool NOT NULL,
-	averagehotelcost int NOT NULL,
-*/
+import { mapToRegion } from '../regions/regions';
 
 export class Settlements {
 	constructor(
 		public readonly id: string,
-		public readonly settlementtype: SettlementsTypes,
+		public readonly type: SettlementsTypes,
 		public readonly name: string,
 		public readonly population: number,
 		public readonly region: Regions,
-		public readonly foundationdate: number,
-		public readonly ishero: boolean,
-		public readonly averagehotelcost: number
+		public readonly foundationYear: number,
+		public readonly isHero: boolean,
+		public readonly averageHotelCost: number
 	) { }
 }
 
@@ -35,5 +25,5 @@ export function mapToSettlements(data: any[]): Settlements[] {
 }
 
 export function mapToSettlement(data: any): Settlements {
-	return new Settlements(data.id, data.settlementtype, data.name, data.population, data.region, data.foundationdate, data.ishero, data.averagehotelcost);
+	return new Settlements(data.id, data.type, data.name, data.population, mapToRegion(data.region), data.foundationYear, data.isHero, data.averageHotelCost);
 }

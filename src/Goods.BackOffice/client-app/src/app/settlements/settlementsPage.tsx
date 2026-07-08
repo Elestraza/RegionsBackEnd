@@ -136,16 +136,15 @@ export function SettlementsPage() {
 									<TableRow key={`product__${settlement.id}`}>
 										<TableCell width='15%'>{settlement.name}</TableCell>
 										<TableCell width='15%'>
-											{SettlementsTypes.getDisplayName(settlement.settlementtype)}
+											{SettlementsTypes.getDisplayName(settlement.type)}
 										</TableCell>
-										<TableCell width='15%'>{settlement.region.name.toString()}</TableCell>
+										<TableCell width='15%'>{settlement.region.name}</TableCell>
 										<TableCell width='5%'>{settlement.population}</TableCell>
-										<TableCell width='10%'>{settlement.foundationdate}</TableCell>
-										<TableCell width='15%'>{settlement.averagehotelcost}</TableCell>
-										<TableCell width='10%'>{settlement.ishero}</TableCell>
+										<TableCell width='10%'>{settlement.foundationYear}</TableCell>
+										<TableCell width='15%'>{settlement.averageHotelCost}</TableCell>
+										<TableCell width='10%'>{settlement.isHero}</TableCell>
 										<TableCell>
 											<Button
-
 												type='icon'
 												variant='edit'
 												size='small'

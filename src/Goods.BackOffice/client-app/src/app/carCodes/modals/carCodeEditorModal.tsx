@@ -41,9 +41,11 @@ export function CarCodeEditorModal(props: Props) {
 		async function loadRegions() {
 			setIsLoadingRegions(true);
 			try {
-				const page = await RegionsProvider.getRegionsPage(1, 1000);
+				const page = await RegionsProvider.getRegionsPage(15, 1);
+				console.log(page);
 				
 				const regionsArray = (page as any).items || (page as any).data || [];
+				console.log(regionsArray);
 				setRegions(regionsArray);
 			} catch (e) {
 				console.error('Ошибка загрузки регионов:', e);
@@ -71,7 +73,7 @@ export function CarCodeEditorModal(props: Props) {
 
 		props.onClose(true);
 	}
-	const selectedRegion = regions.find(r => r.id === blank.region?.id) ?? null;
+	const selectedRegion = regions.find(r => r.id === blank.regions?.id) ?? null;
 	return (
 		<>
 			<Modal onClose={() => props.onClose(false)} isOpen={props.isOpen}>
@@ -91,6 +93,19 @@ export function CarCodeEditorModal(props: Props) {
 						onChange={(code) => setCarCodesBlank(prev => ({ ...prev, code }))}
 						required
 					/>
+					<Input 
+						variant='select'
+						title='Выберите регион'
+						options={regions.map(r => r)}
+						getOptionLabel={(option) => {
+							const region = regions.find(r => r.id === option.id);
+							return region ? `${region.name}` : '';
+						}}
+						isOptionEqualToValue={(a, b) => a === b}
+						value={blank.regions}
+						onChange={(regions: Regions | null) => { setCarCodesBlank((blank) => ({ ...blank, regions: regions})); }}
+						required
+					/>							
 					{/* <Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
 						variant='select'
 						title='Выберите регион'
@@ -99,7 +114,7 @@ export function CarCodeEditorModal(props: Props) {
 						isOptionEqualToValue={(option: Regions, value: Regions | null) =>  value != null ? option.id === value.id : false}
 						value={selectedRegion} 
 						onChange={(selectedRegion: Regions | null) => {
-							setCarCodesBlank(prev => ({ ...prev, region: selectedRegion ? selectedRegion?.id : 'ПИСЬКА' }));
+							setCarCodesBlank(prev => ({ ...prev, regions: selectedRegion}));
 						}}
 						disabled={isLoadingRegions} 
 						required

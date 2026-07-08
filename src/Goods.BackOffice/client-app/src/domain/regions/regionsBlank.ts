@@ -5,7 +5,7 @@ export class RegionsBlank {
 		
 		public id: string | null,
 		public name: string | null,
-		public federalregion: FederalRegions | null
+		public federalRegion: FederalRegions | null
 	) { }
 }
 
@@ -18,7 +18,7 @@ export namespace RegionsBlank {
 		return {
 			id: region.id,
 			name: region.name,
-			federalregion: region.federalregion
+			federalRegion: region.federalRegion
 		};
 	}
 }

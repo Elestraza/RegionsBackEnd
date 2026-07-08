@@ -5,8 +5,8 @@ internal static class RegionsSql
     internal static String Regions_Save =>
         """
             INSERT INTO regions (
-                id
-                name
+                id,
+                name,
                 federalregion
             )
             VALUES (

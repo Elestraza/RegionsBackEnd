@@ -5,7 +5,7 @@ export class CarCodesBlank {
 	constructor(
 		public id: string | null,
 		public code: string | null,
-		public region: Regions | null
+		public regions: Regions | null
 	) { }
 }
 
@@ -18,7 +18,7 @@ export namespace CarCodesBlank {
 		return {
 			id: carCode.id,
 			code: carCode.code,
-			region: carCode.region
+			regions: carCode.regions
 		};
 	}
 }

@@ -1,11 +1,11 @@
 import { Page } from '../../tools/types/page';
 import { Regions } from '../regions/regions';
-
+import { mapToRegion } from '../regions/regions';
 export class CarCodes {
 	constructor(
 		public readonly id: string,
 		public readonly code: string,
-		public readonly region: Regions
+		public readonly regions: Regions
 	) { }
 }
 
@@ -18,5 +18,5 @@ export function mapToProducts(data: any[]): CarCodes[] {
 }
 
 export function mapToCarCode(data: any): CarCodes {
-	return new CarCodes(data.id, data.code, data.region);
+	return new CarCodes(data.id, data.code, mapToRegion(data.regions));
 }

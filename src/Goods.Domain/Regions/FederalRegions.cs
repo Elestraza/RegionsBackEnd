@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 public enum FederalRegions
 {
-    [Display(Name = "Город")]
-    City = 1,
+    [Display(Name = "Московская область")]
+    Moscow = 1,
 
-    [Display(Name = "Село")]
-    Selo = 2,
+    [Display(Name = "Тульская область")]
+    Tula = 2,
 
-    [Display(Name = "Деревня")]
-    Derevnya = 3,
+    [Display(Name = "Краснодарский край")]
+    KrasnodarskiyKrai = 3,
 
-    [Display(Name = "ПГТ")]
-    PGT = 4
+    [Display(Name = "Ямало-Ненецкий автономный округ")]
+    YamaloNenetskiyAvtonomniyOkrug = 4
+
 }

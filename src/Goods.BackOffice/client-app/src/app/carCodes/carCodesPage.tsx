@@ -129,7 +129,7 @@ export function CarCodesPage() {
 								carCodes.map(carCode => (
 									<TableRow key={`product__${carCode.id}`}>
 										<TableCell width='20%'>{carCode.code}</TableCell>
-										<TableCell width='40%'>{carCode.region.name}</TableCell>
+										<TableCell width='40%'>{carCode.regions.name.toString()}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'

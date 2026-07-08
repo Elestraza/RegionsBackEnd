@@ -64,14 +64,14 @@ export function RegionEditorModal(props: Props) {
 						display: 'flex',
 						flexDirection: 'column',
 						gap: '12px'
-					}}>
+					}}>		
 					<Input
 						variant='select'
 						title='Выберите категорию'
 						options={Enum.getNumberValues<FederalRegions>(FederalRegions)}
 						getOptionLabel={(option) => FederalRegions.getDisplayName(option)}
 						isOptionEqualToValue={(a, b) => a === b}
-						value={blank.federalregion}
+						value={blank.federalRegion}
 						onChange={(federalRegion) => setRegionBlank((blank) => ({ ...blank, federalRegion }))}
 						required
 					/>

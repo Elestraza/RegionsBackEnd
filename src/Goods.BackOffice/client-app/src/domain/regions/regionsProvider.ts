@@ -26,7 +26,7 @@ export class RegionsProvider {
 			headers: this.headers
 		});
 		const json = await response.json();
-
+		
 		return mapToRegionsPage(json);
 	}
 
