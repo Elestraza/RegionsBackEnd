@@ -1,3 +1,4 @@
+import { Regions } from '../regions/regions';
 import { Settlements } from './settlements';
 import { SettlementsTypes } from './settlementsTypes';
 
@@ -7,8 +8,8 @@ export class SettlementsBlank {
 		public settlementtype: SettlementsTypes | null,
 		public name: string | null,
 		public population: number | null,
-		public region: string | null,
-		public foundationdate: string | null,
+		public region: Regions | null,
+		public foundationdate: number | null,
 		public ishero: boolean | null,
 		public averagehotelcost: number | null
 	) { }

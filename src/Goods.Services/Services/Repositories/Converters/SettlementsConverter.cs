@@ -13,7 +13,7 @@ internal static class SettlementsConverter
             settlementsDb.Type,
             settlementsDb.Name,
             settlementsDb.Population,
-            settlementsDb.Region,
+            settlementsDb.Region.ToRegions(),
             settlementsDb.FoundationYear,
             settlementsDb.IsHero,
             settlementsDb.AverageHotelCost
@@ -22,21 +22,17 @@ internal static class SettlementsConverter
 
     internal static SettlementsDb ToSettlementsDb(this NpgsqlDataReader reader)
     {
-        //FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
-        //    reader.GetGuid(reader.GetOrdinal("id")),
-        //    reader.GetString(reader.GetOrdinal("Name"))
-        //);
-        //RegionsDb region = new RegionsDb(
-        //    reader.GetGuid(reader.GetOrdinal("id")),
-        //    reader.GetString(reader.GetOrdinal("Name")),
-        //    federalRegionsDb
-        //);
+        RegionsDb region = new RegionsDb(
+            reader.GetGuid(reader.GetOrdinal("region_id")),
+            reader.GetString(reader.GetOrdinal("region_name")),
+            (FederalRegions)reader.GetInt32(reader.GetOrdinal("region_federalregion"))
+        );
         return new SettlementsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            (SettlementsTypes)reader.GetInt32(reader.GetOrdinal("settlementstypee")),
+            (SettlementsTypes)reader.GetInt32(reader.GetOrdinal("settlementtype")),
             reader.GetString(reader.GetOrdinal("Name")),
             reader.GetInt32(reader.GetOrdinal("Population")),
-            reader.GetGuid(reader.GetOrdinal("region")),
+            region,
             reader.GetInt32(reader.GetOrdinal("FoundationYear")),
             reader.GetBoolean(reader.GetOrdinal("IsHero")),
             reader.GetInt32(reader.GetOrdinal("AverageHotelCost"))
@@ -50,7 +46,7 @@ internal static class SettlementsConverter
             settlements.Type,
             settlements.Name, 
             settlements.Population,
-            settlements.Region,
+            settlements.Region.ToRegionsDb(),
             settlements.FoundationYear,
             settlements.IsHero,
             settlements.AverageHotelCost

@@ -20,22 +20,44 @@ internal static class CarCodesSql
         """;
     internal static String GetById =>
         """
-            SELECT * FROM carcodes
+            SELECT  
+                c.id,
+                c.code,
+                c.region,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM carcodes c
+            JOIN regions r ON r.id = c.region
             WHERE id = @id;
         """;
 
     internal static String GetByName =>
         """
-            SELECT * FROM carcodes
-            WHERE name = @name;
+            SELECT 
+                c.id,
+                c.code,
+                c.region,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM carcodes c
+            JOIN regions r ON r.id = c.region
+            WHERE c.code = @code;
         """;
 
     internal static String GetPage =>
         """
             SELECT 
                 COUNT(*) OVER() as count, 
-                *
-            FROM carcodes
+                c.id,
+                c.code,
+                c.region,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM carcodes c
+            JOIN regions r ON r.id = c.region
             OFFSET @offset 
             LIMIT @limit
         """;

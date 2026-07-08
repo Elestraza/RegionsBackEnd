@@ -10,85 +10,86 @@ import {
 	Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Product } from '../../domain/products/product';
-import { ProductCategory } from '../../domain/products/productCategory';
-import { ProductsProvider } from '../../domain/products/productsProvider';
+
+import { Settlements } from '../../domain/settlements/settlements';
+import { SettlementsTypes } from '../../domain/settlements/settlementsTypes';
+import { SettlementsProvider } from '../../domain/settlements/settlementsProvider';
 import { Button } from '../../shared/components/buttons/button';
 import { ConfirmModal } from '../../shared/components/modals/confirmModal';
 import { Notification } from '../../shared/components/notification';
 import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
-import { ProductEditorModal } from './modals/productEditorModal';
+import { SettlementEditorModal } from './modals/settlementEditorModal';
 
-type ProductEditorModalState = {
-	productId: string | null;
+type SettlementEditorModalState = {
+	settlementId: string | null;
 	isOpen: boolean;
 };
 
-interface RemoveProductConfirmModalState extends ConfirmModalState {
-	productId: string | null;
+interface RemoveSettlementConfirmModalState extends ConfirmModalState {
+	settlementId: string | null;
 }
 
 export function SettlementsPage() {
-	const [products, setProducts] = useState<Product[]>([]);
+	const [settlements, setSettlement] = useState<Settlements[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
 
-	const [productEditorModalState, setProductEditorModalState] = useState<ProductEditorModalState>({
-		productId: null,
+	const [settlementEditorModalState, setSettlementEditorModalState] = useState<SettlementEditorModalState>({
+		settlementId: null,
 		isOpen: false
 	});
-	const [removeProductConfirmModalState, setRemoveProductConfirmModalState] =
-		useState<RemoveProductConfirmModalState>({ productId: null, ...ConfirmModalState.getClosed() });
+	const [removeSettlementConfirmModalState, setRemoveSettlementConfirmModalState] =
+		useState<RemoveSettlementConfirmModalState>({ settlementId: null, ...ConfirmModalState.getClosed() });
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	useEffect(() => {
-		loadProductsPage({ ...pagination });
+		loadSettlementsPage({ ...pagination });
 	}, []);
 
-	async function loadProductsPage(newPagination: Pagination) {
-		const productsPage = await ProductsProvider.getProductsPage(newPagination.page, newPagination.pageSize);
+	async function loadSettlementsPage(newPagination: Pagination) {
+		const page = await SettlementsProvider.getSettlementsPage(newPagination.page, newPagination.pageSize);
 
-		setProducts(productsPage.values);
+		setSettlement(page.values);
 		setPagination((pagination) => ({
 			...pagination,
 			page: newPagination.page,
 			pageSize: newPagination.pageSize,
-			totalRows: productsPage.totalRows
+			totalRows: page.totalRows
 		}));
 	}
 
-	function openProductEditorModal(productId?: string) {
-		setProductEditorModalState({ productId: productId ?? null, isOpen: true });
+	function openSettlementEditorModal(settlementId?: string) {
+		setSettlementEditorModalState({ settlementId: settlementId ?? null, isOpen: true });
 	}
 
-	function closeProductEditorModal(isEdited: boolean) {
-		if (isEdited) loadProductsPage({ ...pagination, page: 1 });
-		setProductEditorModalState({ productId: null, isOpen: false });
+	function closeSettlementEditorModal(isEdited: boolean) {
+		if (isEdited) loadSettlementsPage({ ...pagination, page: 1 });
+		setSettlementEditorModalState({ settlementId: null, isOpen: false });
 	}
 
-	function openRemoveProductConfirmModal(productId: string, productName: string) {
-		setRemoveProductConfirmModalState({
-			productId,
-			...ConfirmModalState.getOpen(`Вы действительно хотите удалить продукт "${productName}"`)
+	function openRemoveSettlementConfirmModal(settlementId: string, name: string) {
+		setRemoveSettlementConfirmModalState({
+			settlementId,
+			...ConfirmModalState.getOpen(`Вы действительно хотите удалить населенный пункт "${name}"`)
 		});
 	}
 
-	async function closeRemoveProductConfirmModal(isConfirmed: boolean) {
+	async function closeRemoveSettlementConfirmModal(isConfirmed: boolean) {
 		if (isConfirmed) {
-			if (removeProductConfirmModalState.productId == null) throw 'Cannot remove product with ProductId = null';
+			if (removeSettlementConfirmModalState.settlementId == null) throw 'Cannot remove product with SettlementId = null';
 
-			const result = await ProductsProvider.removeProduct(removeProductConfirmModalState.productId);
+			const result = await SettlementsProvider.removeSettlement(removeSettlementConfirmModalState.settlementId);
 			if (!result.isSuccess) {
 				setErrorMessage(result.errors.map((error) => error.message).join('. '));
 				return;
 			}
 
-			loadProductsPage({ ...pagination, page: 1 });
+			loadSettlementsPage({ ...pagination, page: 1 });
 		}
 
-		setRemoveProductConfirmModalState({ productId: null, ...ConfirmModalState.getClosed() });
+		setRemoveSettlementConfirmModalState({ settlementId: null, ...ConfirmModalState.getClosed() });
 	}
 
 	return (
@@ -105,48 +106,55 @@ export function SettlementsPage() {
 					paddingX: '12px',
 					paddingY: '6px'
 				}}>
-				<Typography variant='h6'>Продукты</Typography>
-				<Button variant='add' title='Создать' onClick={() => openProductEditorModal()} />
+				<Typography variant='h6'>Населенные пункты</Typography>
+				<Button variant='add' title='Создать' onClick={() => openSettlementEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
 				<TableContainer sx={{ height: 'inherit' }}>
 					<Table stickyHeader>
 						<TableHead>
 							<TableRow>
-								<TableCell>Категория</TableCell>
 								<TableCell>Название</TableCell>
-								<TableCell>Описание</TableCell>
-								<TableCell>Цена</TableCell>
+								<TableCell>Тип населенного пункта</TableCell>
+								<TableCell>Регион</TableCell>
+								<TableCell>Население</TableCell>
+								<TableCell>Год основания</TableCell>
+								<TableCell>Средняя стоимость отеля</TableCell>
+								<TableCell>Статус героя</TableCell>
 								<TableCell>Управление</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{
-								products.length === 0 &&
+								settlements.length === 0 &&
 								<TableRow>
 									<TableCell colSpan={5}>Пусто</TableCell>
 								</TableRow>
 							}
 							{
-								products.map(product => (
-									<TableRow key={`product__${product.id}`}>
+								settlements.map(settlement => (
+									<TableRow key={`product__${settlement.id}`}>
+										<TableCell width='15%'>{settlement.name}</TableCell>
 										<TableCell width='15%'>
-											{ProductCategory.getDisplayName(product.category)}
+											{SettlementsTypes.getDisplayName(settlement.settlementtype)}
 										</TableCell>
-										<TableCell width='20%'>{product.name}</TableCell>
-										<TableCell width='40%'>{product.description ?? '—'}</TableCell>
-										<TableCell width='15%'>{product.price}</TableCell>
+										<TableCell width='15%'>{settlement.region.name.toString()}</TableCell>
+										<TableCell width='5%'>{settlement.population}</TableCell>
+										<TableCell width='10%'>{settlement.foundationdate}</TableCell>
+										<TableCell width='15%'>{settlement.averagehotelcost}</TableCell>
+										<TableCell width='10%'>{settlement.ishero}</TableCell>
 										<TableCell>
 											<Button
+
 												type='icon'
 												variant='edit'
 												size='small'
-												onClick={() => openProductEditorModal(product.id)} />
+												onClick={() => openSettlementEditorModal(settlement.id)} />
 											<Button
 												type='icon'
 												variant='remove'
 												size='small'
-												onClick={() => openRemoveProductConfirmModal(product.id, product.name)} />
+												onClick={() => openRemoveSettlementConfirmModal(settlement.id, settlement.name)} />
 										</TableCell>
 									</TableRow>
 								))
@@ -160,21 +168,21 @@ export function SettlementsPage() {
 					page={pagination.page}
 					countInPage={pagination.pageSize}
 					totalRows={pagination.totalRows}
-					changePage={page => loadProductsPage({ ...pagination, page })}
-					changeCountInPage={pageSize => loadProductsPage({ ...pagination, pageSize })}
+					changePage={page => loadSettlementsPage({ ...pagination, page })}
+					changeCountInPage={pageSize => loadSettlementsPage({ ...pagination, pageSize })}
 				/>
 			</Paper>
 
-			<ProductEditorModal
-				isOpen={productEditorModalState.isOpen}
-				productId={productEditorModalState.productId}
-				onClose={closeProductEditorModal}
+			<SettlementEditorModal
+				isOpen={settlementEditorModalState.isOpen}
+				settlementId={settlementEditorModalState.settlementId}
+				onClose={closeSettlementEditorModal}
 			/>
 
 			<ConfirmModal
-				title={removeProductConfirmModalState.title}
-				onClose={(isConfirmed) => closeRemoveProductConfirmModal(isConfirmed)}
-				isOpen={removeProductConfirmModalState.isOpen}
+				title={removeSettlementConfirmModalState.title}
+				onClose={(isConfirmed) => closeRemoveSettlementConfirmModal(isConfirmed)}
+				isOpen={removeSettlementConfirmModalState.isOpen}
 			/>
 
 			{

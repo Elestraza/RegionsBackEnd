@@ -13,7 +13,7 @@ export namespace RegionsBlank {
 	export function getEmpty(): RegionsBlank {
 		return new RegionsBlank(null, null, null);
 	}
-
+	
 	export function getFromRegion(region: Regions): RegionsBlank {
 		return {
 			id: region.id,

@@ -24,8 +24,8 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
         DataResult<Guid?> existValidationResult = await ValidateExistCarCodes(blank);
         if (existValidationResult.IsFail(out Guid? id)) return DataResult<CarCodes>.Fail(existValidationResult);
 
-        DataResult<Guid> regionValidationResult = await ValidateCarCodeRegion(blank);
-        if (regionValidationResult.IsFail(out Guid regions)) return DataResult<CarCodes>.Fail(regionValidationResult);
+        DataResult<Regions> regionValidationResult = await ValidateCarCodeRegion(blank);
+        if (regionValidationResult.IsFail(out Regions regions)) return DataResult<CarCodes>.Fail(regionValidationResult);
 
         DataResult<String> codeValidationResult = ValidateCarCode(blank);
         if (codeValidationResult.IsFail(out String code)) return DataResult<CarCodes>.Fail(codeValidationResult);
@@ -55,17 +55,17 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
         return DataResult<Guid?>.Success(id);
     }
 
-    private async Task<DataResult<Guid>> ValidateCarCodeRegion(CarCodesBlank blank)
+    private async Task<DataResult<Regions>> ValidateCarCodeRegion(CarCodesBlank blank)
     {
         if (!(blank.Regions is { } region))
-            return DataResult<Guid>.Fail("Выберите категорию продукта");
-        Regions selectedRegion = await regionsService.GetRegion(region);
+            return DataResult<Regions>.Fail("Выберите категорию продукта");
+        Regions selectedRegion = await regionsService.GetRegion(region.Id);
 
 
         if (selectedRegion is not null && selectedRegion.Id != blank.Id)
             throw new Exception($"Региона {region} не существует");
 
-        return DataResult<Guid>.Success(selectedRegion.Id);
+        return DataResult<Regions>.Success(selectedRegion);
     }
 
     private DataResult<String> ValidateCarCode(CarCodesBlank blank)

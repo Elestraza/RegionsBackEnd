@@ -1,10 +1,11 @@
+import { Regions } from '../regions/regions';
 import { CarCodes } from './carCodes';
 
 export class CarCodesBlank {
 	constructor(
 		public id: string | null,
-		public code: number | null,
-		public region: string | null
+		public code: string | null,
+		public region: Regions | null
 	) { }
 }
 

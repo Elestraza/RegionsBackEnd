@@ -10,17 +10,15 @@ import {
 	Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-
 import { Regions } from '../../domain/regions/regions';
 import { RegionsProvider } from '../../domain/regions/regionsProvider';
-
 import { Button } from '../../shared/components/buttons/button';
 import { ConfirmModal } from '../../shared/components/modals/confirmModal';
 import { Notification } from '../../shared/components/notification';
 import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
-import { ProductEditorModal } from './modals/productEditorModal';
+import { RegionEditorModal } from './modals/regionEditorModal';
 
 type RegionEditorModalState = {
 	id: string | null;
@@ -159,9 +157,9 @@ export function RegionsPage() {
 				/>
 			</Paper>
 
-			<ProductEditorModal
+			<RegionEditorModal
 				isOpen={regionEditorModalState.isOpen}
-				productId={regionEditorModalState.id}
+				regionId={regionEditorModalState.id}
 				onClose={closeRegionsEditorModal}
 			/>
 

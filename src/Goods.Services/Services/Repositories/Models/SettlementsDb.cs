@@ -27,7 +27,7 @@ namespace Goods.Services.Products.Repositories.Models
         public SettlementsTypes Type { get; set; }
         public String Name { get; set; }
         public Int32 Population { get; set; }
-        public Guid Region { get; set; }
+        public RegionsDb Region { get; set; }
         public Int32 FoundationYear { get; set; }
         public Boolean IsHero { get; set; }
         public Int32 AverageHotelCost { get; set; }
@@ -38,7 +38,7 @@ namespace Goods.Services.Products.Repositories.Models
             SettlementsTypes type,
             String name,
             Int32 population,
-            Guid region,
+            RegionsDb region,
             Int32 foundationYear,
             Boolean isHero,
             Int32 averageHotelCost

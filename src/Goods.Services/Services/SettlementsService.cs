@@ -34,8 +34,8 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
         if (populationValidationResult.IsFail(out Int32 population)) return DataResult<Settlements>.Fail(populationValidationResult);
 
 
-        DataResult<Guid> regionValidationResult = await ValidateSettlementRegion(blank);
-        if (regionValidationResult.IsFail(out Guid region)) return DataResult<Settlements>.Fail(regionValidationResult);
+        DataResult<Regions> regionValidationResult = await ValidateSettlementRegion(blank);
+        if (regionValidationResult.IsFail(out Regions region)) return DataResult<Settlements>.Fail(regionValidationResult);
 
         DataResult<Int32> foundationDateValidationResult = ValidateSettlementFoundationDate(blank);
         if (foundationDateValidationResult.IsFail(out Int32 foundationyear)) return DataResult<Settlements>.Fail(foundationDateValidationResult);
@@ -112,19 +112,19 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
         return DataResult<Int32>.Success(population);
     }
 
-    private async Task<DataResult<Guid>> ValidateSettlementRegion(SettlementsBlank blank)
+    private async Task<DataResult<Regions>> ValidateSettlementRegion(SettlementsBlank blank)
     {
         if (!(blank.Region is { } region))
-            return DataResult<Guid>.Fail("Не указан регион");
+            return DataResult<Regions>.Fail("Не указан регион");
 
-        Regions selectedRegion = await regionsService.GetRegion(region);
+        Regions selectedRegion = await regionsService.GetRegion(region.Id);
 
         if (blank.Region != null && selectedRegion.Id != blank.Id)
             throw new Exception($"Региона {selectedRegion} не существует");
 
         
 
-        return DataResult<Guid>.Success(selectedRegion.Id);
+        return DataResult<Regions>.Success(selectedRegion);
     }
 
     private async Task<DataResult<Int32>> ValidateSettlementAvgHotelCost(SettlementsBlank blank)

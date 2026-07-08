@@ -1,10 +1,11 @@
 import { Page } from '../../tools/types/page';
+import { Regions } from '../regions/regions';
 
 export class CarCodes {
 	constructor(
 		public readonly id: string,
-		public readonly code: number,
-		public readonly region: string
+		public readonly code: string,
+		public readonly region: Regions
 	) { }
 }
 

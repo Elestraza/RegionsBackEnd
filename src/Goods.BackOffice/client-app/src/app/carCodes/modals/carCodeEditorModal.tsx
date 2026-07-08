@@ -71,7 +71,7 @@ export function CarCodeEditorModal(props: Props) {
 
 		props.onClose(true);
 	}
-	const selectedRegion = regions.find(r => r.id === blank.region) ?? null;
+	const selectedRegion = regions.find(r => r.id === blank.region?.id) ?? null;
 	return (
 		<>
 			<Modal onClose={() => props.onClose(false)} isOpen={props.isOpen}>
@@ -85,13 +85,13 @@ export function CarCodeEditorModal(props: Props) {
 						gap: '12px'
 					}}>
 					<Input
-						variant='number'
+						variant='text'
 						title='Введите код'
 						value={blank.code}
 						onChange={(code) => setCarCodesBlank(prev => ({ ...prev, code }))}
 						required
 					/>
-					<Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
+					{/* <Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
 						variant='select'
 						title='Выберите регион'
 						options={regions} 
@@ -99,11 +99,11 @@ export function CarCodeEditorModal(props: Props) {
 						isOptionEqualToValue={(option: Regions, value: Regions | null) =>  value != null ? option.id === value.id : false}
 						value={selectedRegion} 
 						onChange={(selectedRegion: Regions | null) => {
-							setCarCodesBlank(prev => ({ ...prev, region: selectedRegion ? selectedRegion.id : 'ПИСЬКА' }));
+							setCarCodesBlank(prev => ({ ...prev, region: selectedRegion ? selectedRegion?.id : 'ПИСЬКА' }));
 						}}
 						disabled={isLoadingRegions} 
 						required
-					/>
+					/> */}
 				</Modal.Body>
 				<Modal.Footer>
 					{/* Исправлено: было saveCarCode(), должно быть saveProduct() */}

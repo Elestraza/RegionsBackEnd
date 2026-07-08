@@ -17,13 +17,13 @@ namespace Goods.Services.Products.Repositories.Models
         );*/
         public Guid Id { get; set; }
         public String Code { get; set; }
-        public Guid Regions { get; set; }
+        public RegionsDb Regions { get; set; }
 
         public CarCodesDb
         (
             Guid id,
             String code,
-            Guid regions
+            RegionsDb regions
         )
         {
             Id = id;

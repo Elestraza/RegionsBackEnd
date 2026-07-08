@@ -6,7 +6,7 @@ public class SettlementsBlank
     public SettlementsTypes? Type { get; set; }
     public String? Name { get; set; }
     public Int32? Population { get; set; }
-    public Guid? Region { get; set; }
+    public Regions? Region { get; set; }
     public Int32? FoundationYear { get; set; }
     public Boolean? IsHero { get; set; }
     public Int32? AverageHotelCost { get; set; }

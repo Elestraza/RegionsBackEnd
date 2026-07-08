@@ -1,4 +1,5 @@
 import { Page } from '../../tools/types/page';
+import { Regions } from '../regions/regions';
 import { SettlementsTypes } from './settlementsTypes';
 
 /*
@@ -18,8 +19,8 @@ export class Settlements {
 		public readonly settlementtype: SettlementsTypes,
 		public readonly name: string,
 		public readonly population: number,
-		public readonly region: string,
-		public readonly foundationdate: string,
+		public readonly region: Regions,
+		public readonly foundationdate: number,
 		public readonly ishero: boolean,
 		public readonly averagehotelcost: number
 	) { }

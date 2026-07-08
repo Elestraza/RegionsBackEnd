@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 
 import React, { useEffect, useState } from 'react';
-import { ProductsProvider } from '../../domain/products/productsProvider';
 import { Button } from '../../shared/components/buttons/button';
 import { ConfirmModal } from '../../shared/components/modals/confirmModal';
 import { Notification } from '../../shared/components/notification';
@@ -69,7 +68,7 @@ export function CarCodesPage() {
 		setCarCodesEditorModalState({ carCodeId: null, isOpen: false });
 	}
 
-	function openRemoveCarCodesConfirmModal(carCodeId: string, code: number) {
+	function openRemoveCarCodesConfirmModal(carCodeId: string, code: string) {
 		setRemoveCarCodeConfirmModalState({
 			carCodeId,
 			...ConfirmModalState.getOpen(`Вы действительно хотите удалить автомобильный код "${code}"`)
@@ -80,7 +79,7 @@ export function CarCodesPage() {
 		if (isConfirmed) {
 			if (removeCarCodeConfirmModalState.carCodeId == null) throw 'Cannot remove CarCode with ID = null';
 
-			const result = await ProductsProvider.removeProduct(removeCarCodeConfirmModalState.carCodeId);
+			const result = await CarCodesProvider.removeCarCodes(removeCarCodeConfirmModalState.carCodeId);
 			if (!result.isSuccess) {
 				setErrorMessage(result.errors.map((error) => error.message).join('. '));
 				return;
@@ -106,7 +105,7 @@ export function CarCodesPage() {
 					paddingX: '12px',
 					paddingY: '6px'
 				}}>
-				<Typography variant='h6'>Продукты</Typography>
+				<Typography variant='h6'>Автомобильные коды</Typography>
 				<Button variant='add' title='Создать' onClick={() => openCarCodesEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
@@ -116,6 +115,7 @@ export function CarCodesPage() {
 							<TableRow>
 								<TableCell>Код</TableCell>
 								<TableCell>Регион</TableCell>
+								<TableCell>Управление</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -129,7 +129,7 @@ export function CarCodesPage() {
 								carCodes.map(carCode => (
 									<TableRow key={`product__${carCode.id}`}>
 										<TableCell width='20%'>{carCode.code}</TableCell>
-										<TableCell width='40%'>{carCode.region}</TableCell>
+										<TableCell width='40%'>{carCode.region.name}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'

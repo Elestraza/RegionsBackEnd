@@ -17,10 +17,6 @@ internal static class RegionsConverter
 
     internal static RegionsDb ToRegionsDb(this NpgsqlDataReader reader)
     {
-        //FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
-        //    reader.GetGuid(reader.GetOrdinal("id")),
-        //    reader.GetString(reader.GetOrdinal("Name"))
-        //);
         return new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
             reader.GetString(reader.GetOrdinal("Name")),

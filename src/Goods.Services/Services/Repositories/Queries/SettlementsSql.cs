@@ -35,28 +35,65 @@ internal static class SettlementsSql
         """;
     internal static String GetById =>
         """
-            SELECT * FROM settlements
+            SELECT 
+                s.id,
+                s.settlementtype,
+                s.name,
+                s.population,
+                s.region,
+                s.foundationyear,
+                s.ishero,
+                s.averagehotelcost,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM settlements s
+            JOIN regions r ON r.id = s.region
             WHERE id = @id;
         """;
 
     internal static String GetByName =>
         """
-            SELECT * FROM settlements
-            WHERE name = @name;
+            SELECT
+                s.id,
+                s.settlementtype,
+                s.name,
+                s.population,
+                s.region,
+                s.foundationyear,
+                s.ishero,
+                s.averagehotelcost,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM settlements s
+            JOIN regions r ON r.id = s.region
+            WHERE s.name = @name;
         """;
 
     internal static String GetPage =>
         """
             SELECT 
                 COUNT(*) OVER() as count, 
-                *
-            FROM settlements
+                s.id,
+                s.settlementtype,
+                s.name,
+                s.population,
+                s.region,
+                s.foundationyear,
+                s.ishero,
+                s.averagehotelcost,
+                r.id as region_id,
+                r.name as region_name,
+                r.federalregion as region_federalregion
+            FROM settlements s
+            JOIN regions r ON r.id = s.region
             OFFSET @offset 
             LIMIT @limit
         """;
 
     internal static String Remove =>
         """
-        	DELETE ON CASCADE FROM settlements WHERE id = @id
+        	DELETE ON CASCADE FROM settlements s WHERE s.id = @id
         """;
 }
