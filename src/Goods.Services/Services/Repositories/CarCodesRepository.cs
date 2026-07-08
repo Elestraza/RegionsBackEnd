@@ -18,7 +18,7 @@ public class CarCodesRepository : ICarCodesRepository
             parameters =>
             {
                 parameters.AddWithValue("@id", carCodesDb.Id);
-                parameters.AddWithValue("@category", (Int32)carCodesDb.Code);
+                parameters.AddWithValue("@category", (String)carCodesDb.Code);
                 parameters.AddWithValue("@description", (Object?)carCodesDb.Regions ?? DBNull.Value);
             }
         );

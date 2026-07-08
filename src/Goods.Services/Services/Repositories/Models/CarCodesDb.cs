@@ -16,14 +16,14 @@ namespace Goods.Services.Products.Repositories.Models
 	        Foreign key(region) REFERENCES regions(id) ON UPDATE CASCADE
         );*/
         public Guid Id { get; set; }
-        public Int32 Code { get; set; }
-        public RegionsDb Regions { get; set; }
+        public String Code { get; set; }
+        public Guid Regions { get; set; }
 
         public CarCodesDb
         (
             Guid id,
-            Int32 code,
-            RegionsDb regions
+            String code,
+            Guid regions
         )
         {
             Id = id;

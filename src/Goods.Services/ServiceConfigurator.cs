@@ -12,17 +12,11 @@ public static class ServiceConfigurator
         collection.AddSingleton<ICarCodesService, CarCodesService>();
         collection.AddSingleton<ICarCodesRepository, CarCodesRepository>();
 
-        collection.AddSingleton<IFederalRegionsService, FederalRegionsService>();
-        collection.AddSingleton<IFederalRegionsRepository, FederalRegionsRepository>();
-
         collection.AddSingleton<IRegionsService, RegionsService>();
         collection.AddSingleton<IRegionsRepository, RegionsRepository>();
 
         collection.AddSingleton<ISettlementsService, SettlementsService>();
         collection.AddSingleton<ISettlementsRepository, SettlementsRepository>();
-
-        collection.AddSingleton<ISettlementsTypesService, SettlementsTypesService>();
-        collection.AddSingleton<ISettlementsTypesRepository, SettlementsTypesRepository>();
 
         return collection;
     }

@@ -24,22 +24,22 @@ namespace Goods.Services.Products.Repositories.Models
         );
         */
         public Guid Id { get; set; }
-        public SettlementsTypesDb Type { get; set; }
+        public SettlementsTypes Type { get; set; }
         public String Name { get; set; }
         public Int32 Population { get; set; }
-        public RegionsDb Region { get; set; }
-        public String FoundationYear { get; set; }
+        public Guid Region { get; set; }
+        public Int32 FoundationYear { get; set; }
         public Boolean IsHero { get; set; }
         public Int32 AverageHotelCost { get; set; }
 
         public SettlementsDb
         (
             Guid id,
-            SettlementsTypesDb type,
+            SettlementsTypes type,
             String name,
             Int32 population,
-            RegionsDb region,
-            String foundationYear,
+            Guid region,
+            Int32 foundationYear,
             Boolean isHero,
             Int32 averageHotelCost
         ) 

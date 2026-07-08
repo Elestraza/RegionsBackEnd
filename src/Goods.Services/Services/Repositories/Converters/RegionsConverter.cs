@@ -11,20 +11,20 @@ internal static class RegionsConverter
         return new Regions(
             regionsDb.Id,
             regionsDb.Name,
-            regionsDb.FederalRegion.ToFederalRegions()
+            regionsDb.FederalRegion
         );
     }
 
     internal static RegionsDb ToRegionsDb(this NpgsqlDataReader reader)
     {
-        FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
-        );
+        //FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
+        //    reader.GetGuid(reader.GetOrdinal("id")),
+        //    reader.GetString(reader.GetOrdinal("Name"))
+        //);
         return new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
             reader.GetString(reader.GetOrdinal("Name")),
-            federalRegionsDb
+            (FederalRegions)reader.GetInt32(reader.GetOrdinal("federalregion"))
         );
     }
 
@@ -33,7 +33,7 @@ internal static class RegionsConverter
         return new RegionsDb(
             regions.Id, 
             regions.Name,
-            regions.FederalRegion.ToFederalRegionsDb()
+            regions.FederalRegion
         );
     }
 }

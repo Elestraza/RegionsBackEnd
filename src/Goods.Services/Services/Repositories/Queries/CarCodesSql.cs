@@ -4,29 +4,29 @@ internal static class CarCodesSql
 {
     internal static String CarCodes_Save =>
         """
-            INSERT INTO regions (
+            INSERT INTO carcodes (
                 id
-                name
-                federalregion
+                code
+                region
             )
             VALUES (
                 @id,
-                @name,
+                @code,
                 @federalregion
             )
         	ON CONFLICT (id) DO UPDATE SET
-        	    federalregion = @federalregion,
-        	    name = @name
+        	    region = @region,
+        	    code = @code
         """;
     internal static String GetById =>
         """
-            SELECT * FROM regions
+            SELECT * FROM carcodes
             WHERE id = @id;
         """;
 
     internal static String GetByName =>
         """
-            SELECT * FROM regions
+            SELECT * FROM carcodes
             WHERE name = @name;
         """;
 
@@ -35,13 +35,13 @@ internal static class CarCodesSql
             SELECT 
                 COUNT(*) OVER() as count, 
                 *
-            FROM regions
+            FROM carcodes
             OFFSET @offset 
             LIMIT @limit
         """;
 
     internal static String Remove =>
         """
-        	DELETE ON CASCADE FROM regions WHERE id = @id
+        	DELETE ON CASCADE FROM carcodes WHERE id = @id
         """;
 }

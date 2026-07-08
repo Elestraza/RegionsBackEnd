@@ -24,11 +24,11 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
         DataResult<Guid?> existValidationResult = await ValidateExistCarCodes(blank);
         if (existValidationResult.IsFail(out Guid? id)) return DataResult<CarCodes>.Fail(existValidationResult);
 
-        DataResult<Regions> regionValidationResult = await ValidateCarCodeRegion(blank);
-        if (regionValidationResult.IsFail(out Regions regions)) return DataResult<CarCodes>.Fail(regionValidationResult);
+        DataResult<Guid> regionValidationResult = await ValidateCarCodeRegion(blank);
+        if (regionValidationResult.IsFail(out Guid regions)) return DataResult<CarCodes>.Fail(regionValidationResult);
 
-        DataResult<Int32> codeValidationResult = ValidateCarCode(blank);
-        if (codeValidationResult.IsFail(out Int32 code)) return DataResult<CarCodes>.Fail(codeValidationResult);
+        DataResult<String> codeValidationResult = ValidateCarCode(blank);
+        if (codeValidationResult.IsFail(out String code)) return DataResult<CarCodes>.Fail(codeValidationResult);
 
         CarCodes carCode = new(
             id ?? Guid.NewGuid(),
@@ -55,28 +55,28 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
         return DataResult<Guid?>.Success(id);
     }
 
-    private async Task<DataResult<Regions>> ValidateCarCodeRegion(CarCodesBlank blank)
+    private async Task<DataResult<Guid>> ValidateCarCodeRegion(CarCodesBlank blank)
     {
         if (!(blank.Regions is { } region))
-            return DataResult<Regions>.Fail("Выберите категорию продукта");
-        Regions selectedRegion = await regionsService.GetRegion(region.Id);
+            return DataResult<Guid>.Fail("Выберите категорию продукта");
+        Regions selectedRegion = await regionsService.GetRegion(region);
 
 
         if (selectedRegion is not null && selectedRegion.Id != blank.Id)
             throw new Exception($"Региона {region} не существует");
 
-        return DataResult<Regions>.Success(selectedRegion);
+        return DataResult<Guid>.Success(selectedRegion.Id);
     }
 
-    private DataResult<Int32> ValidateCarCode(CarCodesBlank blank)
+    private DataResult<String> ValidateCarCode(CarCodesBlank blank)
     {
         if (!(blank.Code is { } code))
-            return DataResult<Int32>.Fail("Не указан автомобильный код");
+            return DataResult<String>.Fail("Не указан автомобильный код");
 
-        if (code < 0)
-            return DataResult<Int32>.Fail("Указан некорректный автомобильный код");
+        if (code.Length < 2)
+            return DataResult<String>.Fail("Указан некорректный автомобильный код");
 
-        return DataResult<Int32>.Success(code);
+        return DataResult<String>.Success(code);
     }
     
     #endregion Validation

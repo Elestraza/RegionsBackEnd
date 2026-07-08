@@ -6,7 +6,7 @@ using Goods.Tools.Types.Results;
 
 namespace Goods.Services.Products;
 
-public class RegionsService(IRegionsRepository repository, IFederalRegionsService federalRegionsService) : IRegionsService
+public class RegionsService(IRegionsRepository repository) : IRegionsService
 {
     public async Task<Result> SaveRegion(RegionsBlank blank)
     {
@@ -56,16 +56,14 @@ public class RegionsService(IRegionsRepository repository, IFederalRegionsServic
 
     private async Task<DataResult<FederalRegions>> ValidateFederalRegion(RegionsBlank blank)
     {
-        if (!(blank.FederalRegion is { } federalRegion))
+
+        if (blank.FederalRegion is not { } federalRegion)
             return DataResult<FederalRegions>.Fail("Выберите регион");
 
-        //if (!Enum.IsDefined(federalRegion, FederalRegionsRepository))
-        //    throw new Exception($"Федерального региона {federalRegion} не существует");
-        if (!(blank.Id is { } id))
-            return DataResult<FederalRegions>.Fail("Указан несуществующий регион");
-        FederalRegions? forwadedFederalRegion = await federalRegionsService.GetFederalRegion(id);
+        if(!Enum.IsDefined(federalRegion))
+            throw new Exception($"Категория {federalRegion} не существует");
 
-        return DataResult<FederalRegions>.Success(forwadedFederalRegion);
+        return DataResult<FederalRegions>.Success(federalRegion);
     }
 
     private async Task<DataResult<String>> ValidateRegionName(RegionsBlank blank)

@@ -10,10 +10,10 @@ internal static class SettlementsConverter
     {
         return new Settlements(
             settlementsDb.Id,
-            settlementsDb.Type.ToSettlementsTypes(),
+            settlementsDb.Type,
             settlementsDb.Name,
             settlementsDb.Population,
-            settlementsDb.Region.ToRegions(),
+            settlementsDb.Region,
             settlementsDb.FoundationYear,
             settlementsDb.IsHero,
             settlementsDb.AverageHotelCost
@@ -22,26 +22,22 @@ internal static class SettlementsConverter
 
     internal static SettlementsDb ToSettlementsDb(this NpgsqlDataReader reader)
     {
-        SettlementsTypesDb settlementsTypes = new SettlementsTypesDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Settlementtype"))
-        );
-        FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
-        );
-        RegionsDb region = new RegionsDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name")),
-            federalRegionsDb
-        );
+        //FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
+        //    reader.GetGuid(reader.GetOrdinal("id")),
+        //    reader.GetString(reader.GetOrdinal("Name"))
+        //);
+        //RegionsDb region = new RegionsDb(
+        //    reader.GetGuid(reader.GetOrdinal("id")),
+        //    reader.GetString(reader.GetOrdinal("Name")),
+        //    federalRegionsDb
+        //);
         return new SettlementsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            settlementsTypes,
+            (SettlementsTypes)reader.GetInt32(reader.GetOrdinal("settlementstypee")),
             reader.GetString(reader.GetOrdinal("Name")),
             reader.GetInt32(reader.GetOrdinal("Population")),
-            region,
-            reader.GetString(reader.GetOrdinal("FoundationYear")),
+            reader.GetGuid(reader.GetOrdinal("region")),
+            reader.GetInt32(reader.GetOrdinal("FoundationYear")),
             reader.GetBoolean(reader.GetOrdinal("IsHero")),
             reader.GetInt32(reader.GetOrdinal("AverageHotelCost"))
         );
@@ -51,10 +47,10 @@ internal static class SettlementsConverter
     {
         return new SettlementsDb(
             settlements.Id,
-            settlements.Type.ToSettlementsTypesDb(),
+            settlements.Type,
             settlements.Name, 
             settlements.Population,
-            settlements.Region.ToRegionsDb(),
+            settlements.Region,
             settlements.FoundationYear,
             settlements.IsHero,
             settlements.AverageHotelCost

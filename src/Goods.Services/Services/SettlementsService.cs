@@ -5,7 +5,7 @@ using Goods.Tools.Types.Results;
 
 namespace Goods.Services.Products;
 
-public class SettlementsService(ISettlementsRepository repository, ISettlementsTypesService settlementsTypesService, IRegionsService regionsService) : ISettlementsService
+public class SettlementsService(ISettlementsRepository repository, IRegionsService regionsService) : ISettlementsService
 {
     public async Task<Result> SaveSettlement(SettlementsBlank blank)
     {
@@ -34,11 +34,11 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
         if (populationValidationResult.IsFail(out Int32 population)) return DataResult<Settlements>.Fail(populationValidationResult);
 
 
-        DataResult<Regions> regionValidationResult = await ValidateSettlementRegion(blank);
-        if (regionValidationResult.IsFail(out Regions region)) return DataResult<Settlements>.Fail(regionValidationResult);
+        DataResult<Guid> regionValidationResult = await ValidateSettlementRegion(blank);
+        if (regionValidationResult.IsFail(out Guid region)) return DataResult<Settlements>.Fail(regionValidationResult);
 
-        DataResult<String> foundationDateValidationResult = ValidateSettlementFoundationDate(blank);
-        if (foundationDateValidationResult.IsFail(out String foundationyear)) return DataResult<Settlements>.Fail(foundationDateValidationResult);
+        DataResult<Int32> foundationDateValidationResult = ValidateSettlementFoundationDate(blank);
+        if (foundationDateValidationResult.IsFail(out Int32 foundationyear)) return DataResult<Settlements>.Fail(foundationDateValidationResult);
 
         DataResult<Boolean> heroStatusValidationResult = ValidateSettlementHeroStatus(blank);
         if (heroStatusValidationResult.IsFail(out Boolean isHero)) return DataResult<Settlements>.Fail(heroStatusValidationResult);
@@ -77,14 +77,12 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
 
     private async Task<DataResult<SettlementsTypes>> ValidateSettlementType(SettlementsBlank blank)
     {
-        if (!(blank.Type is { } type))
+        if (blank.Type is not { } type)
             return DataResult<SettlementsTypes>.Fail("Выберите тип населенного пункта");
 
-        SettlementsTypes? settlementType = await settlementsTypesService.GetSettlementsType(type.Id);
-        if (settlementType is not null && settlementType.Id != blank.Id)
-            throw new Exception($"Тип населенного пункта {settlementType} не существует");
-
-        return DataResult<SettlementsTypes>.Success(settlementType);
+        if (!Enum.IsDefined(type))
+            throw new Exception($"Категория {type} не существует");
+        return DataResult<SettlementsTypes>.Success(type);
     }
 
     private async Task<DataResult<String>> ValidateSettlementName(SettlementsBlank blank)
@@ -114,19 +112,19 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
         return DataResult<Int32>.Success(population);
     }
 
-    private async Task<DataResult<Regions>> ValidateSettlementRegion(SettlementsBlank blank)
+    private async Task<DataResult<Guid>> ValidateSettlementRegion(SettlementsBlank blank)
     {
         if (!(blank.Region is { } region))
-            return DataResult<Regions>.Fail("Не указан регион");
+            return DataResult<Guid>.Fail("Не указан регион");
 
-        Regions selectedRegion = await regionsService.GetRegion(region.Id);
+        Regions selectedRegion = await regionsService.GetRegion(region);
 
         if (blank.Region != null && selectedRegion.Id != blank.Id)
             throw new Exception($"Региона {selectedRegion} не существует");
 
         
 
-        return DataResult<Regions>.Success(selectedRegion);
+        return DataResult<Guid>.Success(selectedRegion.Id);
     }
 
     private async Task<DataResult<Int32>> ValidateSettlementAvgHotelCost(SettlementsBlank blank)
@@ -145,15 +143,15 @@ public class SettlementsService(ISettlementsRepository repository, ISettlementsT
         throw new NotImplementedException();
     }
 
-    private DataResult<String> ValidateSettlementFoundationDate(SettlementsBlank blank)
+    private DataResult<Int32> ValidateSettlementFoundationDate(SettlementsBlank blank)
     {
         if (!(blank.FoundationYear is { } foundationYear))
-            return DataResult<String>.Fail("Не указан год");
+            return DataResult<Int32>.Fail("Не указан год");
 
-        if (foundationYear.Length < 0)
-            return DataResult<String>.Fail("Указан некорректный год");
+        if (foundationYear < 0)
+            return DataResult<Int32>.Fail("Указан некорректный год");
 
-        return DataResult<String>.Success(foundationYear);
+        return DataResult<Int32>.Success(foundationYear);
     }
 
     #endregion Validation

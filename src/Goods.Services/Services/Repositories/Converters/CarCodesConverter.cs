@@ -11,25 +11,16 @@ internal static class CarCodesConverter
         return new CarCodes(
             carCodesDb.Id,
             carCodesDb.Code,
-            carCodesDb.Regions.ToRegions()
+            carCodesDb.Regions
         );
     }
 
     internal static CarCodesDb ToCarCodesDb(this NpgsqlDataReader reader)
     {
-        FederalRegionsDb federalRegionsDb = new FederalRegionsDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name"))
-        );
-        RegionsDb regions = new RegionsDb(
-            reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetString(reader.GetOrdinal("Name")),
-            federalRegionsDb
-        );
         return new CarCodesDb(
             reader.GetGuid(reader.GetOrdinal("id")),
-            reader.GetInt32(reader.GetOrdinal("Code")),
-            regions
+            reader.GetString(reader.GetOrdinal("code")),
+            reader.GetGuid(reader.GetOrdinal("region"))
         );
     }
 
@@ -38,7 +29,7 @@ internal static class CarCodesConverter
         return new CarCodesDb(
             carCodes.Id, 
             carCodes.Code,
-            carCodes.Regions.ToRegionsDb()
+            carCodes.Regions
         );
     }
 }
