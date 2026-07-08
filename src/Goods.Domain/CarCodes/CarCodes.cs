@@ -3,14 +3,14 @@
 public class CarCodes
 {
     public Guid Id { get; set; }
-    public Int32 Code { get; set; }
-    public Regions Regions { get; set; }
+    public String Code { get; set; }
+    public Guid Regions { get; set; }
 
     public CarCodes
     (
         Guid id,
-        Int32 code,
-        Regions regions
+        String code,
+        Guid regions
     )
     {
         Id = id;

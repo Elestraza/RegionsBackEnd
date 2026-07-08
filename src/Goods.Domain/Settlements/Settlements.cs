@@ -18,8 +18,8 @@ public class Settlements
     public SettlementsTypes Type { get; set; }
     public String Name { get; set; }
     public Int32 Population {  get; set; }
-    public Regions Region { get; set; }
-    public String FoundationYear { get; set; }
+    public Guid Region { get; set; }
+    public Int32 FoundationYear { get; set; }
     public Boolean IsHero { get; set; }
     public Int32 AverageHotelCost { get; set; }
 
@@ -29,8 +29,8 @@ public class Settlements
         SettlementsTypes type,
         String name,
         Int32 population,
-        Regions region,
-        String foundationYear,
+        Guid region,
+        Int32 foundationYear,
         Boolean isHero,
         Int32 averageHotelCost
     )
