@@ -1,8 +1,11 @@
 import { AppBar, Box, Typography } from '@mui/material';
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Button } from './buttons/button';
 import { Links } from '../../app/router';
+
+
+
 
 export function Layout() {
 
@@ -19,6 +22,14 @@ export function Layout() {
 	const routeHome = () =>{ 
 		navigate(Links.index);
 	}
+	
+	const HomeBtnSx = {
+		padding: '5px', 
+		margin: '5px', 
+		fontWeight: 'bold', 
+		color: 'white', 
+		textDecoration: 'none' 
+	}
 
 	return (
 		<>
@@ -32,18 +43,21 @@ export function Layout() {
 						gap: 4,
 						paddingX: 2
 					}}>
-					<Box sx={{ width: 'fit-content', height: '100%', display: 'flex', alignItems: 'center' }}>
-						<Typography sx={{ fontWeight: 'bold' }}>Goods</Typography>	
-						<Button 	sx={{ color: 'white', marginLeft: 5 }} title="Главный экран" variant='confirm' onClick={routeHome}/>
-						<Button sx={{marginLeft: 5}} title="Автомобильные коды" variant='edit' 		onClick={routeCarCodes}/>
-						<Button sx={{marginLeft: 5}} title="Регионы" 			variant='edit' 		onClick={routeRegions}/>
-						<Button sx={{marginLeft: 5}} title="Населенные пункты" 	variant='edit' 		onClick={routeSettlements}/>
+					<Box sx={{ width: 'fit-content', height: '100%', alignItems: 'center', display: 'flex' }}>
+						<Typography sx={{ fontWeight: 'bold' }}>Управление населенными пунктами</Typography>	
+						{/* <Button 	sx={{ color: 'white', marginLeft: 5 }} title="Главный экран" variant='add' onClick={routeHome}/> */}
+						<Typography component={Link} to={Links.index} sx={{ 
+							padding: '5px', 
+							margin: '5px', 
+							fontWeight: 'bold', 
+							color: 'white', 
+							textDecoration: 'none'  
+						}}> 
+							ГЛАВНЫЙ ЭКРАН
+						</Typography>	
 					</Box>
-					
 				</Box>
-				
 			</AppBar>
-			
 			<Box
 				sx={{
 					width: '100%',
