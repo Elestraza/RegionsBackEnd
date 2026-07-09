@@ -24,8 +24,6 @@ export function SettlementEditorModal(props: Props) {
 	const [regions, setRegions] = useState<Regions[]>([]);
 	const [isLoadingRegions, setIsLoadingRegions] = useState(false);
 
-	const [heroStatus, setHeroStatus] = useState()
-
 	useEffect(() => {
 		console.log(`Стейт blank.isHero : ${blank.isHero}`);
 	}, [blank.isHero]);
@@ -163,8 +161,8 @@ export function SettlementEditorModal(props: Props) {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant='save' onClick={() => {
-						if (blank.type !== 1) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");	
-						saveSettlement()
+							if (blank.type !== 1 && blank.isHero === true) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");	
+							else saveSettlement()
 						}} 
 					/>
 				</Modal.Footer>

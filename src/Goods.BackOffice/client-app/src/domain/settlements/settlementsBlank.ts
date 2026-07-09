@@ -17,7 +17,7 @@ export class SettlementsBlank {
 
 export namespace SettlementsBlank {
 	export function getEmpty(): SettlementsBlank {
-		return new SettlementsBlank(null, null, null, null, null, null, null, null);
+		return new SettlementsBlank(null, null, null, null, null, null, false, null);
 	}
 
 	export function getFromSettlement(settlement: Settlements): SettlementsBlank {
