@@ -85,16 +85,13 @@ export function SettlementsPage() {
 	function openHistoricalValueModal(settlementId: string, settlement: Settlements) {
 
 		console.log(settlement);
-
 /*
 *
 *		ВОЗРАСТ СТАНОВЛЕНИЯ НП ИСТОРИЧЕСКИ ЦЕННЫМ ЗАВИСИТ ОТ ФЕДЕРАЛЬНОГО РЕГИОНА 
 *
 */
-
-
 		let year: number = new Date().getFullYear();
-		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= 500) ){
+		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= settlement.region.federalRegion.historicalValueAge) ){
 			setHistoryValueModalState({
 				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${settlement.name}" имеет историческую ценность`)
 			});

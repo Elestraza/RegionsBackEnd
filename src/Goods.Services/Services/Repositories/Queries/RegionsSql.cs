@@ -22,7 +22,7 @@ internal static class RegionsSql
         """
             SELECT
                 r.id,
-                r.code,
+                r.name,
                 r.historicalvalueage,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
@@ -36,14 +36,14 @@ internal static class RegionsSql
         """
             SELECT
                 r.id,
-                r.code,
+                r.name,
                 r.historicalvalueage,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
                 fr.historicalvalueage as federalregion_historicalvalueage
             FROM regions
-            JOIN federalregions fr ON r.id = federalregion
-            WHERE name = @name;
+            JOIN federalregions fr ON r.id = fr.federalregion
+            WHERE r.name = @name;
         """;
 
     internal static String GetPage =>
@@ -51,7 +51,7 @@ internal static class RegionsSql
             SELECT 
                 COUNT(*) OVER() as count, 
                 r.id,
-                r.code,
+                r.name,
                 r.historicalvalueage,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
