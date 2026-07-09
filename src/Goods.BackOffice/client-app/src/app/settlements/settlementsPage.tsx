@@ -82,16 +82,19 @@ export function SettlementsPage() {
 		});
 	}
 	
-	function openHistoricalValueModal(settlementId: string, name: string, foundationYear: number) {
+	function openHistoricalValueModal(settlementId: string, settlement: Settlements) {
+
+		console.log(settlement);
+		
 		let year: number = new Date().getFullYear();
-		if ((year - foundationYear) <= 500){
+		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= 500) ){
 			setHistoryValueModalState({
-				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${name}" не имеет исторической ценности`)
+				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${settlement.name}" имеет историческую ценность`)
 			});
 		}
 		else {
 			setHistoryValueModalState({
-				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${name}" имеет историческую ценность`)
+				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${settlement.name}" не имеет исторической ценности`)
 			});
 		}
 	}
@@ -186,7 +189,7 @@ export function SettlementsPage() {
 												type='icon'
 												variant='confirm'
 												size='small'
-												onClick={() => openHistoricalValueModal(settlement.id, settlement.name, settlement.foundationYear)} />
+												onClick={() => openHistoricalValueModal(settlement.id, settlement)} />
 										</TableCell>
 									</TableRow>
 								))
