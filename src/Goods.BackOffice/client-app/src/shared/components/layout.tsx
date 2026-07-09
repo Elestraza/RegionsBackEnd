@@ -1,36 +1,9 @@
 import { AppBar, Box, Typography } from '@mui/material';
 import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { Button } from './buttons/button';
+import { Link, Outlet } from 'react-router-dom';
 import { Links } from '../../app/router';
 
-
-
-
 export function Layout() {
-
-	let navigate = useNavigate(); 
-	const routeCarCodes = () =>{ 
-		navigate(Links.carCodes);
-	}
-	const routeRegions = () =>{ 
-		navigate(Links.regions);
-	}
-	const routeSettlements = () =>{ 
-		navigate(Links.settlements);
-	}
-	const routeHome = () =>{ 
-		navigate(Links.index);
-	}
-	
-	const HomeBtnSx = {
-		padding: '5px', 
-		margin: '5px', 
-		fontWeight: 'bold', 
-		color: 'white', 
-		textDecoration: 'none' 
-	}
-
 	return (
 		<>
 			<AppBar position='fixed' sx={{ height: 64 }}>
