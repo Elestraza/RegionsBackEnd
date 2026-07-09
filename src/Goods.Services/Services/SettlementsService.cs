@@ -25,7 +25,7 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
         if (existValidationResult.IsFail(out Guid? id)) return DataResult<Settlements>.Fail(existValidationResult);
 
         DataResult<SettlementsTypes> typeValidationResult = await ValidateSettlementType(blank);
-        if (typeValidationResult.IsFail(out SettlementsTypes type)) return DataResult<Settlements>.Fail(typeValidationResult);
+        if (typeValidationResult.IsFail(out SettlementsTypes settlementtype)) return DataResult<Settlements>.Fail(typeValidationResult);
 
         DataResult<String> nameValidationResult = await ValidateSettlementName(blank);
         if (nameValidationResult.IsFail(out String name)) return DataResult<Settlements>.Fail(nameValidationResult);
@@ -48,7 +48,7 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
         Settlements settlement = new(
             id ?? Guid.NewGuid(),
-            type,
+            settlementtype,
             name,
             population,
             region,
@@ -77,12 +77,12 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
     private async Task<DataResult<SettlementsTypes>> ValidateSettlementType(SettlementsBlank blank)
     {
-        if (blank.Type is not { } type)
+        if (blank.Type is not { } settlementtype)
             return DataResult<SettlementsTypes>.Fail("Выберите тип населенного пункта");
 
-        if (!Enum.IsDefined(type))
-            throw new Exception($"Категория {type} не существует");
-        return DataResult<SettlementsTypes>.Success(type);
+        if (!Enum.IsDefined(settlementtype))
+            throw new Exception($"Категория {settlementtype} не существует");
+        return DataResult<SettlementsTypes>.Success(settlementtype);
     }
 
     private async Task<DataResult<String>> ValidateSettlementName(SettlementsBlank blank)
@@ -119,7 +119,7 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
         Regions selectedRegion = await regionsService.GetRegion(region.Id);
 
-        if (blank.Region != null && selectedRegion.Id != blank.Id)
+        if (blank.Region != null && selectedRegion.Id != blank.Region.Id)
             throw new Exception($"Региона {selectedRegion} не существует");
 
         
@@ -140,7 +140,10 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
     private DataResult<Boolean> ValidateSettlementHeroStatus(SettlementsBlank blank)
     {
-        throw new NotImplementedException();
+        if (!(blank.IsHero is { } isHero))
+            return DataResult<bool>.Fail("Не указан автомобильный код");
+
+        return DataResult<Boolean>.Success(isHero);
     }
 
     private DataResult<Int32> ValidateSettlementFoundationDate(SettlementsBlank blank)

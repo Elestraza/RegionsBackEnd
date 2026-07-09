@@ -62,8 +62,8 @@ public class CarCodesService(ICarCodesRepository repository, IRegionsService reg
         Regions selectedRegion = await regionsService.GetRegion(region.Id);
 
 
-        if (selectedRegion is not null && selectedRegion.Id != blank.Id)
-            throw new Exception($"Региона {region} не существует");
+        if (selectedRegion is not null && selectedRegion.Id != blank.Regions.Id)
+            throw new Exception($"Региона {selectedRegion} не существует");
 
         return DataResult<Regions>.Success(selectedRegion);
     }
