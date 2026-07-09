@@ -73,7 +73,7 @@ public class SettlementsRepository : ISettlementsRepository
 
         return pageDb.Convert(settlementDb => settlementDb.ToSettlements());
     }
-    
+
     public Task RemoveSettlement(Guid id)
     {
         return DatabaseUtils.ExecuteAsync(
@@ -84,4 +84,6 @@ public class SettlementsRepository : ISettlementsRepository
             }
         );
     }
+
+    
 }

@@ -12,25 +12,25 @@ public class SettlementsController(ISettlementsService settlementsService) : Bas
     public IActionResult Settlements() => ReactApp();
 
     [HttpPost("settlements/save")]
-	public Task<Result> SaveProducts([FromBody] SettlementsBlank blank)
+	public Task<Result> SaveSettlements([FromBody] SettlementsBlank blank)
 	{
 		return settlementsService.SaveSettlement(blank);
 	}
 
 	[HttpGet("settlements/get-page")]
-	public Task<Page<Settlements>> GetProductsPage([FromQuery] Int32 page, [FromQuery] Int32 count)
+	public Task<Page<Settlements>> GetSettlementPage([FromQuery] Int32 page, [FromQuery] Int32 count)
 	{
 		return settlementsService.GetSettlements(page, count);
 	}
 
-	[HttpGet("settlements/get-by-id")]
+    [HttpGet("settlements/get-by-id")]
 	public Task<Settlements> GetProduct([FromQuery] Guid id)
 	{
 		return settlementsService.GetSettlement(id);
 	}
 
 	[HttpPost("settlements/remove")]
-	public Task<Result> RemoveProduct([FromQuery] Guid id)
+	public Task<Result> RemoveSettlement([FromQuery] Guid id)
 	{
 		return settlementsService.RemoveSettlement(id);
 	}

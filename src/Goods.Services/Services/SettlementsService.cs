@@ -176,7 +176,7 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
     {
         return repository.GetSettlements(page, countInPage);
     }
-
+    
     public async Task<Result> RemoveSettlement(Guid id)
     {
         try
