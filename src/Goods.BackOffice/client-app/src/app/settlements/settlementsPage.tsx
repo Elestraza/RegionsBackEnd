@@ -31,10 +31,13 @@ interface RemoveSettlementConfirmModalState extends ConfirmModalState {
 	settlementId: string | null;
 }
 
+interface HistoryValueOfSettlementConfirmModalState extends ConfirmModalState {
+	settlementId: string | null;
+}
+
 export function SettlementsPage() {
 	const [settlements, setSettlement] = useState<Settlements[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
-	const [sortedPagination, setSortedPagination] = useState<Pagination>(Pagination.default);
 
 	const [settlementEditorModalState, setSettlementEditorModalState] = useState<SettlementEditorModalState>({
 		settlementId: null,
@@ -42,6 +45,8 @@ export function SettlementsPage() {
 	});
 	const [removeSettlementConfirmModalState, setRemoveSettlementConfirmModalState] =
 		useState<RemoveSettlementConfirmModalState>({ settlementId: null, ...ConfirmModalState.getClosed() });
+	const [historyValueModalState, setHistoryValueModalState] =
+		useState<HistoryValueOfSettlementConfirmModalState>({ settlementId: null, ...ConfirmModalState.getClosed() });
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -60,7 +65,7 @@ export function SettlementsPage() {
 			totalRows: page.totalRows
 		}));
 	}
-
+	
 	function openSettlementEditorModal(settlementId?: string) {
 		setSettlementEditorModalState({ settlementId: settlementId ?? null, isOpen: true });
 	}
@@ -77,21 +82,19 @@ export function SettlementsPage() {
 		});
 	}
 	
-	function historicalValue() {
-
+	function openHistoricalValueModal(settlementId: string, name: string, foundationYear: number) {
+		let year: number = new Date().getFullYear();
+		if ((year - foundationYear) <= 500){
+			setHistoryValueModalState({
+				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${name}" не имеет исторической ценности`)
+			});
+		}
+		else {
+			setHistoryValueModalState({
+				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${name}" имеет историческую ценность`)
+			});
+		}
 	}
-
-	// function sortSettlementsByHeroStatus((newPagination: Pagination) {
-	// 	const page = await SettlementsProvider.getSettlementsPage(newPagination.page, newPagination.pageSize);
-	// 	sortedPage = page.find();
-	// 	setSettlement(page.values);
-	// 	setSortedPagination((pagination) => ({
-	// 		...pagination,
-	// 		page: newPagination.page,
-	// 		pageSize: newPagination.pageSize,
-	// 		totalRows: page.totalRows
-	// 	}));
-	// }
 
 	async function closeRemoveSettlementConfirmModal(isConfirmed: boolean) {
 		if (isConfirmed) {
@@ -109,6 +112,14 @@ export function SettlementsPage() {
 		setRemoveSettlementConfirmModalState({ settlementId: null, ...ConfirmModalState.getClosed() });
 	}
 
+	async function closeHistoryValueModal(isConfirmed: boolean) {
+		if (isConfirmed) {
+			loadSettlementsPage({ ...pagination, page: 1 });
+		}
+
+		setHistoryValueModalState({settlementId: null, ...ConfirmModalState.getClosed()});
+	}
+
 	return (
 		<Container
 			sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}
@@ -124,24 +135,6 @@ export function SettlementsPage() {
 					paddingY: '6px'
 				}}>
 				<Typography variant='h6'>Населенные пункты</Typography>
-
-				<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-					<span>Показать исторически ценные населенные пункты</span>
-					<input 
-						type="checkbox" 
-						defaultChecked={false}
-						// checked={blank.isHero ?? false}
-						onChange={(e) => { 
-							openSettlementEditorModal()
-						// 	if (blank.type !== 1) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");
-							
-						// 	setSettlementBlank(prev => ({ ...prev, isHero: !e.target.checked }));
-						// 	console.log(blank.isHero);
-						}} 
-					/>
-				</label>
-
-				{/* <Button variant='edit' title='Показать Города-герои' size='small' onClick={() => openSettlementEditorModal()} /> */}
 				<Button variant='add' title='Создать' onClick={() => openSettlementEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
@@ -189,6 +182,11 @@ export function SettlementsPage() {
 												variant='remove'
 												size='small'
 												onClick={() => openRemoveSettlementConfirmModal(settlement.id, settlement.name)} />
+											<Button
+												type='icon'
+												variant='confirm'
+												size='small'
+												onClick={() => openHistoricalValueModal(settlement.id, settlement.name, settlement.foundationYear)} />
 										</TableCell>
 									</TableRow>
 								))
@@ -217,6 +215,12 @@ export function SettlementsPage() {
 				title={removeSettlementConfirmModalState.title}
 				onClose={(isConfirmed) => closeRemoveSettlementConfirmModal(isConfirmed)}
 				isOpen={removeSettlementConfirmModalState.isOpen}
+			/>
+
+			<ConfirmModal
+				title={historyValueModalState.title}
+				onClose={(isConfirmed) => closeHistoryValueModal(isConfirmed)}
+				isOpen={historyValueModalState.isOpen}
 			/>
 
 			{
