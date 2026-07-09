@@ -42,7 +42,7 @@ export class RegionsProvider {
 
 	public static async removeRegion(id: string): Promise<Result> {
 		const response = await fetch(`/regions/remove?id=${id}`, {
-			method: 'GET',
+			method: 'POST',
 			headers: this.headers
 		});
 		const json = await response.json();

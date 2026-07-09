@@ -34,6 +34,7 @@ interface RemoveSettlementConfirmModalState extends ConfirmModalState {
 export function SettlementsPage() {
 	const [settlements, setSettlement] = useState<Settlements[]>([]);
 	const [pagination, setPagination] = useState<Pagination>(Pagination.default);
+	const [sortedPagination, setSortedPagination] = useState<Pagination>(Pagination.default);
 
 	const [settlementEditorModalState, setSettlementEditorModalState] = useState<SettlementEditorModalState>({
 		settlementId: null,
@@ -75,6 +76,22 @@ export function SettlementsPage() {
 			...ConfirmModalState.getOpen(`Вы действительно хотите удалить населенный пункт "${name}"`)
 		});
 	}
+	
+	function historicalValue() {
+
+	}
+
+	// function sortSettlementsByHeroStatus((newPagination: Pagination) {
+	// 	const page = await SettlementsProvider.getSettlementsPage(newPagination.page, newPagination.pageSize);
+	// 	sortedPage = page.find();
+	// 	setSettlement(page.values);
+	// 	setSortedPagination((pagination) => ({
+	// 		...pagination,
+	// 		page: newPagination.page,
+	// 		pageSize: newPagination.pageSize,
+	// 		totalRows: page.totalRows
+	// 	}));
+	// }
 
 	async function closeRemoveSettlementConfirmModal(isConfirmed: boolean) {
 		if (isConfirmed) {
@@ -107,6 +124,24 @@ export function SettlementsPage() {
 					paddingY: '6px'
 				}}>
 				<Typography variant='h6'>Населенные пункты</Typography>
+
+				<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+					<span>Показать исторически ценные населенные пункты</span>
+					<input 
+						type="checkbox" 
+						defaultChecked={false}
+						// checked={blank.isHero ?? false}
+						onChange={(e) => { 
+							openSettlementEditorModal()
+						// 	if (blank.type !== 1) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");
+							
+						// 	setSettlementBlank(prev => ({ ...prev, isHero: !e.target.checked }));
+						// 	console.log(blank.isHero);
+						}} 
+					/>
+				</label>
+
+				{/* <Button variant='edit' title='Показать Города-герои' size='small' onClick={() => openSettlementEditorModal()} /> */}
 				<Button variant='add' title='Создать' onClick={() => openSettlementEditorModal()} />
 			</Paper>
 			<Paper elevation={3} sx={{ height: 'calc(100% - 52px)' }}>
@@ -142,7 +177,7 @@ export function SettlementsPage() {
 										<TableCell width='5%'>{settlement.population}</TableCell>
 										<TableCell width='10%'>{settlement.foundationYear}</TableCell>
 										<TableCell width='15%'>{settlement.averageHotelCost}</TableCell>
-										<TableCell width='10%'>{settlement.isHero}</TableCell>
+										<TableCell width='10%'>{`${settlement.isHero}`}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'

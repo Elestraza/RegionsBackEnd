@@ -42,7 +42,7 @@ export class CarCodesProvider {
 
 	public static async removeCarCodes(id: string): Promise<Result> {
 		const response = await fetch(`/car-codes/remove?id=${id}`, {
-			method: 'GET',
+			method: 'POST',
 			headers: this.headers
 		});
 		const json = await response.json();

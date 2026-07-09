@@ -17,25 +17,18 @@ interface Props {
 	isOpen: boolean;
 }
 
-interface EditProps {
-	settlementtype: SettlementsTypes | null,
-	name: string | null,
-	population: number | null,
-	region: string | null,
-	foundationdate: number | null,
-	ishero: boolean | null,
-	averagehotelcost: number | null
-}
-
 export function SettlementEditorModal(props: Props) {
 	const [blank, setSettlementBlank] = useState<SettlementsBlank>(SettlementsBlank.getEmpty());
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const [regions, setRegions] = useState<Regions[]>([]);
-	// const [isLoadingRegions, setIsLoadingRegions] = useState(false);
+	const [isLoadingRegions, setIsLoadingRegions] = useState(false);
 
-	const [checked, setChecked] = useState<boolean>(true);
-	
+	const [heroStatus, setHeroStatus] = useState()
+
+	useEffect(() => {
+		console.log(`Стейт blank.isHero : ${blank.isHero}`);
+	}, [blank.isHero]);
 	useEffect(() => {
 		if (!props.isOpen) return;
 
@@ -47,27 +40,36 @@ export function SettlementEditorModal(props: Props) {
 				if (settlement == null) throw 'Settlement is null';
 
 				blank = SettlementsBlank.getFromSettlement(settlement);
+				
 			}
-
+			
 			setSettlementBlank(blank ?? SettlementsBlank.getEmpty());
 		}
-		// async function loadRegions() {
-		// 	setIsLoadingRegions(true);
-		// 	try {
-		// 		const page = await RegionsProvider.getRegionsPage(1, 1000);
+
+		async function loadRegions() {
+			setIsLoadingRegions(true);
+			try {
+				const page = await RegionsProvider.getRegionsPage(0, 1000);
 				
-		// 		const regionsArray = (page as any).items || (page as any).data || [];
-		// 		setRegions(regionsArray);
-		// 	} catch (e) {
-		// 		console.error('Ошибка загрузки регионов:', e);
-		// 		setErrorMessage('Не удалось загрузить список регионов');
-		// 	} finally {
-		// 		setIsLoadingRegions(false);
-		// 	}
-		// }
+				const regionsArray = 
+					(page as any).values || 
+					(page as any).items || 
+					(page as any).data || 
+					(page as any).content || 
+					(page as any).elements || 
+					[];
+
+				setRegions(regionsArray);
+			} catch (e) {
+				console.error('Ошибка загрузки регионов:', e);
+				setErrorMessage('Не удалось загрузить список регионов');
+			} finally {
+				setIsLoadingRegions(false);
+			}
+		}
 
 		loadSettlementBlank();
-		// loadRegions();
+		loadRegions();
 
 		return () => {
 			setSettlementBlank(SettlementsBlank.getEmpty());
@@ -75,7 +77,7 @@ export function SettlementEditorModal(props: Props) {
 		};
 	}, [props.isOpen, props.settlementId]);
 
-	async function saveProduct() {
+	async function saveSettlement() {
 		const result = await SettlementsProvider.saveSettlements(blank);
 		if (!result.isSuccess) {
 			setErrorMessage(result.errorsAsString);
@@ -84,7 +86,8 @@ export function SettlementEditorModal(props: Props) {
 
 		props.onClose(true);
 	}
-	// const selectedRegion = regions.find(r => r.id === blank.region?.id) ?? null;
+
+
 	return (
 		<>
 			<Modal onClose={() => props.onClose(false)} isOpen={props.isOpen}>
@@ -108,7 +111,7 @@ export function SettlementEditorModal(props: Props) {
 						required
 					/>
 					<Input
-						variant='text'
+						variant='text-area'
 						title='Введите название'
 						value={blank.name}
 						onChange={(name) => setSettlementBlank((blank) => ({ ...blank, name }))}
@@ -118,23 +121,21 @@ export function SettlementEditorModal(props: Props) {
 						variant='number'
 						title='Введите население'
 						value={blank.population}
-						onChange={(population) =>
-							setSettlementBlank((blank) => ({ ...blank, population }))
-						}
+						onChange={(population) => setSettlementBlank((blank) => ({ ...blank, population }))}
 						required
 					/>
 					<Input
 						variant='number'
 						title='Введите год основания'
 						value={blank.foundationYear}
-						onChange={(foundationDate) => setSettlementBlank((blank) => ({ ...blank, foundationDate }))}
+						onChange={(foundationYear) => setSettlementBlank((blank) => ({ ...blank, foundationYear }))}
 						required
 					/>
 					<Input
 						variant='number'
 						title='Введите среднюю стоимость отеля за ночь'
 						value={blank.averageHotelCost}
-						onChange={(averageCost) => setSettlementBlank((blank) => ({ ...blank, averageCost }))}
+						onChange={(averageHotelCost) => setSettlementBlank((blank) => ({ ...blank, averageHotelCost }))}
 						required
 					/>
 					<Input 
@@ -148,28 +149,24 @@ export function SettlementEditorModal(props: Props) {
 						isOptionEqualToValue={(a, b) => a === b}
 						value={blank.region}
 						onChange={(regions: Regions | null) => { setSettlementBlank((blank) => ({ ...blank, region: regions})); }}
-						required
-					/>						
-					{/* <Input // ПРОВЕРИТЬ ЗАВТРА НА РАБОЧЕМ КОМПЕ
-						variant='select'
-						title='Выберите регион'
-						options={regions} 
-						getOptionLabel={(option: Regions) => option.name}
-						isOptionEqualToValue={(option: Regions, value: Regions | null) => 
-							value != null ? option.id === value.id : false
-						}
-						value={selectedRegion} 
-						onChange={(selectedRegion: Regions | null) => { 
-							setSettlementBlank(prev => ({ ...prev, regions: selectedRegion ? selectedRegion.id : ''  })); 
-						}}
 						disabled={isLoadingRegions} 
 						required
-					/> */}
-					<input name="Статус героя" type="checkbox" checked={checked} 
-          				onChange={e => setChecked(!checked)} />
+					/>
+					<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+						<input 
+							type="checkbox" 
+							checked={blank.isHero ?? false}
+							onChange={(e) => setSettlementBlank(prev => ({ ...prev, isHero: e.target.checked })) } 
+						/>
+						<span>Город имеет статус Герой-город</span>
+					</label>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='save' onClick={() => saveProduct()} />
+					<Button variant='save' onClick={() => {
+						if (blank.type !== 1) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");	
+						saveSettlement()
+						}} 
+					/>
 				</Modal.Footer>
 			</Modal>
 
