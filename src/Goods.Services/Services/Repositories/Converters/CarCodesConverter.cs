@@ -25,7 +25,7 @@ internal static class CarCodesConverter
         return new CarCodesDb(
             reader.GetGuid(reader.GetOrdinal("id")),
             reader.GetString(reader.GetOrdinal("code")),
-            region
+            (RegionsDb)region
         );
     }
 
