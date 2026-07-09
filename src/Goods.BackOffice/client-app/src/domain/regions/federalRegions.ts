@@ -2,8 +2,8 @@ export enum FederalRegions {
 	Moscow = 1,
 	Tula = 2,
 	KrasnodarskiyKrai = 3,
-	YamaloNenetskiyAvtonomniyOkrug = 4
-
+	YamaloNenetskiyAvtonomniyOkrug = 4,
+	Kaluga = 5
 }
 
 export namespace FederalRegions {
@@ -17,6 +17,8 @@ export namespace FederalRegions {
 				return 'Краснодарский край';
 			case FederalRegions.YamaloNenetskiyAvtonomniyOkrug:
 				return 'Ямало-Ненецкий автономный округ';
+			case FederalRegions.Kaluga:
+				return 'Калужская область';
 		}
 	};
 }
