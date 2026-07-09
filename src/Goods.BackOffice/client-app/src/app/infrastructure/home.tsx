@@ -15,7 +15,9 @@ export function Home() {
     const routeSettlements = () =>{ 
         navigate(Links.settlements);
     }
-
+    const routeFederalRegions = () =>{ 
+        navigate(Links.federalRegions);
+    }
     return ( <>
         <Container
             display='flex'
@@ -52,6 +54,7 @@ export function Home() {
                     <Button sx={{marginLeft: 5}} title="Автомобильные коды" variant='edit' onClick={routeCarCodes}/>
                     <Button sx={{marginLeft: 5}} title="Регионы" 			variant='edit' onClick={routeRegions}/>
                     <Button sx={{marginLeft: 5}} title="Населенные пункты" 	variant='edit' onClick={routeSettlements}/>
+                    <Button sx={{marginLeft: 5}} title="Федеральные регионы" 	variant='edit' onClick={routeFederalRegions}/>
                 </Box>
             </Paper>
         </Container>

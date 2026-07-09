@@ -60,7 +60,7 @@ public class RegionsService(IRegionsRepository repository) : IRegionsService
         if (blank.FederalRegion is not { } federalRegion)
             return DataResult<FederalRegions>.Fail("Выберите регион");
 
-        if(!Enum.IsDefined(federalRegion))
+        if(federalRegion == null)
             throw new Exception($"Категория {federalRegion} не существует");
 
         return DataResult<FederalRegions>.Success(federalRegion);

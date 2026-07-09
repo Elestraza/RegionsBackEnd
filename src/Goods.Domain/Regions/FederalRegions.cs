@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public enum FederalRegions
+public enum FederalRegionsENUM
 {
     [Display(Name = "Московская область")]
     Moscow = 1,

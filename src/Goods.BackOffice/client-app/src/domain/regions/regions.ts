@@ -1,5 +1,5 @@
 import { Page } from '../../tools/types/page';
-import { FederalRegions } from './federalRegions';
+import { FederalRegions } from '../federalRegions/federalRegions';
 
 export class Regions {
 	constructor(

@@ -22,10 +22,15 @@ internal static class SettlementsConverter
 
     internal static SettlementsDb ToSettlementsDb(this NpgsqlDataReader reader)
     {
+        FederalRegionsDb federalRegions = new FederalRegionsDb(
+            reader.GetGuid(reader.GetOrdinal("federalregion_id")),
+            reader.GetString(reader.GetOrdinal("federalregion_name")),
+            reader.GetInt32(reader.GetOrdinal("federalregion_historicalvalueage"))
+        );
         RegionsDb region = new RegionsDb(
             reader.GetGuid(reader.GetOrdinal("region_id")),
             reader.GetString(reader.GetOrdinal("region_name")),
-            (FederalRegions)reader.GetInt32(reader.GetOrdinal("region_federalregion"))
+            (FederalRegionsDb)federalRegions
         );
         return new SettlementsDb(
             reader.GetGuid(reader.GetOrdinal("id")),

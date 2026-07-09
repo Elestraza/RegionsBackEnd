@@ -20,12 +20,12 @@ namespace Goods.Services.Products.Repositories.Models
 
         public Guid Id { get; set; }
         public String Name { get; set; }
-        public FederalRegions FederalRegion { get; set; }
+        public FederalRegionsDb FederalRegion { get; set; }
         public RegionsDb
         (
             Guid id,
             String name,
-            FederalRegions federalRegion
+            FederalRegionsDb federalRegion
         )
         {
             Id = id;

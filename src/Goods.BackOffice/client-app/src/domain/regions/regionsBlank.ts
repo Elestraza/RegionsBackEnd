@@ -1,4 +1,4 @@
-import { FederalRegions } from './federalRegions';
+import { FederalRegions } from '../federalRegions/federalRegions';
 import { Regions } from './regions';
 export class RegionsBlank {
 	constructor(

@@ -18,7 +18,6 @@ export function Layout() {
 					}}>
 					<Box sx={{ width: 'fit-content', height: '100%', alignItems: 'center', display: 'flex' }}>
 						<Typography sx={{ fontWeight: 'bold' }}>Управление населенными пунктами</Typography>	
-						{/* <Button 	sx={{ color: 'white', marginLeft: 5 }} title="Главный экран" variant='add' onClick={routeHome}/> */}
 						<Typography component={Link} to={Links.index} sx={{ 
 							padding: '5px', 
 							margin: '5px', 

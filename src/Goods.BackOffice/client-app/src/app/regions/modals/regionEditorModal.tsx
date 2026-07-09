@@ -4,7 +4,7 @@ import { Input } from '../../../shared/components/inputs/input';
 import { Modal } from '../../../shared/components/modals/modal';
 import { Notification } from '../../../shared/components/notification';
 import { Enum } from '../../../tools/types/enum';
-import { FederalRegions } from '../../../domain/regions/federalRegions';
+import { FederalRegions } from '../../../domain/federalRegions/federalRegions';
 import { RegionsProvider } from '../../../domain/regions/regionsProvider';
 import { RegionsBlank } from '../../../domain/regions/regionsBlank';
 import { Regions } from '../../../domain/regions/regions';
@@ -18,6 +18,9 @@ interface Props {
 export function RegionEditorModal(props: Props) {
 	const [blank, setRegionBlank] = useState<RegionsBlank>(RegionsBlank.getEmpty());
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+	const [federalRegions, setFederalRegions] = useState<FederalRegions[]>([]);
+	const [isLoadingFederalRegions, setIsLoadingFederalRegions] = useState(false);
 
 	useEffect(() => {
 		if (!props.isOpen) return;
@@ -35,7 +38,30 @@ export function RegionEditorModal(props: Props) {
 			setRegionBlank(blank ?? RegionsBlank.getEmpty());
 		}
 
+		async function loadFederalRegions() {
+			setIsLoadingFederalRegions(true);
+			try {
+				const page = await RegionsProvider.getRegionsPage(0, 1000);
+				
+				const federalRegionsArray = 
+					(page as any).values || 
+					(page as any).items || 
+					(page as any).data || 
+					(page as any).content || 
+					(page as any).elements || 
+					[];
+
+				setFederalRegions(federalRegionsArray);
+			} catch (e) {
+				console.error('Ошибка загрузки регионов:', e);
+				setErrorMessage('Не удалось загрузить список регионов');
+			} finally {
+				setIsLoadingFederalRegions(false);
+			}
+		}		
+
 		loadRegionBlank();
+		loadFederalRegions();
 
 		return () => {
 			setRegionBlank(RegionsBlank.getEmpty());
@@ -65,14 +91,18 @@ export function RegionEditorModal(props: Props) {
 						flexDirection: 'column',
 						gap: '12px'
 					}}>		
-					<Input
+					<Input 
 						variant='select'
-						title='Выберите категорию'
-						options={Enum.getNumberValues<FederalRegions>(FederalRegions)}
-						getOptionLabel={(option) => FederalRegions.getDisplayName(option)}
+						title='Выберите регион'
+						options={federalRegions.map(r => r)}
+						getOptionLabel={(option) => {
+							const federalRegion = federalRegions.find(r => r.id === option.id);
+							return federalRegion ? `${federalRegion.name}` : '';
+						}}
 						isOptionEqualToValue={(a, b) => a === b}
 						value={blank.federalRegion}
-						onChange={(federalRegion) => setRegionBlank((blank) => ({ ...blank, federalRegion }))}
+						onChange={(federalRegion: FederalRegions | null) => { setRegionBlank((blank) => ({ ...blank, federalRegion: federalRegion})); }}
+						disabled={isLoadingFederalRegions} 
 						required
 					/>
 					<Input

@@ -19,7 +19,7 @@ public class RegionsRepository : IRegionsRepository
             {
                 parameters.AddWithValue("@id", regionsDb.Id);
                 parameters.AddWithValue("@name", regionsDb.Name);
-                parameters.AddWithValue("@federalregion", (Int32)regionsDb.FederalRegion);
+                parameters.AddWithValue("@federalregion", regionsDb.FederalRegion.Id);
             }
         );
     }

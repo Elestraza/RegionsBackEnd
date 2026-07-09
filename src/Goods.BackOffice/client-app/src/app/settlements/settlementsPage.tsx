@@ -85,7 +85,14 @@ export function SettlementsPage() {
 	function openHistoricalValueModal(settlementId: string, settlement: Settlements) {
 
 		console.log(settlement);
-		
+
+/*
+*
+*		ВОЗРАСТ СТАНОВЛЕНИЯ НП ИСТОРИЧЕСКИ ЦЕННЫМ ЗАВИСИТ ОТ ФЕДЕРАЛЬНОГО РЕГИОНА 
+*
+*/
+
+
 		let year: number = new Date().getFullYear();
 		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= 500) ){
 			setHistoryValueModalState({

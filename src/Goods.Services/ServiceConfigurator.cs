@@ -9,6 +9,10 @@ public static class ServiceConfigurator
 {
     public static IServiceCollection AddServices(this IServiceCollection collection)
     {
+        collection.AddSingleton<IFederalRegionsService, FederalRegionsService>();
+        collection.AddSingleton<IFederalRegionsRepository, FederalRegionsRepository>();
+
+
         collection.AddSingleton<ICarCodesService, CarCodesService>();
         collection.AddSingleton<ICarCodesRepository, CarCodesRepository>();
 

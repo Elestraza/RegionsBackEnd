@@ -19,7 +19,7 @@ import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { RegionEditorModal } from './modals/regionEditorModal';
-import { FederalRegions } from '../../domain/regions/federalRegions';
+import { FederalRegions } from '../../domain/federalRegions/federalRegions';
 
 type RegionEditorModalState = {
 	id: string | null;
@@ -130,9 +130,7 @@ export function RegionsPage() {
 									<TableRow key={`product__${region.id}`}>
 
 										<TableCell width='20%'>{region.name}</TableCell>
-										<TableCell width='15%'>
-											{FederalRegions.getDisplayName(region.federalRegion)}
-										</TableCell>
+										<TableCell width='15%'>{region.federalRegion.name}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'

@@ -20,13 +20,29 @@ internal static class RegionsSql
         """;
     internal static String GetById =>
         """
-            SELECT * FROM regions
-            WHERE id = @id;
+            SELECT
+                r.id,
+                r.code,
+                r.historicalvalueage,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
+            FROM regions r
+            JOIN federalregions fr ON r.id = r.federalregion
+            WHERE r.id = @id;
         """;
 
     internal static String GetByName =>
         """
-            SELECT * FROM regions
+            SELECT
+                r.id,
+                r.code,
+                r.historicalvalueage,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
+            FROM regions
+            JOIN federalregions fr ON r.id = federalregion
             WHERE name = @name;
         """;
 
@@ -34,8 +50,14 @@ internal static class RegionsSql
         """
             SELECT 
                 COUNT(*) OVER() as count, 
-                *
+                r.id,
+                r.code,
+                r.historicalvalueage,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM regions
+            JOIN federalregions fr ON r.id = federalregion
             OFFSET @offset 
             LIMIT @limit
         """;
