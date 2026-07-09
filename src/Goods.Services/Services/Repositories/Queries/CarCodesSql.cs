@@ -5,18 +5,18 @@ internal static class CarCodesSql
     internal static String CarCodes_Save =>
         """
             INSERT INTO carcodes (
-                id
-                code
+                id,
+                code,
                 region
             )
             VALUES (
                 @id,
                 @code,
-                @federalregion
+                @region
             )
         	ON CONFLICT (id) DO UPDATE SET
-        	    region = @region,
-        	    code = @code
+                code = @code,
+        	    region = @region;
         """;
     internal static String GetById =>
         """
@@ -29,7 +29,7 @@ internal static class CarCodesSql
                 r.federalregion as region_federalregion
             FROM carcodes c
             JOIN regions r ON r.id = c.region
-            WHERE id = @id;
+            WHERE c.id = @id;
         """;
 
     internal static String GetByName =>
@@ -59,11 +59,11 @@ internal static class CarCodesSql
             FROM carcodes c
             JOIN regions r ON r.id = c.region
             OFFSET @offset 
-            LIMIT @limit
+            LIMIT @limit;
         """;
 
     internal static String Remove =>
         """
-        	DELETE ON CASCADE FROM carcodes WHERE id = @id
+        	DELETE FROM carcodes WHERE id = @id;
         """;
 }

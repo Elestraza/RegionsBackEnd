@@ -42,6 +42,6 @@ internal static class RegionsSql
 
     internal static String Remove =>
         """
-        	DELETE ON CASCADE FROM regions WHERE id = @id
+        	DELETE FROM regions WHERE id = @id
         """;
 }

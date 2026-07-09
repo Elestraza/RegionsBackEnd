@@ -49,7 +49,7 @@ internal static class SettlementsSql
                 r.federalregion as region_federalregion
             FROM settlements s
             JOIN regions r ON r.id = s.region
-            WHERE id = @id;
+            WHERE s.id = @id;
         """;
 
     internal static String GetByName =>
@@ -94,6 +94,6 @@ internal static class SettlementsSql
 
     internal static String Remove =>
         """
-        	DELETE ON CASCADE FROM settlements s WHERE s.id = @id
+        	DELETE FROM settlements s WHERE s.id = @id
         """;
 }
