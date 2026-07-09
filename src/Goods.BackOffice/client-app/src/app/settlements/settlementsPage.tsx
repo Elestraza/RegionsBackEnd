@@ -83,7 +83,6 @@ export function SettlementsPage() {
 	}
 	
 	function openHistoricalValueModal(settlementId: string, settlement: Settlements) {
-
 		console.log(settlement);
 /*
 *
