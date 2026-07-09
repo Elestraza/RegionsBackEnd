@@ -18,9 +18,10 @@ public class SettlementsRepository : ISettlementsRepository
             parameters =>
             {
                 parameters.AddWithValue("@id", settlementDb.Id);
-                parameters.AddWithValue("@type", (Object)settlementDb.Type);
+                parameters.AddWithValue("@settlementtype", (Int32)settlementDb.Type);
+                parameters.AddWithValue("@population", settlementDb.Population);
                 parameters.AddWithValue("@name", settlementDb.Name);
-                parameters.AddWithValue("@region", (Object)settlementDb.Region);
+                parameters.AddWithValue("@region", settlementDb.Region.Id);
                 parameters.AddWithValue("@foundationyear", settlementDb.FoundationYear);
                 parameters.AddWithValue("@ishero", (Boolean)settlementDb.IsHero);
                 parameters.AddWithValue("@averagehotelcost", (Int32)settlementDb.AverageHotelCost);

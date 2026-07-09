@@ -18,8 +18,8 @@ public class CarCodesRepository : ICarCodesRepository
             parameters =>
             {
                 parameters.AddWithValue("@id", carCodesDb.Id);
-                parameters.AddWithValue("@category", (String)carCodesDb.Code);
-                parameters.AddWithValue("@description", (Object?)carCodesDb.Regions ?? DBNull.Value);
+                parameters.AddWithValue("@code", (String)carCodesDb.Code);
+                parameters.AddWithValue("@region", carCodesDb.Regions.Id);
             }
         );
     }
