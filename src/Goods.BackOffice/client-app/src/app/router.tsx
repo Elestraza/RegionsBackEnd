@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { SettlementsPage } from './settlements/settlementsPage';
 import { RegionsPage } from './regions/regionsPage';
 import { CarCodesPage } from './carCodes/carCodesPage'
-import { Home } from './infrastructure/components/home';
+import { Home } from './infrastructure/home';
 
 export function Router() {
 	return (
