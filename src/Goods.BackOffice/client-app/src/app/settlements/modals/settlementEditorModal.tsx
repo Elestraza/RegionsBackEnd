@@ -10,7 +10,7 @@ import { Enum } from '../../../tools/types/enum';
 import { SettlementsProvider } from '../../../domain/settlements/settlementsProvider';
 import { Regions } from '../../../domain/regions/regions';
 import { RegionsProvider } from '../../../domain/regions/regionsProvider';
-
+import { DateTimePicker } from 'react-datetime-picker'; // <DateTimePicker onChange={onChange} value={value} />
 interface Props {
 	settlementId: string | null;
 	onClose: (isEdited: boolean) => void;
