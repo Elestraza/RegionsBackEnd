@@ -140,10 +140,10 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
     private DataResult<Boolean> ValidateSettlementHeroStatus(SettlementsBlank blank)
     {
-        if (!(blank.IsHero is { } isHero))
-            return DataResult<bool>.Fail("Не указан автомобильный код");
+        if (blank.Type != SettlementsTypes.City && blank.IsHero == true)
+            return DataResult<Boolean>.Fail("Данный тип населенного пункта не может иметь статус Города-Героя");
 
-        return DataResult<Boolean>.Success(isHero);
+        return DataResult<Boolean>.Success(true);
     }
 
     private DataResult<Int32> ValidateSettlementFoundationDate(SettlementsBlank blank)
