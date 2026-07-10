@@ -92,14 +92,8 @@ export function SettlementsPage() {
 	async function openHistoricalValueModal(settlementId: string) {		
 		await fetch(`/settlements/settlement-history-value/get-by-id?id=${settlementId}`)
 		.then(response => response.text())
-		.then((response) => {
-			setHistoryValueModalState({
-				settlementId, ...ConfirmModalState.getOpen(response)
-			});
-			console.log("RESPONCE: ", response);
-		})
-		.catch(err => console.log(err))
-		
+		.then((response) => setHistoryValueModalState({settlementId, ...ConfirmModalState.getOpen(response)}))
+		.catch(err => console.log(err));
 	}
 
 	async function closeRemoveSettlementConfirmModal(isConfirmed: boolean) {
