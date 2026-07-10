@@ -114,7 +114,10 @@ export function CarCodeEditorModal(props: Props) {
 					/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='save' onClick={() => saveCarCode()} /> 
+					<Button variant='save' onClick={() => {
+						if ( (/^\d+$/.test(blank.code)) === false) setErrorMessage("Автомобильный код может содержать только цифры.");
+						else saveCarCode()
+						}} /> 
 				</Modal.Footer>
 			</Modal>
 
