@@ -19,6 +19,7 @@
 		"noImplicitAny": true,
 		"noImplicitThis": true,
 		"noUnusedLocals": true,
-		"jsx": "react"
+		"jsx": "react",
+		"ignoreDeprecations": "6.0"
 	}
 }
