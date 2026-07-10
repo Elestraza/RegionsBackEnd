@@ -37,6 +37,7 @@ export function Layout() {
 					paddingTop: 10,
 					paddingBottom: 2,
 					paddingX: 2,
+					overflow: 'auto'
 				}}>
 				<Box>
 					<Outlet />
