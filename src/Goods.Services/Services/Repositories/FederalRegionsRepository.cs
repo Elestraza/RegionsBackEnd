@@ -19,7 +19,7 @@ public class FederalRegionsRepository : IFederalRegionsRepository
             {
                 parameters.AddWithValue("@id", federalRegionsDb.Id);
                 parameters.AddWithValue("@name", (String)federalRegionsDb.Name);
-                parameters.AddWithValue("@historicalvalueage", (Int32)federalRegion.HistoricalValueAge);
+                parameters.AddWithValue("@historicalvalueage", federalRegion.HistoricalValueAge);
             }
         );
     }
