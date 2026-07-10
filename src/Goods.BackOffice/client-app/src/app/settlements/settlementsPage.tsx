@@ -90,7 +90,7 @@ export function SettlementsPage() {
 *		СЕРВЕРНАЯ ЛОГИКА
 */
 	async function openHistoricalValueModal(settlementId: string) {		
-		const response = await fetch(`/settlements/settlement-history-value/get-by-id?id=${settlementId}`)
+		await fetch(`/settlements/settlement-history-value/get-by-id?id=${settlementId}`)
 		.then(response => response.text())
 		.then((response) => {
 			setHistoryValueModalState({
