@@ -51,6 +51,7 @@ export function FederalRegionsPage() {
 	async function loadFederalRegionsPage(newPagination: Pagination) {
 		const federalRegionsPage = await FederalRegionsProvider.getFederalRegionsPage(newPagination.page, newPagination.pageSize);
 
+		
 		setFederalRegions(federalRegionsPage.values);
 		setPagination((pagination) => ({
 			...pagination,
@@ -127,21 +128,21 @@ export function FederalRegionsPage() {
 								</TableRow>
 							}
 							{
-								federalRegions.map(federalRegions => (
-									<TableRow key={`product__${federalRegions.id}`}>
-										<TableCell width='20%'>{federalRegions.name}</TableCell>
-										<TableCell width='40%'>{federalRegions.historicalValueAge}</TableCell>
+								federalRegions.map(federalRegion => (
+									<TableRow key={`product__${federalRegion.id}`}>
+										<TableCell width='20%'>{federalRegion.name}</TableCell>
+										<TableCell width='40%'>{federalRegion.historicalValueAge}</TableCell>
 										<TableCell>
 											<Button
 												type='icon'
 												variant='edit'
 												size='small'
-												onClick={() => openFederalRegionsEditorModal(federalRegions.id)} />
+												onClick={() => openFederalRegionsEditorModal(federalRegion.id)} />
 											<Button
 												type='icon'
 												variant='remove'
 												size='small'
-												onClick={() => openRemoveFederalRegionsConfirmModal(federalRegions.id, federalRegions.name)} />
+												onClick={() => openRemoveFederalRegionsConfirmModal(federalRegion.id, federalRegion.name)} />
 										</TableCell>
 									</TableRow>
 								))

@@ -89,6 +89,8 @@ export function SettlementsPage() {
 *		ВОЗРАСТ СТАНОВЛЕНИЯ НП ИСТОРИЧЕСКИ ЦЕННЫМ ЗАВИСИТ ОТ ФЕДЕРАЛЬНОГО РЕГИОНА 
 *
 */
+		console.log(`Age: ${settlement.region.federalRegion.historicalValueAge}`);
+		
 		let year: number = new Date().getFullYear();
 		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= settlement.region.federalRegion.historicalValueAge) ){
 			setHistoryValueModalState({
