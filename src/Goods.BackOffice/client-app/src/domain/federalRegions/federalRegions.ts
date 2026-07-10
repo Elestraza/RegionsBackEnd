@@ -8,14 +8,14 @@ export class FederalRegions {
 	) { }
 }
 
-export function mapToRegionsPage(data: any): Page<FederalRegions> {
-	return Page.convert(data, mapToRegion);
+export function mapToFederalRegionsPage(data: any): Page<FederalRegions> {
+	return Page.convert(data, mapToFederalRegion);
 }
 
-export function mapToRegions(data: any[]): FederalRegions[] {
-	return data.map(mapToRegion);
+export function mapToFederalRegions(data: any[]): FederalRegions[] {
+	return data.map(mapToFederalRegion);
 }
 
-export function mapToRegion(data: any): FederalRegions {
-	return new FederalRegions(data.id, data.name, data.federalRegion);
+export function mapToFederalRegion(data: any): FederalRegions {
+	return new FederalRegions(data.id, data.name, data.historicalValueAge);
 }

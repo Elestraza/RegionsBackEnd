@@ -1,6 +1,6 @@
 import { Page } from '../../tools/types/page';
 import { mapToResult, Result } from '../../tools/types/results/result';
-import { mapToRegion, mapToRegionsPage, FederalRegions } from './federalRegions';
+import { mapToFederalRegion, mapToFederalRegionsPage, FederalRegions } from './federalRegions';
 import { FederalRegionsBlank } from './federalRegionsBlank';
 
 export class FederalRegionsProvider {
@@ -27,7 +27,7 @@ export class FederalRegionsProvider {
 		});
 		const json = await response.json();
 		
-		return mapToRegionsPage(json);
+		return mapToFederalRegionsPage(json);
 	}
 
 	public static async getFederalRegionById(id: string): Promise<FederalRegions | null> {
@@ -37,7 +37,7 @@ export class FederalRegionsProvider {
 		});
 		const json = await response.json();
 
-		return mapToRegion(json);
+		return mapToFederalRegion(json);
 	}
 
 	public static async removeFederalRegion(id: string): Promise<Result> {
