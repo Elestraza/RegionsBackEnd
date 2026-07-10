@@ -19,7 +19,6 @@ import { TablePagination } from '../../shared/components/tablePagination';
 import { ConfirmModalState } from '../../shared/types/confirmModalState';
 import { Pagination } from '../../tools/types/pagination';
 import { RegionEditorModal } from './modals/regionEditorModal';
-import { FederalRegions } from '../../domain/federalRegions/federalRegions';
 
 type RegionEditorModalState = {
 	id: string | null;
