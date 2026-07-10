@@ -55,7 +55,7 @@ export function FederalRegionsEditorModal(props: Props) {
 	return (
 		<>
 			<Modal onClose={() => props.onClose(false)} isOpen={props.isOpen}>
-				<Modal.Header onClose={() => props.onClose(false)}>Редактор автомобильных кодов</Modal.Header>
+				<Modal.Header onClose={() => props.onClose(false)}>Редактор федеральных регионов</Modal.Header>
 				<Modal.Body
 					sx={{
 						maxWidth: '800px',
@@ -66,7 +66,7 @@ export function FederalRegionsEditorModal(props: Props) {
 					}}>
 					<Input
 						variant='text'
-						title='Введите код'
+						title='Введите название'
 						value={blank.name}
 						onChange={(name) => setFederalRegionsBlank(prev => ({ ...prev, name }))}
 						required
@@ -80,7 +80,9 @@ export function FederalRegionsEditorModal(props: Props) {
 					/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='save' onClick={() => saveFederalRegion()} /> 
+					<Button variant='save' onClick={() => {
+						saveFederalRegion()
+						}} /> 
 				</Modal.Footer>
 			</Modal>
 
