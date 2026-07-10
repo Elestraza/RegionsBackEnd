@@ -23,7 +23,7 @@ internal static class FederalRegionsSql
             SELECT  
                 id,
                 name,
-                historicalvalueage,
+                historicalvalueage
             FROM federalregions
             WHERE id = @id;
         """;
@@ -33,7 +33,7 @@ internal static class FederalRegionsSql
             SELECT 
                 id,
                 name,
-                historicalvalueage,
+                historicalvalueage
             FROM federalregions
             WHERE name = @name;
         """;

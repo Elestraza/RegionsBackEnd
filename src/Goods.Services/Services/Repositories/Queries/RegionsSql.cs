@@ -23,12 +23,12 @@ internal static class RegionsSql
             SELECT
                 r.id,
                 r.name,
-                r.historicalvalueage,
+                r.federalregion,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
                 fr.historicalvalueage as federalregion_historicalvalueage
             FROM regions r
-            JOIN federalregions fr ON r.id = r.federalregion
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE r.id = @id;
         """;
 
@@ -37,12 +37,12 @@ internal static class RegionsSql
             SELECT
                 r.id,
                 r.name,
-                r.historicalvalueage,
+                r.federalregion,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
                 fr.historicalvalueage as federalregion_historicalvalueage
-            FROM regions
-            JOIN federalregions fr ON r.id = fr.federalregion
+            FROM regions r
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE r.name = @name;
         """;
 
@@ -52,12 +52,12 @@ internal static class RegionsSql
                 COUNT(*) OVER() as count, 
                 r.id,
                 r.name,
-                r.historicalvalueage,
+                r.federalregion,
                 fr.id as federalregion_id,
                 fr.name as federalregion_name,
                 fr.historicalvalueage as federalregion_historicalvalueage
-            FROM regions
-            JOIN federalregions fr ON r.id = federalregion
+            FROM regions r
+            JOIN federalregions fr ON fr.id = r.federalregion
             OFFSET @offset 
             LIMIT @limit
         """;

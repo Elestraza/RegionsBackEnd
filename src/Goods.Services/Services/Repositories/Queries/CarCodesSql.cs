@@ -26,9 +26,13 @@ internal static class CarCodesSql
                 c.region,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM carcodes c
             JOIN regions r ON r.id = c.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE c.id = @id;
         """;
 
@@ -40,9 +44,13 @@ internal static class CarCodesSql
                 c.region,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM carcodes c
             JOIN regions r ON r.id = c.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE c.code = @code;
         """;
 
@@ -55,9 +63,13 @@ internal static class CarCodesSql
                 c.region,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM carcodes c
             JOIN regions r ON r.id = c.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             OFFSET @offset 
             LIMIT @limit;
         """;

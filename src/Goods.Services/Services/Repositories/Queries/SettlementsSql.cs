@@ -46,9 +46,13 @@ internal static class SettlementsSql
                 s.averagehotelcost,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM settlements s
             JOIN regions r ON r.id = s.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE s.id = @id;
         """;
 
@@ -65,9 +69,13 @@ internal static class SettlementsSql
                 s.averagehotelcost,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM settlements s
             JOIN regions r ON r.id = s.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             WHERE s.name = @name;
         """;
 
@@ -85,9 +93,13 @@ internal static class SettlementsSql
                 s.averagehotelcost,
                 r.id as region_id,
                 r.name as region_name,
-                r.federalregion as region_federalregion
+                r.federalregion as region_federalregion,
+                fr.id as federalregion_id,
+                fr.name as federalregion_name,
+                fr.historicalvalueage as federalregion_historicalvalueage
             FROM settlements s
             JOIN regions r ON r.id = s.region
+            JOIN federalregions fr ON fr.id = r.federalregion
             OFFSET @offset 
             LIMIT @limit
         """;
