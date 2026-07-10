@@ -3,12 +3,11 @@ import { Button } from '../../../shared/components/buttons/button';
 import { Input } from '../../../shared/components/inputs/input';
 import { Modal } from '../../../shared/components/modals/modal';
 import { Notification } from '../../../shared/components/notification';
-import { Enum } from '../../../tools/types/enum';
 import { FederalRegions } from '../../../domain/federalRegions/federalRegions';
 import { RegionsProvider } from '../../../domain/regions/regionsProvider';
 import { RegionsBlank } from '../../../domain/regions/regionsBlank';
 import { Regions } from '../../../domain/regions/regions';
-
+import { FederalRegionsProvider } from '../../../domain/federalRegions/federalRegionsProvider';
 interface Props {
 	regionId: string | null;
 	onClose: (isEdited: boolean) => void;
@@ -41,7 +40,7 @@ export function RegionEditorModal(props: Props) {
 		async function loadFederalRegions() {
 			setIsLoadingFederalRegions(true);
 			try {
-				const page = await RegionsProvider.getRegionsPage(0, 1000);
+				const page = await FederalRegionsProvider.getFederalRegionsPage(0, 1000);
 				
 				const federalRegionsArray = 
 					(page as any).values || 
