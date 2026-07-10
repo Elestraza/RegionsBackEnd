@@ -82,26 +82,24 @@ export function SettlementsPage() {
 		});
 	}
 	
-	function openHistoricalValueModal(settlementId: string, settlement: Settlements) {
-		console.log(settlement);
+
+
 /*
 *
 *		ВОЗРАСТ СТАНОВЛЕНИЯ НП ИСТОРИЧЕСКИ ЦЕННЫМ ЗАВИСИТ ОТ ФЕДЕРАЛЬНОГО РЕГИОНА 
-*
+*		СЕРВЕРНАЯ ЛОГИКА
 */
-		console.log(`Age: ${settlement.region.federalRegion.historicalValueAge}`);
+	async function openHistoricalValueModal(settlementId: string) {		
+		const response = await fetch(`/settlements/settlement-history-value/get-by-id?id=${settlementId}`)
+		.then(response => response.text())
+		.then((response) => {
+			setHistoryValueModalState({
+				settlementId, ...ConfirmModalState.getOpen(response)
+			});
+			console.log("RESPONCE: ", response);
+		})
+		.catch(err => console.log(err))
 		
-		let year: number = new Date().getFullYear();
-		if ( (settlement.isHero === true) || ((year - settlement.foundationYear) >= settlement.region.federalRegion.historicalValueAge) ){
-			setHistoryValueModalState({
-				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${settlement.name}" имеет историческую ценность`)
-			});
-		}
-		else {
-			setHistoryValueModalState({
-				settlementId, ...ConfirmModalState.getOpen(`Населенный пункт "${settlement.name}" не имеет исторической ценности`)
-			});
-		}
 	}
 
 	async function closeRemoveSettlementConfirmModal(isConfirmed: boolean) {
@@ -194,7 +192,7 @@ export function SettlementsPage() {
 												type='icon'
 												variant='confirm'
 												size='small'
-												onClick={() => openHistoricalValueModal(settlement.id, settlement)} />
+												onClick={() => openHistoricalValueModal(settlement.id)} />
 										</TableCell>
 									</TableRow>
 								))

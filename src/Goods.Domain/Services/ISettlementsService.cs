@@ -12,6 +12,7 @@ namespace Goods.Domain.Services
     {
         Task<Result> SaveSettlement(SettlementsBlank productBlank);
         Task<Settlements> GetSettlement(Guid id);
+        Task<String> GetSettlementHistoryValue(Guid id);
         Task<Page<Settlements>> GetSettlements(Int32 page, Int32 count);
         Task<Result> RemoveSettlement(Guid id);
     }

@@ -190,4 +190,14 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
         return Result.Success();
     }
+    public async Task<String> GetSettlementHistoryValue(Guid id)
+    {
+        Settlements? settlement = await repository.GetSettlement(id);
+        if (DateTime.Now.Year - settlement.FoundationYear < settlement.Region.FederalRegion.HistoricalValueAge)
+        {
+            return $"Населенный пункт {settlement.Name} не имеет историческую ценность";
+        }
+        return $"Населенный пункт {settlement.Name} имеет историческую ценность";
+    }
+
 }

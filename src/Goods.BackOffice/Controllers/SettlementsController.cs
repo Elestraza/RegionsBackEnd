@@ -24,12 +24,18 @@ public class SettlementsController(ISettlementsService settlementsService) : Bas
 	}
 
     [HttpGet("settlements/get-by-id")]
-	public Task<Settlements> GetProduct([FromQuery] Guid id)
+	public Task<Settlements> GetSettlement([FromQuery] Guid id)
 	{
 		return settlementsService.GetSettlement(id);
 	}
 
-	[HttpPost("settlements/remove")]
+    [HttpGet("settlements/settlement-history-value/get-by-id")]
+    public Task<String> GetSettlementHistoryValue([FromQuery] Guid id)
+    {
+        return settlementsService.GetSettlementHistoryValue(id);
+    }
+
+    [HttpPost("settlements/remove")]
 	public Task<Result> RemoveSettlement([FromQuery] Guid id)
 	{
 		return settlementsService.RemoveSettlement(id);
