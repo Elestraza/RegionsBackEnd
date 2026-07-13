@@ -10,7 +10,8 @@ import { Enum } from '../../../tools/types/enum';
 import { SettlementsProvider } from '../../../domain/settlements/settlementsProvider';
 import { Regions } from '../../../domain/regions/regions';
 import { RegionsProvider } from '../../../domain/regions/regionsProvider';
-import { DateTimePicker } from 'react-datetime-picker'; // <DateTimePicker onChange={onChange} value={value} />
+// import { DateTimePicker } from 'react-datetime-picker'; // <DateTimePicker onChange={onChange} value={value} />
+
 interface Props {
 	settlementId: string | null;
 	onClose: (isEdited: boolean) => void;
@@ -150,6 +151,13 @@ export function SettlementEditorModal(props: Props) {
 						disabled={isLoadingRegions} 
 						required
 					/>
+					 {/* <DateTimePicker // Placeholder for FoundationYear input change
+						format={"DD-MM-YYYY"}  // your date format
+						label="my date"
+						inputVariant="outlined" // if you want an outlined date input
+						helperText=""
+						size="small"
+   					/> */}
 					<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
 						<input 
 							type="checkbox" 
@@ -161,7 +169,10 @@ export function SettlementEditorModal(props: Props) {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant='save' onClick={() => {
-							if (blank.type !== 1 && blank.isHero === true) setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");	
+							if (blank.type !== 1 && blank.isHero === true) {
+								blank.isHero = false;
+								setErrorMessage("Данный населенный пункт не может иметь статус Города-героя.");
+							}	
 							else saveSettlement()
 						}} 
 					/>

@@ -8,6 +8,6 @@ public class SettlementsBlank
     public Int32? Population { get; set; }
     public Regions? Region { get; set; }
     public Int32? FoundationYear { get; set; }
-    public Boolean? IsHero { get; set; }
+    public Boolean IsHero { get; set; }
     public Int32? AverageHotelCost { get; set; }
 }

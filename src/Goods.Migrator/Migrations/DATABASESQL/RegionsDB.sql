@@ -22,7 +22,7 @@ CREATE TABLE settlements(
 	population int NOT NULL,
 	region uuid NOT NULL,
 	foundationyear int NOT NULL,
-	ishero bool NOT NULL,
+	ishero bool NOT NULL DEFAULT False,
 	averagehotelcost int NOT NULL,
 	Foreign key(region) REFERENCES regions(id) ON UPDATE CASCADE
 );

@@ -56,7 +56,7 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
             isHero,
             averageHotelCost
         );
-
+        Console.WriteLine(settlement.IsHero);
         return DataResult<Settlements>.Success(settlement);
     }
 
@@ -140,10 +140,13 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
 
     private DataResult<Boolean> ValidateSettlementHeroStatus(SettlementsBlank blank)
     {
-        if (blank.Type != SettlementsTypes.City && blank.IsHero == true)
+        if ((blank.Type != SettlementsTypes.City) && (blank.IsHero == true))
+        {
+            blank.IsHero = false;
             return DataResult<Boolean>.Fail("Данный тип населенного пункта не может иметь статус Города-Героя");
-
-        return DataResult<Boolean>.Success(true);
+        }
+        Console.WriteLine(blank.IsHero);
+        return DataResult<Boolean>.Success(blank.IsHero);
     }
 
     private DataResult<Int32> ValidateSettlementFoundationDate(SettlementsBlank blank)

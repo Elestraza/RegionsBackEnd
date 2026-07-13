@@ -26,7 +26,7 @@ export function Home() {
             gap='10px'
         >
             <Paper 
-                display="flex"
+                display='flex'
                 justifyContent="center"
                 alignItems="center"
                 elevation={3}

@@ -35,12 +35,12 @@ internal static class SettlementsConverter
         return new SettlementsDb(
             reader.GetGuid(reader.GetOrdinal("id")),
             (SettlementsTypes)reader.GetInt32(reader.GetOrdinal("settlementtype")),
-            reader.GetString(reader.GetOrdinal("Name")),
-            reader.GetInt32(reader.GetOrdinal("Population")),
+            reader.GetString(reader.GetOrdinal("name")),
+            reader.GetInt32(reader.GetOrdinal("population")),
             region,
-            reader.GetInt32(reader.GetOrdinal("FoundationYear")),
-            reader.GetBoolean(reader.GetOrdinal("IsHero")),
-            reader.GetInt32(reader.GetOrdinal("AverageHotelCost"))
+            reader.GetInt32(reader.GetOrdinal("foundationyear")),
+            reader.GetBoolean(reader.GetOrdinal("ishero")),
+            reader.GetInt32(reader.GetOrdinal("averagehotelcost"))
         );
     }
 
