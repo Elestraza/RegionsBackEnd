@@ -103,7 +103,11 @@ internal static class SettlementsSql
             OFFSET @offset 
             LIMIT @limit
         """;
-
+    internal static String GetByRegion =>
+        """
+            SELECT * FROM settlements
+            WHERE region = @region
+        """;
     internal static String Remove =>
         """
         	DELETE FROM settlements s WHERE s.id = @id

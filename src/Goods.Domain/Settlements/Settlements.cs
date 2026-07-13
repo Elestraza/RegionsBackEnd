@@ -13,7 +13,8 @@ public class Settlements
 	    ishero bool NOT NULL,
 	    averagehotelcost int NOT NULL,
      */
-
+    
+    
     public Guid Id { get; set; }
     public SettlementsTypes Type { get; set; }
     public String Name { get; set; }

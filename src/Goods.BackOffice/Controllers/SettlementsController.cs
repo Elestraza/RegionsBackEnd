@@ -35,6 +35,12 @@ public class SettlementsController(ISettlementsService settlementsService) : Bas
         return settlementsService.GetSettlementHistoryValue(id);
     }
 
+    [HttpGet("settlements/get-settlements-in-region")]
+    public Task<Page<Settlements>> GetSettlementsByRegion([FromQuery] Guid id, [FromQuery] DateOnly vacationDate)
+    {
+        return settlementsService.GetTopTenSettlements(id, vacationDate);
+    }
+
     [HttpPost("settlements/remove")]
 	public Task<Result> RemoveSettlement([FromQuery] Guid id)
 	{

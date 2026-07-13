@@ -2,6 +2,7 @@
 using Goods.Domain.Services;
 using Goods.Services.Products.Repositories;
 using Goods.Tools.Types.Results;
+using System.Xml.Linq;
 
 namespace Goods.Services.Products;
 
@@ -196,11 +197,65 @@ public class SettlementsService(ISettlementsRepository repository, IRegionsServi
     public async Task<String> GetSettlementHistoryValue(Guid id)
     {
         Settlements? settlement = await repository.GetSettlement(id);
-        if (DateTime.Now.Year - settlement.FoundationYear < settlement.Region.FederalRegion.HistoricalValueAge && settlement.IsHero == false)
+        if (DateTime.Now.Year - settlement.FoundationYear < settlement.Region.FederalRegion.HistoricalValueAge && settlement.IsHero == false && settlement.Type.CanHaveHistoricalValue())
         {
             return $"Населенный пункт {settlement.Name} не имеет историческую ценность";
         }
         return $"Населенный пункт {settlement.Name} имеет историческую ценность";
     }
+
+
+
+    /*
+        Каждый год возраста - +1 
+        Население - каждый человек даёт 0.000001 (settlement.population * 0.000001)
+        Коэффицент - вычисляется суммарно
+        
+        Тип:
+            Город - 1.3
+            ПГТ - 1.0
+            Деревня - 0.7
+            Село - 0.5
+        Город-Герой - итоговый коэффицент x2
+        Если нет отеля - делить итоговый коэффицент на 3
+
+        settlementtype int NOT NULL,
+        name varchar NOT NULL,
+        population int NOT NULL,
+	    region uuid NOT NULL,
+        foundationyear int NOT NULL,
+	    ishero bool NOT NULL DEFAULT False,
+	    averagehotelcost int DEFAULT NULL,
+
+        select * from settlements
+        join regions on regions.id = settlements.region
+        
+
+     */
+    public async Task<(Double, Settlements)[]> GetTopTenSettlements(Guid chosenRegion, DateOnly vacationDate)
+    {
+        // region.id заранее известен от пользователя
+
+        Page<Settlements> settlements = await repository.GetSettlementsByRegion(chosenRegion);
+
+        Double settlementScore = 0;
+        (Double, Settlements) [] scoredSettlements = { };
+        foreach (var settlement in settlements.Values.Where(s => s.Region.Id == chosenRegion))
+        {
+            settlementScore += (settlement.FoundationYear - vacationDate.Year);
+            settlementScore += (settlement.Population * 0.000001);
+            settlementScore += settlement.Type.ScorePoints();
+            if (settlement.IsHero)
+                settlementScore *= 2;
+            if (settlement.AverageHotelCost == null)
+                settlementScore /= 3;
+
+            (Double, Settlements) st = (settlementScore, settlement);
+            scoredSettlements.Append(st);
+        }
+
+        return scoredSettlements.OrderBy(i => i.Item1).ToArray();
+    }
+
 
 }

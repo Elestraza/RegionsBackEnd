@@ -85,5 +85,17 @@ public class SettlementsRepository : ISettlementsRepository
         );
     }
 
-    
+    public async Task<Page<Settlements>> GetSettlementsByRegion(Guid regionId)
+    {
+        Page<SettlementsDb?> pageDb  = await DatabaseUtils.GetPageAsync<SettlementsDb?>(
+            SettlementsSql.GetByRegion,
+            parameters =>
+            {
+                parameters.AddWithValue("@region", regionId);
+            },
+            reader => reader.ToSettlementsDb()
+        );
+
+        return pageDb.Convert(settlementDb => settlementDb.ToSettlements());
+    }
 }
